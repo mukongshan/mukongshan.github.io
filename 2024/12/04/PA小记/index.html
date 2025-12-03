@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 8.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous" defer></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"kongshan.me","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.26.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":null,"gitalk":{"enable":true,"github_id":"mukongshan","repo":"mukongshan.github.io","client_id":"Ov23lifObx8GLwJlVsh3","client_secret":"ebc5f2cd8493752a92129fa16b4bf1635308b0d6","admin_user":"mukongshan","distraction_free_mode":true,"language":"zh-CN"}},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="思考题 在cmd_c()函数中, 调用cpu_exec()的时候传入了参数-1, 你知道这是什么意思吗? 在 NEMU 项目中的 cmd_c() 函数调用 cpu_exec(-1) 时，传入的 -1 参数表示让模拟器持续执行指令，直到某种停止条件（如断点或异常）发生。    笔记 用gdb调试NEMU：  在nemu下执行make gdb 在一个高度较高的窗口中运行GDB后, 输入layout s">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PA小记">
+<meta property="og:url" content="https://kongshan.me/2024/12/04/PA%E5%B0%8F%E8%AE%B0/index.html">
+<meta property="og:site_name" content="kongshan&#39;s blog">
+<meta property="og:description" content="思考题 在cmd_c()函数中, 调用cpu_exec()的时候传入了参数-1, 你知道这是什么意思吗? 在 NEMU 项目中的 cmd_c() 函数调用 cpu_exec(-1) 时，传入的 -1 参数表示让模拟器持续执行指令，直到某种停止条件（如断点或异常）发生。    笔记 用gdb调试NEMU：  在nemu下执行make gdb 在一个高度较高的窗口中运行GDB后, 输入layout s">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://kongshan.me/home/mukongshan/.config/Typora/typora-user-images/image-20241022120735922.png">
+<meta property="article:published_time" content="2024-12-04T04:00:00.000Z">
+<meta property="article:modified_time" content="2025-12-03T09:01:19.903Z">
+<meta property="article:author" content="mukongshan">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://kongshan.me/home/mukongshan/.config/Typora/typora-user-images/image-20241022120735922.png">
+
+
+<link rel="canonical" href="https://kongshan.me/2024/12/04/PA%E5%B0%8F%E8%AE%B0/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://kongshan.me/2024/12/04/PA%E5%B0%8F%E8%AE%B0/","path":"2024/12/04/PA小记/","title":"PA小记"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>PA小记 | kongshan's blog</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+
+  <script src="/js/third-party/pace.js" defer></script>
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">kongshan's blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-blog"><a href="/blog/" rel="section"><i class="fa fa-book-open fa-fw"></i>博客</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%9D%E8%80%83%E9%A2%98"><span class="nav-number">1.</span> <span class="nav-text">思考题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%94%E8%AE%B0"><span class="nav-number">2.</span> <span class="nav-text">笔记</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#NEMU%E7%BB%93%E6%9E%84"><span class="nav-number">3.</span> <span class="nav-text">NEMU结构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B3%E9%94%AE%E7%BB%93%E6%9E%84%E4%BD%93"><span class="nav-number">3.1.</span> <span class="nav-text">关键结构体</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%A8%E5%B1%80%E8%AE%BE%E7%BD%AE"><span class="nav-number">3.1.1.</span> <span class="nav-text">全局设置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PA2"><span class="nav-number">3.1.2.</span> <span class="nav-text">PA2</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B3%E9%94%AE%E5%87%BD%E6%95%B0"><span class="nav-number">3.2.</span> <span class="nav-text">关键函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#PA1"><span class="nav-number">3.2.1.</span> <span class="nav-text">PA1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PA2-1"><span class="nav-number">3.2.2.</span> <span class="nav-text">PA2</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#gdb%E7%94%A8%E6%B3%95"><span class="nav-number">4.</span> <span class="nav-text">gdb用法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#gcc%E7%94%A8%E6%B3%95"><span class="nav-number">5.</span> <span class="nav-text">gcc用法</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="mukongshan"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">mukongshan</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">19</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/mukongshan" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;mukongshan" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:2087179041@qq.com" title="E-Mail → mailto:2087179041@qq.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://kongshan.me/2024/12/04/PA%E5%B0%8F%E8%AE%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="mukongshan">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="kongshan's blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="PA小记 | kongshan's blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          PA小记
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-12-04 12:00:00" itemprop="dateCreated datePublished" datetime="2024-12-04T12:00:00+08:00">2024-12-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-12-03 17:01:19" itemprop="dateModified" datetime="2025-12-03T17:01:19+08:00">2025-12-03</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/course/" itemprop="url" rel="index"><span itemprop="name">课业</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="思考题"><a href="#思考题" class="headerlink" title="思考题"></a>思考题</h1><ol>
+<li>在<code>cmd_c()</code>函数中, 调用<code>cpu_exec()</code>的时候传入了参数<code>-1</code>, 你知道这是什么意思吗?<ul>
+<li>在 NEMU 项目中的 cmd_c() 函数调用 cpu_exec(-1) 时，传入的 -1 参数表示让模拟器持续执行指令，直到某种停止条件（如断点或异常）发生。</li>
+</ul>
+</li>
+</ol>
+<h1 id="笔记"><a href="#笔记" class="headerlink" title="笔记"></a>笔记</h1><ol>
+<li><p>用gdb调试NEMU：</p>
+<ul>
+<li>在nemu下执行make gdb</li>
+<li>在一个高度较高的窗口中运行GDB后, 输入<code>layout split</code>就可以切换到TUI, 这样你就可以同时从源代码和指令的角度来观察程序的行为了.</li>
+</ul>
+</li>
+<li><p>core文件：放在了&#x2F;tmp里面</p>
+<ol>
+<li>用gdb分析：格式gdb &lt;可执行程序&gt; &lt;核心转储文件&gt;</li>
+</ol>
+</li>
+<li><p>RISC-32的指令格式</p>
+<p>![截图 2024-10-22 12-00-03](&#x2F;home&#x2F;mukongshan&#x2F;图片&#x2F;截图&#x2F;截图 2024-10-22 12-00-03.png)</p>
+<p>完整opcode编码表</p>
+<p><img src="/home/mukongshan/.config/Typora/typora-user-images/image-20241022120735922.png" alt="image-20241022120735922"></p>
+</li>
+</ol>
+<h1 id="NEMU结构"><a href="#NEMU结构" class="headerlink" title="NEMU结构"></a>NEMU结构</h1><h2 id="关键结构体"><a href="#关键结构体" class="headerlink" title="关键结构体"></a>关键结构体</h2><h3 id="全局设置"><a href="#全局设置" class="headerlink" title="全局设置"></a>全局设置</h3><ol>
+<li>word_t：表示与ISA字长等长的无符号类型, 在32位的ISA中为<code>uint32_t</code>, 在64位的ISA中为<code>uint64_t</code>.</li>
+<li>sword_t：表示与ISA字长等长的有符号类型, 在32位的ISA中为<code>int32_t</code>, 在64位的ISA中为<code>int64_t</code></li>
+<li>char *FMT_WORD：word_t<code>类型对应的十六进制格式化说明符, 在32位的ISA中为</code>“0x%08x”<code>, 在64位的ISA中为</code>“0x%016lx”</li>
+<li>CPU_state cpu：寄存器结构的全局定义.</li>
+</ol>
+<h3 id="PA2"><a href="#PA2" class="headerlink" title="PA2"></a>PA2</h3><ul>
+<li>涉及到了很多宏，详见手册RTFSC（2）</li>
+</ul>
+<ol>
+<li><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> &#123;</span></span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125; ISADecodeInfo;</span><br><span class="line">用于存放ISA相关的译码信息, 会嵌入在译码信息结构体Decode的定义中.</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>INSTPAT</code>：(意思是instruction pattern)是一个宏(在<code>nemu/include/cpu/decode.h</code>中定义), 它用于定义一条模式匹配规则. 其格式如下:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">INSTPAT(模式字符串, 指令名称, 指令类型, 指令执行操作);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Decode：</p>
+</li>
+<li><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">typedef struct Decode &#123;                                   </span><br><span class="line">   vaddr_t pc;                                </span><br><span class="line">   vaddr_t snpc; // static next pc</span><br><span class="line">   vaddr_t dnpc; // dynamic next pc</span><br><span class="line">   ISADecodeInfo isa;        </span><br><span class="line">   IFDEF(CONFIG_ITRACE, char logbuf[128]);</span><br><span class="line">&#125; Decode;</span><br></pre></td></tr></table></figure>
+</li>
+<li></li>
+</ol>
+<h2 id="关键函数"><a href="#关键函数" class="headerlink" title="关键函数"></a>关键函数</h2><h3 id="PA1"><a href="#PA1" class="headerlink" title="PA1"></a>PA1</h3><ol>
+<li><p>engin</p>
+<ul>
+<li><p>cpu_exec: 模拟cpu执行命令。包括检查nemu_state。参数n表示要执行的代码量。若n&#x3D;-1，则意思是让cpu一直执行下去，直到某种停止条件。</p>
+<ul>
+<li>exec_once: 执行一次命令。</li>
+</ul>
+</li>
+<li><p>sdb_loop：负责调试机的运行，包括读取指令</p>
+<ul>
+<li><p>rl_gets：读取字符串</p>
+</li>
+<li><p>cmd_c: 继续（continue）的意思。</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>getopt_long: <code>getopt_long</code> 是一个 C 语言标准库函数，用于解析命令行参数。与 <code>getopt</code> 不同的是，它支持 <strong>长选项</strong>（如 <code>--option</code>）以及短选项（如 <code>-o</code>）。长选项非常适合复杂的命令行工具，使选项的含义更具可读性。</p>
+<ol>
+<li><p>参数</p>
+<ul>
+<li><p><strong><code>argc</code></strong>: 参数个数（通常来自 <code>main</code> 函数的 <code>argc</code>）。</p>
+</li>
+<li><p><strong><code>argv</code></strong>: 参数列表（通常来自 <code>main</code> 函数的 <code>argv</code>）。</p>
+</li>
+<li><p><strong><code>optstring</code></strong>: 短选项的字符串定义，每个字符表示一个选项。如果某个选项需要参数，在其后加上 <code>:</code>（如 <code>-f filename</code>）。</p>
+</li>
+<li><p><strong><code>longopts</code></strong>: 长选项的定义，是一个 <code>struct option</code> 类型的数组，每个选项有四个字段：</p>
+<ol start="2">
+<li>返回值：</li>
+</ol>
+<ul>
+<li>如果解析到短选项或长选项，则返回选项对应的字符（短选项）或 <code>val</code>（长选项）。</li>
+<li>如果遇到非选项参数，返回 <code>1</code>。</li>
+<li>当所有参数解析完毕时，返回 <code>-1</code>。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><p>paddr.c：内存相关的函数</p>
+<ol>
+<li>paddr_read：接受一个起始地址和长度，读取内存</li>
+<li>paddr_write</li>
+<li>guest_to_host：地址映射</li>
+</ol>
+</li>
+</ol>
+<h3 id="PA2-1"><a href="#PA2-1" class="headerlink" title="PA2"></a>PA2</h3><ol>
+<li><figure class="highlight plaintext"><figcaption><span>isa_exec_once(Decode *s);</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">int isa_exec_once(Decode *s);</span><br><span class="line">取出s-&gt;pc指向的指令并译码执行, 同时更新s-&gt;snpc.</span><br></pre></td></tr></table></figure>
+</li>
+<li></li>
+</ol>
+<h1 id="gdb用法"><a href="#gdb用法" class="headerlink" title="gdb用法"></a>gdb用法</h1><ol>
+<li><p>启动GDB</p>
+<ul>
+<li><p>用-g：<br>gcc -g -o myprogram myprogram.c</p>
+</li>
+<li><p>用-ggdb：<br>gcc -ggdb -o myprogram myprogram.c</p>
+</li>
+</ul>
+</li>
+<li><p>启动GDB：</p>
+<p>gdb .&#x2F;myprogram</p>
+</li>
+<li><p>常用命令:</p>
+<ol>
+<li>运行程序：<br>run 或 r：启动程序。<br>run <args>：带参数启动程序，例如 run arg1 arg2。</li>
+<li>设置断点：<br>break <line>：在指定行设置断点，例如 break 10。<br>break <function>：在指定函数设置断点，例如 break main。<br>break <file>:<line>：在指定文件的指定行设置断点，例如 break main.c:10。</li>
+<li>查看断点：<br>info breakpoints：列出所有断点。</li>
+<li>删除断点：<br>delete <breakpoint_number>：删除指定编号的断点。<br>delete：删除所有断点。</li>
+<li>单步执行：<br>next 或 n：执行下一行（不会进入函数）。<br>step 或 s：执行下一行（会进入函数）。<br>continue 或 c：继续执行程序直到下一个断点。</li>
+<li>查看代码：<br>list 或 l：显示当前代码段。<br>list <line>：显示指定行附近的代码。<br>list <function>：显示指定函数的代码。</li>
+<li>打印变量：<br>print <variable> 或 p <variable>：打印变量的值。<br>print&#x2F;x <variable>：以十六进制显示变量值。</li>
+<li>查看栈信息：<br>backtrace 或 bt：查看当前函数调用栈。<br>frame <frame_number>：切换到指定的栈帧，例如 frame 2。<br>info frame：查看当前栈帧的信息。</li>
+<li>查看变量：<br>info locals：查看当前栈帧中的局部变量。<br>info variables：查看所有变量。</li>
+<li>修改变量：<br>set variable <variable>&#x3D;<value>：修改变量值，例如 set variable x&#x3D;10。</li>
+<li>退出GDB：<br> quit 或 q：退出GDB。</li>
+<li>其他技巧<br>  条件断点：使用 condition <breakpoint_number> <condition>，例如 condition 1 x&#x3D;&#x3D;5。<br>  断点命令：使用 commands <breakpoint_number> 在指定断点触发时执行命令。</li>
+</ol>
+</li>
+</ol>
+<h1 id="gcc用法"><a href="#gcc用法" class="headerlink" title="gcc用法"></a>gcc用法</h1><ol>
+<li>基本编译命令<ol>
+<li>编译一个 C 源文件生成可执行文件:<br>gcc -o program main.c</li>
+<li>编译多个源文件并生成一个可执行文件：<br>gcc -o program main.c utils.c</li>
+<li>将源文件编译为目标文件（.o 文件），而不是直接生成可执行文件：<br>gcc -c main.c<br>gcc -c utils.c</li>
+<li>将多个目标文件链接成一个可执行文件：<br>gcc -o program main.o utils.o</li>
+</ol>
+</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/12/04/%E4%BA%92%E8%81%94%E7%BD%91%E8%AE%A1%E7%AE%97/" rel="prev" title="互联网计算">
+                  <i class="fa fa-angle-left"></i> 互联网计算
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/12/04/Linux%E7%B3%BB%E7%BB%9F%E5%9F%BA%E7%A1%80/" rel="next" title="Linux系统基础">
+                  Linux系统基础 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">mukongshan</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>

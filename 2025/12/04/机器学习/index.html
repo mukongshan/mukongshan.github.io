@@ -1,0 +1,3066 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 8.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous" defer></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"kongshan.me","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.26.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":null,"gitalk":{"enable":true,"github_id":"mukongshan","repo":"mukongshan.github.io","client_id":"Ov23lifObx8GLwJlVsh3","client_secret":"ebc5f2cd8493752a92129fa16b4bf1635308b0d6","admin_user":"mukongshan","distraction_free_mode":true,"language":"zh-CN"}},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="考核形式平时成绩（60%）课程作业30%（每人提交，共八次） 上机报告30%（小组提交，共六次） 期末成绩（40%）专题报告（小组提交，共一次）  无期末试卷考试  机器学习四大问题聚类 定义：一种 无监督学习方法，目标是把样本自动划分为若干组（簇），同一簇内的样本相似度高，不同簇间的相似度低。 常见算法 K-means：基于中心点迭代优化，快速但对初始值和簇数敏感。 层次聚类（Hierarchi">
+<meta property="og:type" content="article">
+<meta property="og:title" content="机器学习">
+<meta property="og:url" content="https://kongshan.me/2025/12/04/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:site_name" content="kongshan&#39;s blog">
+<meta property="og:description" content="考核形式平时成绩（60%）课程作业30%（每人提交，共八次） 上机报告30%（小组提交，共六次） 期末成绩（40%）专题报告（小组提交，共一次）  无期末试卷考试  机器学习四大问题聚类 定义：一种 无监督学习方法，目标是把样本自动划分为若干组（簇），同一簇内的样本相似度高，不同簇间的相似度低。 常见算法 K-means：基于中心点迭代优化，快速但对初始值和簇数敏感。 层次聚类（Hierarchi">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="d:\All_of_mine\%E5%A4%A7%E5%AD%A6\%E5%AD%A6%E4%B9%A0\%E5%A4%A7%E4%B8%89%E4%B8%8A\%E5%A4%A7%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90\hw\hw6\src\%E5%B1%82%E6%AC%A1%E8%81%9A%E7%B1%BB%E6%A0%91%E7%8A%B6%E5%9B%BE.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20251018140124542.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20251018140704218.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20251121100949500.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20251121102532474.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20251121102934942.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20251121103039608.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20251121103205331.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20251120212439270.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20251120212509500.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20251120212558392.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20251121104101413.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20251121104557384.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20251121100218626.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20251121100248396.png">
+<meta property="article:published_time" content="2025-12-03T17:00:00.000Z">
+<meta property="article:modified_time" content="2025-12-03T09:06:23.140Z">
+<meta property="article:author" content="mukongshan">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="d:\All_of_mine\%E5%A4%A7%E5%AD%A6\%E5%AD%A6%E4%B9%A0\%E5%A4%A7%E4%B8%89%E4%B8%8A\%E5%A4%A7%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90\hw\hw6\src\%E5%B1%82%E6%AC%A1%E8%81%9A%E7%B1%BB%E6%A0%91%E7%8A%B6%E5%9B%BE.png">
+
+
+<link rel="canonical" href="https://kongshan.me/2025/12/04/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://kongshan.me/2025/12/04/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/","path":"2025/12/04/机器学习/","title":"机器学习"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>机器学习 | kongshan's blog</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+
+  <script src="/js/third-party/pace.js" defer></script>
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">kongshan's blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-blog"><a href="/blog/" rel="section"><i class="fa fa-book-open fa-fw"></i>博客</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%80%83%E6%A0%B8%E5%BD%A2%E5%BC%8F"><span class="nav-number">1.</span> <span class="nav-text">考核形式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B9%B3%E6%97%B6%E6%88%90%E7%BB%A9%EF%BC%8860-%EF%BC%89"><span class="nav-number">1.1.</span> <span class="nav-text">平时成绩（60%）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%9F%E6%9C%AB%E6%88%90%E7%BB%A9%EF%BC%8840-%EF%BC%89"><span class="nav-number">1.2.</span> <span class="nav-text">期末成绩（40%）</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%9B%9B%E5%A4%A7%E9%97%AE%E9%A2%98"><span class="nav-number">2.</span> <span class="nav-text">机器学习四大问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%81%9A%E7%B1%BB"><span class="nav-number">2.1.</span> <span class="nav-text">聚类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%99%8D%E7%BB%B4"><span class="nav-number">2.2.</span> <span class="nav-text">降维</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%89%B9%E5%BE%81%E5%B7%A5%E7%A8%8B"><span class="nav-number">2.3.</span> <span class="nav-text">特征工程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B%E8%AF%84%E4%BC%B0"><span class="nav-number">2.4.</span> <span class="nav-text">模型评估</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0"><span class="nav-number">3.</span> <span class="nav-text">机器学习</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%81%E7%A8%8B"><span class="nav-number">3.1.</span> <span class="nav-text">流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%87%E6%8B%9F%E5%90%88%E5%92%8C%E6%AC%A0%E6%8B%9F%E5%90%88"><span class="nav-number">3.2.</span> <span class="nav-text">过拟合和欠拟合</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%87%E6%8B%9F%E5%90%88"><span class="nav-number">3.2.1.</span> <span class="nav-text">过拟合</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AC%A0%E6%8B%9F%E5%90%88"><span class="nav-number">3.2.2.</span> <span class="nav-text">欠拟合</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E7%B1%BB%E5%92%8C%E5%9B%9E%E5%BD%92%E4%BB%BB%E5%8A%A1"><span class="nav-number">3.3.</span> <span class="nav-text">分类和回归任务</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E7%B1%BB%E4%BB%BB%E5%8A%A1"><span class="nav-number">3.3.1.</span> <span class="nav-text">分类任务</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89"><span class="nav-number">3.3.1.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%B1%BB%E5%88%AB%E5%B9%B3%E8%A1%A1"><span class="nav-number">3.3.1.2.</span> <span class="nav-text">类别平衡</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%B1%BB%E5%88%AB%E4%B8%8D%E5%B9%B3%E8%A1%A1%E7%9A%84%E5%BD%B1%E5%93%8D"><span class="nav-number">3.3.1.3.</span> <span class="nav-text">类别不平衡的影响</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E5%BA%94%E5%AF%B9%E7%B1%BB%E5%88%AB%E4%B8%8D%E5%B9%B3%E8%A1%A1"><span class="nav-number">3.3.1.4.</span> <span class="nav-text">如何应对类别不平衡</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AF%84%E4%BB%B7%E6%8C%87%E6%A0%87"><span class="nav-number">3.3.1.5.</span> <span class="nav-text">评价指标</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%9E%E5%BD%92%E4%BB%BB%E5%8A%A1"><span class="nav-number">3.3.2.</span> <span class="nav-text">回归任务</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89-1"><span class="nav-number">3.3.2.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AF%84%E4%BB%B7%E6%8C%87%E6%A0%87-1"><span class="nav-number">3.3.2.2.</span> <span class="nav-text">评价指标</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E2%BD%80%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA%E4%B8%8E%E6%A0%B8%E5%87%BD%E6%95%B0"><span class="nav-number">3.4.</span> <span class="nav-text">⽀持向量机与核函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA"><span class="nav-number">3.4.1.</span> <span class="nav-text">支持向量机</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E7%A7%8D%E5%86%B3%E7%AD%96%E6%A0%91%E7%AE%97%E6%B3%95%E5%AF%B9%E6%AF%94"><span class="nav-number">3.5.</span> <span class="nav-text">三种决策树算法对比</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%89%B9%E5%BE%81%E9%80%89%E6%8B%A9%E4%BE%9D%E6%8D%AE"><span class="nav-number">3.5.1.</span> <span class="nav-text">特征选择依据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%AA%E6%9E%9D%E7%AD%96%E7%95%A5"><span class="nav-number">3.5.2.</span> <span class="nav-text">剪枝策略</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%84%E7%90%86%E8%BF%9E%E7%BB%AD%E7%89%B9%E5%BE%81"><span class="nav-number">3.5.3.</span> <span class="nav-text">处理连续特征</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%84%E7%90%86%E7%BC%BA%E5%A4%B1%E6%95%B0%E6%8D%AE"><span class="nav-number">3.5.4.</span> <span class="nav-text">处理缺失数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%9F%E6%88%90%E7%9A%84%E6%A0%91%E7%B1%BB%E5%9E%8B"><span class="nav-number">3.5.5.</span> <span class="nav-text">生成的树类型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E7%B1%BB%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0%E2%BD%85%E6%B3%95"><span class="nav-number">3.6.</span> <span class="nav-text">三类集成学习⽅法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0"><span class="nav-number">3.6.1.</span> <span class="nav-text">集成学习</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Bagging%EF%BC%88Bootstrap-Aggregating%EF%BC%89"><span class="nav-number">3.6.2.</span> <span class="nav-text">Bagging（Bootstrap Aggregating）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Boosting"><span class="nav-number">3.6.3.</span> <span class="nav-text">Boosting</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Stacking%EF%BC%88Stacked-Generalization%EF%BC%89"><span class="nav-number">3.6.4.</span> <span class="nav-text">Stacking（Stacked Generalization）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E7%A7%8D%E8%81%9A%E7%B1%BB%E2%BD%85%E6%B3%95"><span class="nav-number">3.7.</span> <span class="nav-text">三种聚类⽅法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#K-Means"><span class="nav-number">3.7.1.</span> <span class="nav-text">K-Means</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-number">3.7.1.1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A4%84%E7%90%86%E9%9D%9E%E7%90%83%E5%BD%A2%E7%B0%87%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">3.7.1.2.</span> <span class="nav-text">处理非球形簇的问题</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DBSCAN"><span class="nav-number">3.7.2.</span> <span class="nav-text">DBSCAN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B1%82%E6%AC%A1%E8%81%9A%E7%B1%BB"><span class="nav-number">3.7.3.</span> <span class="nav-text">层次聚类</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PCA"><span class="nav-number">3.8.</span> <span class="nav-text">PCA</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%B8%E5%BF%83%E6%80%9D%E6%83%B3"><span class="nav-number">3.8.1.</span> <span class="nav-text">核心思想</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%8F%E6%96%B9%E5%B7%AE%E7%9F%A9%E9%98%B5%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="nav-number">3.8.2.</span> <span class="nav-text">协方差矩阵的作用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SMOTE%E7%BC%93%E8%A7%A3%E4%B8%8D%E5%B9%B3%E8%A1%A1%E9%97%AE%E9%A2%98"><span class="nav-number">3.9.</span> <span class="nav-text">SMOTE缓解不平衡问题</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C"><span class="nav-number">4.</span> <span class="nav-text">神经网络</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%84%9F%E7%9F%A5%E6%9C%BA"><span class="nav-number">4.1.</span> <span class="nav-text">感知机</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E6%80%9D%E6%83%B3"><span class="nav-number">4.1.1.</span> <span class="nav-text">基本思想</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%95%E5%B1%82%E6%84%9F%E7%9F%A5%E6%9C%BA%E6%97%A0%E6%B3%95%E8%A7%A3%E5%86%B3-XOR%EF%BC%88%E5%BC%82%E6%88%96%EF%BC%89%E9%97%AE%E9%A2%98"><span class="nav-number">4.1.2.</span> <span class="nav-text">单层感知机无法解决 XOR（异或）问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD%E7%A5%9E%E7%BB%8F%E2%BD%B9%E7%BB%9C"><span class="nav-number">4.2.</span> <span class="nav-text">反向传播神经⽹络</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0-1"><span class="nav-number">4.2.1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E5%90%91%E4%BC%A0%E6%92%AD"><span class="nav-number">4.2.2.</span> <span class="nav-text">前向传播</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD"><span class="nav-number">4.2.3.</span> <span class="nav-text">反向传播</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E5%A4%A7%E6%B7%B1%E5%BA%A6%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C"><span class="nav-number">4.3.</span> <span class="nav-text">三大深度神经网络</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E9%A6%88%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%EF%BC%88Feedforward-Neural-Network-FNN%EF%BC%89"><span class="nav-number">4.3.1.</span> <span class="nav-text">前馈神经网络（Feedforward Neural Network, FNN）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0-2"><span class="nav-number">4.3.1.1.</span> <span class="nav-text">概述</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%EF%BC%88Convolutional-Neural-Network-CNN%EF%BC%89"><span class="nav-number">4.3.2.</span> <span class="nav-text">卷积神经网络（Convolutional Neural Network, CNN）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0-3"><span class="nav-number">4.3.2.1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="nav-number">4.3.2.2.</span> <span class="nav-text">工作原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B"><span class="nav-number">4.3.2.3.</span> <span class="nav-text">工作流程</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BE%AA%E7%8E%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%EF%BC%88Recurrent-Neural-Network-RNN%EF%BC%89"><span class="nav-number">4.3.3.</span> <span class="nav-text">循环神经网络（Recurrent Neural Network, RNN）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0-4"><span class="nav-number">4.3.3.1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86-1"><span class="nav-number">4.3.3.2.</span> <span class="nav-text">工作原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B-1"><span class="nav-number">4.3.3.3.</span> <span class="nav-text">工作流程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#LSTM%E9%95%BF%E7%9F%AD%E6%9C%9F%E8%AE%B0%E5%BF%86%E7%BD%91%E7%BB%9C"><span class="nav-number">4.3.3.4.</span> <span class="nav-text">LSTM长短期记忆网络</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#GRU%E9%97%A8%E6%8E%A7%E5%BE%AA%E7%8E%AF%E5%8D%95%E5%85%83"><span class="nav-number">4.3.3.5.</span> <span class="nav-text">GRU门控循环单元</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#BiLSTM%E5%8F%8C%E5%90%91%E9%95%BF%E7%9F%AD%E6%9C%9F%E8%AE%B0%E5%BF%86%E7%BD%91%E7%BB%9C"><span class="nav-number">4.3.3.6.</span> <span class="nav-text">BiLSTM双向长短期记忆网络</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Transformer-%E6%9E%B6%E6%9E%84%E5%8F%8A%E5%85%B6%E5%8F%98%E4%BD%93"><span class="nav-number">4.4.</span> <span class="nav-text">Transformer 架构及其变体</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0-5"><span class="nav-number">4.4.1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6"><span class="nav-number">4.4.2.</span> <span class="nav-text">注意力机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Encoder-only%EF%BC%88%E4%BB%85%E7%BC%96%E7%A0%81%E5%99%A8%EF%BC%89%E7%BB%93%E6%9E%84"><span class="nav-number">4.4.3.</span> <span class="nav-text">Encoder-only（仅编码器）结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Decoder-only%EF%BC%88%E4%BB%85%E8%A7%A3%E7%A0%81%E5%99%A8%EF%BC%89%E7%BB%93%E6%9E%84"><span class="nav-number">4.4.4.</span> <span class="nav-text">Decoder-only（仅解码器）结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Encoder-Decoder%EF%BC%88%E7%BC%96%E7%A0%81%E5%99%A8-%E8%A7%A3%E7%A0%81%E5%99%A8%EF%BC%89%E7%BB%93%E6%9E%84"><span class="nav-number">4.4.5.</span> <span class="nav-text">Encoder-Decoder（编码器-解码器）结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BA%8F%E5%88%97%E7%94%9F%E6%88%90%E4%BB%BB%E5%8A%A1%E8%AF%84%E4%BB%B7%E6%8C%87%E6%A0%87"><span class="nav-number">4.4.6.</span> <span class="nav-text">序列生成任务评价指标</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E2%BD%A3%E6%88%90%E5%BC%8F%E5%AF%B9%E6%8A%97%E2%BD%B9%E7%BB%9C%EF%BC%88GAN%EF%BC%89"><span class="nav-number">4.5.</span> <span class="nav-text">⽣成式对抗⽹络（GAN）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0-6"><span class="nav-number">4.5.1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Wasserstein-GAN%EF%BC%88WGAN%EF%BC%89"><span class="nav-number">4.5.2.</span> <span class="nav-text">Wasserstein GAN（WGAN）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9D%A1%E4%BB%B6%E2%BD%A3%E6%88%90%E5%BC%8F%E5%AF%B9%E6%8A%97%E2%BD%B9%E7%BB%9C%EF%BC%88Conditional-GAN%EF%BC%8CcGAN%EF%BC%89"><span class="nav-number">4.5.3.</span> <span class="nav-text">条件⽣成式对抗⽹络（Conditional GAN，cGAN）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%AF%E6%8E%A7%E7%94%9F%E6%88%90%EF%BC%88Controllable-Generation%EF%BC%89"><span class="nav-number">4.5.4.</span> <span class="nav-text">可控生成（Controllable Generation）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%EF%BC%88Reinforcement-Learning%EF%BC%89"><span class="nav-number">4.6.</span> <span class="nav-text">强化学习（Reinforcement Learning）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0-7"><span class="nav-number">4.6.1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Actor-Critic%E6%96%B9%E6%B3%95"><span class="nav-number">4.6.2.</span> <span class="nav-text">Actor-Critic方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E5%9C%A8%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B%E4%B8%AD%E7%9A%84%E6%BD%9C%E5%9C%A8%E5%BA%94%E7%94%A8"><span class="nav-number">4.6.3.</span> <span class="nav-text">强化学习在生成模型中的潜在应用</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="mukongshan"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">mukongshan</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">19</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/mukongshan" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;mukongshan" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:2087179041@qq.com" title="E-Mail → mailto:2087179041@qq.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://kongshan.me/2025/12/04/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="mukongshan">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="kongshan's blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="机器学习 | kongshan's blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          机器学习
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-12-04 01:00:00" itemprop="dateCreated datePublished" datetime="2025-12-04T01:00:00+08:00">2025-12-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-12-03 17:06:23" itemprop="dateModified" datetime="2025-12-03T17:06:23+08:00">2025-12-03</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/course/" itemprop="url" rel="index"><span itemprop="name">课业</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="考核形式"><a href="#考核形式" class="headerlink" title="考核形式"></a>考核形式</h1><h2 id="平时成绩（60-）"><a href="#平时成绩（60-）" class="headerlink" title="平时成绩（60%）"></a>平时成绩（60%）</h2><p>课程作业30%（每人提交，共八次）</p>
+<p>上机报告30%（小组提交，共六次）</p>
+<h2 id="期末成绩（40-）"><a href="#期末成绩（40-）" class="headerlink" title="期末成绩（40%）"></a>期末成绩（40%）</h2><p>专题报告（小组提交，共一次）</p>
+<ul>
+<li>无期末试卷考试</li>
+</ul>
+<h1 id="机器学习四大问题"><a href="#机器学习四大问题" class="headerlink" title="机器学习四大问题"></a>机器学习四大问题</h1><h2 id="聚类"><a href="#聚类" class="headerlink" title="聚类"></a>聚类</h2><ul>
+<li><strong>定义</strong>：一种 <strong>无监督学习方法</strong>，目标是把样本自动划分为若干组（簇），同一簇内的样本相似度高，不同簇间的相似度低。</li>
+<li><strong>常见算法</strong><ul>
+<li><strong>K-means</strong>：基于中心点迭代优化，快速但对初始值和簇数敏感。</li>
+<li><strong>层次聚类</strong>（Hierarchical Clustering）：逐层合并或拆分，得到树状聚类结构。</li>
+<li><strong>DBSCAN</strong>：基于密度，能发现任意形状的簇，并识别噪声。</li>
+<li><strong>高斯混合模型 (GMM)</strong>：用概率分布来建模簇。</li>
+</ul>
+</li>
+<li><strong>应用</strong>：用户分群、市场细分、异常检测、推荐系统。</li>
+</ul>
+<h2 id="降维"><a href="#降维" class="headerlink" title="降维"></a>降维</h2><p><strong>定义</strong>：把高维数据映射到低维空间，同时尽量保留数据的主要信息。</p>
+<p><strong>目的</strong></p>
+<ul>
+<li>降低计算复杂度</li>
+<li>去除噪声、减少冗余</li>
+<li>便于可视化</li>
+</ul>
+<p><strong>方法</strong></p>
+<ul>
+<li><strong>线性方法</strong><ul>
+<li><strong>PCA（主成分分析）</strong>：通过正交变换找到最大方差方向。</li>
+<li><strong>LDA（线性判别分析）</strong>：监督方法，最大化类间差异、最小化类内差异。</li>
+</ul>
+</li>
+<li><strong>非线性方法</strong><ul>
+<li><strong>t-SNE</strong>：常用于高维数据的可视化（比如词向量）。</li>
+<li><strong>UMAP</strong>：保持局部和全局结构，更适合大规模数据。</li>
+</ul>
+</li>
+</ul>
+<h2 id="特征工程"><a href="#特征工程" class="headerlink" title="特征工程"></a>特征工程</h2><p><strong>定义</strong>：对原始数据进行处理，构造出更能表达模式的特征，提高模型效果。</p>
+<p><strong>流程</strong></p>
+<ul>
+<li><strong>特征预处理</strong><ul>
+<li>缺失值处理（均值填充、插值、模型预测）</li>
+<li>标准化 &#x2F; 归一化（Z-score, MinMaxScaler）</li>
+<li>离散化（分箱、one-hot 编码）</li>
+</ul>
+</li>
+<li><strong>特征选择</strong><ul>
+<li>过滤法（方差选择、相关系数、卡方检验）</li>
+<li>包装法（递归特征消除 RFE）</li>
+<li>嵌入法（Lasso, 决策树特征重要性）</li>
+</ul>
+</li>
+<li><strong>特征构造</strong><ul>
+<li>组合特征（交互项、多项式特征）</li>
+<li>时间序列特征（滞后、移动平均）</li>
+<li>NLP 特征（TF-IDF, word2vec, BERT）</li>
+</ul>
+</li>
+</ul>
+<h2 id="模型评估"><a href="#模型评估" class="headerlink" title="模型评估"></a>模型评估</h2><ul>
+<li><strong>目的</strong>：衡量训练好的模型在未知数据上的泛化能力。</li>
+<li><strong>评估方法</strong><ul>
+<li><strong>分类任务</strong><ul>
+<li>准确率（Accuracy）</li>
+<li>精确率（Precision）、召回率（Recall）、F1-score</li>
+<li>AUC-ROC 曲线</li>
+</ul>
+</li>
+<li><strong>回归任务</strong><ul>
+<li>MSE（均方误差）、RMSE</li>
+<li>MAE（平均绝对误差）</li>
+<li>$R^2$（决定系数）</li>
+</ul>
+</li>
+<li><strong>聚类任务</strong><ul>
+<li>轮廓系数（Silhouette Coefficient）</li>
+<li>Calinski-Harabasz 指数</li>
+<li>Davies-Bouldin 指数</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>验证方式</strong><ul>
+<li>留出法（Train&#x2F;Test Split）</li>
+<li>交叉验证（k-fold Cross Validation）</li>
+<li>自助法（Bootstrap）</li>
+</ul>
+</li>
+</ul>
+<h1 id="机器学习"><a href="#机器学习" class="headerlink" title="机器学习"></a>机器学习</h1><h2 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">问题定义</span><br><span class="line">    ↓</span><br><span class="line">数据收集</span><br><span class="line">    ↓</span><br><span class="line">数据预处理 &amp; 特征工程</span><br><span class="line">    ↓</span><br><span class="line">数据划分（训练/验证/测试）</span><br><span class="line">    ↓</span><br><span class="line">模型选择与训练</span><br><span class="line">    ↓</span><br><span class="line">模型评估</span><br><span class="line">    ↓</span><br><span class="line">模型优化（调参/集成/正则化）</span><br><span class="line">    ↓</span><br><span class="line">模型部署</span><br><span class="line">    ↓</span><br><span class="line">维护与迭代</span><br></pre></td></tr></table></figure>
+
+<p>一、问题定义（Problem Definition）</p>
+<ul>
+<li><strong>目标：</strong> 明确你要解决的问题是什么。是分类问题（如垃圾邮件识别）？还是回归问题（如房价预测）？或者是无监督问题（如客户分群）？</li>
+<li><strong>评估指标：</strong> 确定如何衡量模型的好坏。分类：准确率（Accuracy）、精确率（Precision）、召回率（Recall）、F1分数等回归：均方误差（MSE）、均方根误差（RMSE）、R²等</li>
+</ul>
+<hr>
+<p>二、数据收集（Data Collection）</p>
+<ul>
+<li>**来源：**公开数据集（如Kaggle、UCI、政府开放数据等）业务系统&#x2F;数据库爬虫&#x2F;传感器&#x2F;日志等</li>
+<li>**类型：**结构化数据（表格数据，如CSV）非结构化数据（文本、图像、音频等）</li>
+</ul>
+<hr>
+<p>三、数据预处理（Data Preprocessing）</p>
+<p>这是非常关键的一步，数据质量直接影响模型效果。</p>
+<ul>
+<li>**数据清洗：**处理缺失值（删除、填充均值&#x2F;中位数&#x2F;众数等）处理异常值（删除、修正、分箱等）去重</li>
+<li>**数据转换：**特征编码：类别型变量 → 数值（如独热编码 One-Hot Encoding、标签编码 Label Encoding）数据标准化 &#x2F; 归一化（如Z-score标准化、Min-Max归一化）</li>
+<li>**特征工程：**特征选择（过滤法、包裹法、嵌入法）特征构造（组合特征、多项式特征等）降维（如PCA、LDA）</li>
+</ul>
+<hr>
+<p>四、数据划分（Data Splitting）</p>
+<p>将数据划分为训练集、验证集和测试集，常见比例：</p>
+<ul>
+<li>训练集（Train）：70% ~ 80%</li>
+<li>验证集（Validation）：10% ~ 15%（用于调参和模型选择）</li>
+<li>测试集（Test）：10% ~ 15%（最终评估模型泛化能力）</li>
+</ul>
+<p>或者使用交叉验证（如 k-fold Cross Validation）</p>
+<hr>
+<p>五、模型选择与训练（Model Selection &amp; Training）</p>
+<ul>
+<li>**选择模型：**线性模型：线性回归、逻辑回归树模型：决策树、随机森林、梯度提升树（如XGBoost、LightGBM、CatBoost）神经网络：多层感知机（MLP）、CNN、RNN等（用于复杂任务）其他：支持向量机（SVM）、K近邻（KNN）、朴素贝叶斯等</li>
+<li>**训练模型：**使用训练集对模型进行拟合（fit）可使用默认参数先跑通流程，再优化</li>
+</ul>
+<hr>
+<p>六、模型评估（Model Evaluation）</p>
+<ul>
+<li>在验证集或测试集上评估模型性能</li>
+<li>根据任务类型选择合适的评估指标</li>
+<li>可视化结果（如混淆矩阵、ROC曲线、学习曲线等）</li>
+</ul>
+<hr>
+<p>七、模型优化（Model Optimization）</p>
+<ul>
+<li>**超参数调优：**网格搜索（Grid Search）随机搜索（Random Search）贝叶斯优化、进化算法等</li>
+<li>**模型融合&#x2F;集成：**Bagging（如随机森林）Boosting（如XGBoost）Stacking、Voting等</li>
+<li>**防止过拟合&#x2F;欠拟合：**正则化（L1&#x2F;L2）Dropout（神经网络）增加数据、简化模型等</li>
+</ul>
+<hr>
+<p>八、模型部署（Model Deployment）</p>
+<ul>
+<li>将训练好的模型应用到实际环境中</li>
+<li>**部署方式：**批处理预测实时API服务（如使用 Flask、FastAPI、Django）嵌入到移动端&#x2F;嵌入式设备</li>
+<li>**模型监控：**模型性能衰减监控数据漂移检测持续更新与迭代</li>
+</ul>
+<hr>
+<p>九、维护与迭代（Maintenance &amp; Iteration）</p>
+<ul>
+<li>收集用户反馈与新的数据</li>
+<li>定期重新训练与优化模型</li>
+<li>持续改进业务流程与模型效果</li>
+</ul>
+<h2 id="过拟合和欠拟合"><a href="#过拟合和欠拟合" class="headerlink" title="过拟合和欠拟合"></a>过拟合和欠拟合</h2><h3 id="过拟合"><a href="#过拟合" class="headerlink" title="过拟合"></a>过拟合</h3><p><strong>定义</strong>：</p>
+<ol>
+<li>过拟合是指模型在训练集上表现得非常好，但在新的、未见过的测试集上表现较差的现象。此时，模型过于复杂，记住了训练数据中的噪声和细节，导致无法很好地泛化到新的数据。</li>
+</ol>
+<p><strong>影响</strong></p>
+<ol>
+<li>过拟合的模型能够在训练数据中准确地预测，但在测试集或实际应用中性能差，不能有效地处理未见过的数据。这是因为模型不仅学习到了数据的普遍规律，还过度关注了训练集的特殊性。</li>
+</ol>
+<p><strong>原因</strong></p>
+<ol>
+<li>模型过于复杂：例如，神经网络的层数和参数过多，决策树的深度过深，大参数。<ol>
+<li><strong>（数值）大参数的模型，尤其是在高维度中，容易导致过拟合。所以我们要小参数，不要大参数</strong></li>
+<li>为什么在相同的参数量下，小参数意味着复杂度低？<ol>
+<li>减小参数值的大小会约束模型的灵活性</li>
+<li>小参数使得模型“平滑”</li>
+<li>大参数带来更高的方差</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>训练数据不足：样本量少，模型无法学习到足够的普遍性规律。</li>
+<li>缺乏正则化：模型没有适当的惩罚项来控制其复杂性。</li>
+</ol>
+<p><strong>预防策略</strong></p>
+<ol>
+<li><p><strong>数据方面</strong>：</p>
+<ol>
+<li>增加训练数据量：更多的数据有助于模型捕捉到数据中的普遍规律，减少对偶然性噪声的依赖。</li>
+<li>数据增强：通过对训练数据进行不同的变换（如旋转、裁剪、翻转等），来生成更多样化的训练数据，增加数据的多样性，帮助模型泛化。</li>
+</ol>
+</li>
+<li><p><strong>模型方面</strong>：</p>
+<ol>
+<li><p>使用正则化：正则化技术如 L1 或 L2 正则化可以对模型参数施加约束，从而防止模型过于复杂。</p>
+<ol>
+<li><p>L1正则化：</p>
+</li>
+<li><p>原理：</p>
+<ol>
+<li><p>L1 正则化是通过在损失函数中加入模型参数的 <strong>绝对值</strong> 的和来进行惩罚。其惩罚项为：</p>
+</li>
+<li><p>$$<br>L1 Regularization&#x3D;λ_i∑∣w_i∣<br>$$</p>
+</li>
+<li><p>其中，w是模型的参数，λ 是正则化强度超参数，控制惩罚的力度。</p>
+</li>
+</ol>
+</li>
+<li><p>特点：适用于特征稀疏的模型，比如在很多特征中只有少数特征对预测有用的情况</p>
+</li>
+<li><p>L2正则化：</p>
+</li>
+<li><p>$$<br>L2 Regularization&#x3D;λ_i∑w_i^2<br>$$</p>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+<li><p><strong>训练方面</strong>：</p>
+<ol>
+<li>早停法（Early Stopping）：在训练过程中监控验证集的表现，一旦验证误差开始增加，停止训练，从而避免过拟合。</li>
+<li>交叉验证（Cross-validation）：将数据分成多个子集，每次训练时使用不同的训练集和验证集，确保模型在不同数据集上都有良好的表现。<ol>
+<li>特别适用于样本量相对较小的情况</li>
+<li>它通过将数据集分成多个子集，在不同的子集上训练和验证模型，从而使得模型的训练和验证更加稳定，避免过拟合。</li>
+<li><strong>K折交叉验证</strong>是最常见的交叉验证方法。将数据集分为 K 个子集，模型会在 K-1 个子集上进行训练，然后在剩下的一个子集上进行验证。这个过程重复 K 次，每次选择不同的子集作为验证集，最终得到一个平均的模型性能评估结果。</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<h3 id="欠拟合"><a href="#欠拟合" class="headerlink" title="欠拟合"></a>欠拟合</h3><p><strong>定义</strong></p>
+<p>欠拟合是指模型对训练数据的学习能力不足，无法捕捉到数据的基本规律。表现为训练集和测试集上都无法取得良好的性能。</p>
+<p><strong>影响</strong></p>
+<ol>
+<li>欠拟合的模型无法从数据中提取有用的信息，导致预测精度较低。它通常发生在模型过于简单，不能表达数据中复杂关系时。</li>
+</ol>
+<p><strong>原因</strong></p>
+<ul>
+<li><p>模型过于简单：例如，使用了线性模型来拟合本应是非线性关系的数据。</p>
+</li>
+<li><p>特征不足：没有选取到有意义的特征，模型无法有效地学习数据的规律。</p>
+</li>
+<li><p>训练不充分：模型训练不够充分，未能在训练集上学习到足够的信息。</p>
+</li>
+</ul>
+<p><strong>防止策略</strong></p>
+<ol>
+<li>增加模型复杂度：选择更复杂的模型，增加更多的特征或增加模型的非线性能力。例如，使用多层神经网络、非线性回归或决策树等。</li>
+<li>增加训练时间：确保模型有足够的时间来学习训练数据中的模式，避免过早终止训练。</li>
+<li>选择更合适的特征：通过特征工程选取更加有意义的特征，使模型能够学习到更复杂的模式。</li>
+<li>降低正则化强度：如果正则化太强，可能会限制模型的学习能力，导致欠拟合。因此，可以适当减小正则化项的系数。</li>
+</ol>
+<h2 id="分类和回归任务"><a href="#分类和回归任务" class="headerlink" title="分类和回归任务"></a>分类和回归任务</h2><h3 id="分类任务"><a href="#分类任务" class="headerlink" title="分类任务"></a>分类任务</h3><h4 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h4><p>分类任务的目标是将样本正确地分类到一个或多个预定的类别中</p>
+<h4 id="类别平衡"><a href="#类别平衡" class="headerlink" title="类别平衡"></a>类别平衡</h4><ol>
+<li>定义：类别平衡是指数据集中每个类别的样本数量大致相等。即，不同类别的数据样本数量差不多，分类器可以公平地学习每个类别的特征。</li>
+<li>特点<ol>
+<li>每个类别的样本数差异较小。</li>
+<li>模型训练时，每个类别对模型的影响相对均衡。</li>
+<li>评估指标（如准确率、精确率、召回率等）能较为客观地反映模型的性能。</li>
+</ol>
+</li>
+</ol>
+<h4 id="类别不平衡的影响"><a href="#类别不平衡的影响" class="headerlink" title="类别不平衡的影响"></a>类别不平衡的影响</h4><ol>
+<li>模型偏向于多数类<ul>
+<li>在类别不平衡的情况下，多数类的样本在训练集中的占比非常大，模型会倾向于预测多数类样本，从而导致少数类的分类效果较差。</li>
+<li>比如在上面的例子中，模型如果只预测为负类（多数类），它也能取得较高的 准确率，但其实模型并没有有效地识别少数类样本。</li>
+</ul>
+</li>
+<li>评估指标失真<ul>
+<li>在不平衡的情况下，准确率是一个 误导性指标。因为即使模型忽略了少数类样本，只预测多数类，准确率也可能很高。</li>
+<li>对于 少数类 的评价，精确率 和 召回率 等指标更为重要，尤其是 F1 分数，能够综合考虑精确率和召回率，帮助更好地评估模型对少数类的预测能力。</li>
+</ul>
+</li>
+<li>训练困难<ul>
+<li>类别不平衡会导致模型的 学习偏差，模型可能会忽略少数类样本的特征，甚至完全不去学习少数类的样本。这样一来，模型的 泛化能力 就会变差，尤其是在实际应用中，少数类样本往往才是 关键性数据（例如，疾病诊断中的患病类别）。</li>
+</ul>
+</li>
+<li>不良的泛化能力<ul>
+<li>由于模型倾向于学习多数类的特征，它在处理 新数据 时可能会产生较差的预测，特别是当新数据的类别分布与训练集不同（例如，大量少数类数据突然出现时），模型的表现可能会急剧下降。</li>
+</ul>
+</li>
+</ol>
+<h4 id="如何应对类别不平衡"><a href="#如何应对类别不平衡" class="headerlink" title="如何应对类别不平衡"></a>如何应对类别不平衡</h4><ol>
+<li>重新采样</li>
+<li>类别权重调整<ol>
+<li>一些机器学习算法（如 支持向量机、逻辑回归、决策树 等）允许调整每个类别的权重。在类别不平衡时，增加少数类的权重，使得模型在训练时更加关注少数类样本。</li>
+</ol>
+</li>
+<li>使用合适的评估指标<ol>
+<li>使用 F1 分数、精确率、召回率 或 AUC 等更适合不平衡数据集的指标，而不是简单的准确率。</li>
+<li>AUC（Area Under Curve）：ROC 曲线下的面积，能够更全面地评估模型在不同阈值下的表现，尤其是在数据不平衡的情况下。</li>
+<li>F1 分数：综合考虑 精确率 和 召回率，在不平衡数据中更能准确反映模型的性能。</li>
+</ol>
+</li>
+<li>集成学习方法<ol>
+<li>一些集成学习方法，如 Bagging 和 Boosting，在处理不平衡数据时也具有优势。例如，随机森林和XGBoost可以通过调整 类别权重 或 数据采样 来处理类别不平衡。</li>
+</ol>
+</li>
+<li>生成对抗网络</li>
+</ol>
+<h4 id="评价指标"><a href="#评价指标" class="headerlink" title="评价指标"></a>评价指标</h4><ol>
+<li><p><strong>准确率</strong></p>
+<ol>
+<li><strong>定义</strong>：准确率是指正确分类的样本数与总样本数之比：<br>$$<br>\text{Accuracy} &#x3D; \frac{\text{正确分类的样本数}}{\text{总样本数}}<br>$$</li>
+</ol>
+<p>​    2. <strong>优点</strong>：简单直观，适用于类别均衡的情况。</p>
+<ol start="3">
+<li><strong>缺点</strong>：当数据类别不平衡时，准确率可能会误导模型的真实性能。</li>
+</ol>
+</li>
+<li><p><strong>精确率</strong></p>
+<ol>
+<li><p><strong>定义</strong>：精确率是指被分类为正类的样本中，实际为正类的比例：</p>
+</li>
+<li><p>$$<br>\text{Precision} &#x3D; \frac{\text{真正例（TP）}}{\text{真正例（TP）} + \text{假正例（FP）}}<br>$$</p>
+<ul>
+<li>其中，TP 为真正例，FP 为假正例。</li>
+</ul>
+</li>
+<li><p><strong>优点</strong>：关注模型的<strong>误报率</strong>（False Positive），即模型预测为正类的样本中，实际为负类的比例。</p>
+</li>
+<li><p><strong>缺点</strong>：精确率高并不一定意味着模型总体表现好，因为它忽视了召回率（Recall）。</p>
+</li>
+</ol>
+</li>
+<li><p><strong>召回率</strong></p>
+<ol>
+<li><p><strong>定义</strong>：召回率是指所有实际为正类的样本中，被正确预测为正类的比例：</p>
+</li>
+<li><p>$$<br>\text{Recall} &#x3D; \frac{\text{真正例（TP）}}{\text{真正例（TP）} + \text{假负例（FN）}}<br>$$</p>
+<ul>
+<li>其中，FN 为假负例。</li>
+</ul>
+</li>
+<li><p><strong>优点</strong>：关注模型的<strong>漏报率</strong>（False Negative），即实际为正类但被误预测为负类的比例。</p>
+</li>
+<li><p><strong>缺点</strong>：召回率高并不意味着模型总体表现好，因为它忽视了精确率。</p>
+</li>
+</ol>
+</li>
+<li><p><strong>F1 分数</strong></p>
+<ol>
+<li><p><strong>定义</strong>：F1 分数是精确率和召回率的调和平均数，综合考虑了精确率和召回率：</p>
+</li>
+<li><p>$$<br>\text{F1 Score} &#x3D; 2 \times \frac{\text{Precision} \times \text{Recall}}{\text{Precision} + \text{Recall}}<br>$$</p>
+</li>
+<li><p><strong>优点</strong>：适用于需要平衡精确率和召回率的场景，尤其是当数据类别不平衡时，F1 分数比准确率更能反映模型性能。</p>
+</li>
+<li><p><strong>缺点</strong>：可能会过于简化，忽略某些特定的应用场景。</p>
+</li>
+</ol>
+</li>
+<li><p>ROC 曲线和 AUC（Area Under the Curve）</p>
+<ul>
+<li>ROC 曲线：通过绘制 假正率（False Positive Rate, FPR） 与 真正率（True Positive Rate, TPR） 的关系图来评估模型的表现。<ul>
+<li>TPR（True Positive Rate）即召回率，反映模型对正类样本的识别能力。</li>
+<li>FPR（False Positive Rate）反映模型对负类样本错误分类的能力。</li>
+</ul>
+</li>
+<li>AUC（Area Under the Curve）：ROC 曲线下的面积，AUC 值越接近 1，表示模型的分类性能越好，AUC 为 0.5 表示模型没有分类能力。</li>
+</ul>
+</li>
+</ol>
+<h3 id="回归任务"><a href="#回归任务" class="headerlink" title="回归任务"></a>回归任务</h3><h4 id="定义-1"><a href="#定义-1" class="headerlink" title="定义"></a>定义</h4><p>回归任务的目标是预测一个连续的数值。</p>
+<h4 id="评价指标-1"><a href="#评价指标-1" class="headerlink" title="评价指标"></a>评价指标</h4><ol>
+<li><p><strong>均方误差（Mean Squared Error, MSE）</strong></p>
+<ul>
+<li><p><strong>定义</strong>：均方误差是预测值与真实值之差的平方的平均值：</p>
+</li>
+<li><p>$$<br>\text{MSE} &#x3D; \frac{1}{n} \sum_{i&#x3D;1}^{n} (y_i - \hat{y}_i)^2<br>$$</p>
+<p>其中，$y_i$ 是真实值，$\hat{y}_i $是预测值。</p>
+</li>
+<li><p><strong>优点</strong>：常用且简单，能够强调较大的误差。</p>
+</li>
+<li><p><strong>缺点</strong>：对异常值非常敏感。</p>
+</li>
+</ul>
+</li>
+<li><p><strong>均方根误差（Root Mean Squared Error, RMSE）</strong></p>
+<ul>
+<li><p><strong>定义</strong>：均方根误差是均方误差的平方根：</p>
+</li>
+<li><p>$$<br>\text{RMSE} &#x3D; \sqrt{\text{MSE}}<br>$$</p>
+</li>
+<li><p><strong>优点</strong>：相比 MSE，这个RMSE 具有与原数据相同的单位，更直观。</p>
+</li>
+<li><p><strong>缺点</strong>：同样对异常值敏感。</p>
+</li>
+</ul>
+</li>
+<li><p><strong>平均绝对误差（Mean Absolute Error, MAE）</strong></p>
+<ul>
+<li><p><strong>定义</strong>：平均绝对误差是预测值与真实值之差的绝对值的平均值：</p>
+</li>
+<li><p>$$<br>\text{MAE} &#x3D; \frac{1}{n} \sum_{i&#x3D;1}^{n} |y_i - \hat{y}_i|<br>$$</p>
+</li>
+<li><p><strong>优点</strong>：相较于 MSE，MAE 对异常值不那么敏感。</p>
+</li>
+<li><p><strong>缺点</strong>：不会对大的误差进行惩罚，可能不如 MSE 更加有效。</p>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="⽀持向量机与核函数"><a href="#⽀持向量机与核函数" class="headerlink" title="⽀持向量机与核函数"></a>⽀持向量机与核函数</h2><h3 id="支持向量机"><a href="#支持向量机" class="headerlink" title="支持向量机"></a>支持向量机</h3><ol>
+<li>概念<ol>
+<li>支持向量机（<strong>SVM</strong>）是一种强大的监督学习算法，广泛用于分类和回归任务。它的基本思想是寻找一个 <strong>超平面</strong>，将数据集分成不同的类别，并且尽量使得各类之间的间隔（<strong>边界</strong>）最大化。对于<strong>线性可分</strong>的数据，SVM 可以很好地进行分类，但在面对 <strong>线性不可分</strong> 的数据时，SVM 就显得有些力不从心。</li>
+</ol>
+</li>
+<li><strong>线性可分数据</strong>：数据点可以通过一个超平面（线性决策边界）完全分开。线性不可分则反之</li>
+<li>核函数的引入：如何解决线性不可分问题<ol>
+<li>概述<ol>
+<li>当数据是线性不可分的时，SVM 的标准方法无法找到一个合适的超平面来分割这些数据。为了克服这个问题，SVM 引入了 <strong>核函数</strong>的思想，<strong>通过将数据映射到更高维的空间</strong>，使得数据在新的空间中变得线性可分，从而能够找到一个超平面进行分类。</li>
+</ol>
+</li>
+<li>核心思想<ol>
+<li><strong>映射到更高维空间</strong>：核函数通过某种方式将原始数据从低维空间映射到更高维的空间，在高维空间中，数据可能变得线性可分。例如，如果二维数据在三维空间中能够被一个平面分开，核函数的作用就是将数据从二维空间映射到三维空间。</li>
+<li><strong>避免直接计算映射</strong>：直接计算映射到高维空间的特征非常复杂，尤其当维度极高时。因此，SVM 使用 <strong>核技巧</strong>（kernel trick）来避免显式计算这个映射。通过核函数直接计算数据在高维空间中的内积，而不需要实际地将数据投影到高维空间中，从而大大提高了计算效率。</li>
+</ol>
+</li>
+<li>内积：<ol>
+<li>代数定义就是对应的元素之积的和</li>
+<li>几何定义是两个向量的模之积乘夹角的余弦<ol>
+<li>内积的值与两向量之间的夹角相关。内积越大，表示两个向量的方向越相似。</li>
+<li>如果内积为零，则表示两个向量是 正交的（垂直的）。</li>
+</ol>
+</li>
+<li>为什么要计算内积？<ol>
+<li><strong>内积</strong>在高维空间中可以告诉我们数据点之间的相似性，进而帮助我们找到最优的分类超平面。</li>
+<li>核函数通过内积实现了 <strong>将数据映射到高维空间</strong>，而无需明确计算每个数据点的高维表示。通过这种技巧，SVM 可以有效地解决 <strong>线性不可分</strong> 问题。</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<h2 id="三种决策树算法对比"><a href="#三种决策树算法对比" class="headerlink" title="三种决策树算法对比"></a>三种决策树算法对比</h2><p>ID3、C4.5 和 CART 是三种经典的 <strong>决策树算法</strong>。下面，我们将从以下几个方面对这三种算法进行对比：</p>
+<h3 id="特征选择依据"><a href="#特征选择依据" class="headerlink" title="特征选择依据"></a>特征选择依据</h3><p>特征选择是决策树算法中最重要的步骤之一，它决定了树的结构和分类效果。ID3、C4.5 和 CART 在特征选择时采用不同的标准：</p>
+<table>
+<thead>
+<tr>
+<th><strong>特性</strong></th>
+<th><strong>ID3</strong></th>
+<th><strong>C4.5</strong></th>
+<th><strong>CART</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>特征选择依据</strong></td>
+<td>信息增益（Information Gain）</td>
+<td>信息增益比（Information Gain Ratio）</td>
+<td>基尼指数（Gini Index）</td>
+</tr>
+<tr>
+<td><strong>剪枝策略</strong></td>
+<td>无剪枝或后期剪枝</td>
+<td>后剪枝（Post-pruning）</td>
+<td>成本复杂度剪枝（Cost Complexity Pruning）</td>
+</tr>
+<tr>
+<td><strong>处理连续特征</strong></td>
+<td>不支持连续特征，需离散化</td>
+<td>允许处理连续特征，选择最佳切分点（如中位数）</td>
+<td>允许处理连续特征，选择最佳切分点</td>
+</tr>
+<tr>
+<td><strong>处理缺失数据</strong></td>
+<td>忽略缺失数据或使用默认值</td>
+<td>根据条件概率处理缺失数据</td>
+<td>插补方法（多数类或平均值填充）</td>
+</tr>
+<tr>
+<td><strong>生成树类型</strong></td>
+<td>分类树（Classification Tree）</td>
+<td>分类树（Classification Tree）</td>
+<td>分类树和回归树（Classification and Regression Trees）</td>
+</tr>
+<tr>
+<td><strong>适用任务</strong></td>
+<td>主要用于分类问题</td>
+<td>主要用于分类问题，但支持概率输出</td>
+<td>既可以用于分类问题，也可以用于回归问题</td>
+</tr>
+<tr>
+<td><strong>优缺点</strong></td>
+<td>- 简单易实现 - 易过拟合（因为缺乏剪枝机制）</td>
+<td>- 解决了ID3的偏向性 - 计算复杂 - 能处理缺失数据</td>
+<td>- 支持回归任务 - 基尼指数计算简洁 - 处理缺失数据较好</td>
+</tr>
+</tbody></table>
+<ol>
+<li><p>ID3</p>
+<ol>
+<li><p><strong>特征选择依据</strong>：ID3 使用 <strong>信息增益</strong>（Information Gain）作为特征选择的依据。信息增益衡量的是 <strong>通过某个特征对数据集的分类效果的提高</strong>。信息增益越大，表示该特征越能有效地减少数据的不确定性，因此被优先选择。</p>
+</li>
+<li><p>信息增益的公式<br>$$<br>Gain(D,A)&#x3D;Entropy(D)−∑_{v∈A}\frac{∣D∣}{∣D_v|}·Entropy(D_v)<br>$$</p>
+</li>
+<li><p><strong>优缺点</strong>：</p>
+<ul>
+<li>优点：计算简单，易于理解。</li>
+<li>缺点：信息增益倾向于选择取值较多的特征，这可能导致偏向复杂特征，从而容易过拟合。</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><p>C4.5</p>
+<ol>
+<li><p><strong>特征选择依据</strong>：C4.5 在 ID3 的基础上做了改进，使用了 <strong>信息增益比</strong>（Information Gain Ratio）作为特征选择的依据。信息增益比通过对信息增益进行归一化，解决了 ID3 在特征选择时偏向取值较多的特征的问题。</p>
+</li>
+<li><p>信息增益比的公式<br>$$<br>GainRatio(D,A)&#x3D;\frac{Gain(D,A)}{SplitInfo(D,A)}<br>$$<br>其中，<strong>SplitInfo</strong> 衡量的是特征 A 的 <strong>分裂能力</strong>，即特征 A 能把数据集分成多少子集。C4.5 通过信息增益比避免了 ID3 中的信息增益偏向取值多的特征的问题。</p>
+</li>
+<li><p><strong>优缺点</strong>：</p>
+<ul>
+<li>优点：信息增益比克服了 ID3 的偏向性，能更合理地选择特征。</li>
+<li>缺点：信息增益比并不总能在所有情况下都最优。</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><p>CART</p>
+<ol>
+<li><p><strong>特征选择依据</strong>：CART（Classification and Regression Trees）使用 <strong>基尼指数</strong>（Gini Index）作为特征选择的依据。基尼指数衡量的是数据集的不纯度或不确定性。基尼指数越小，表示数据集越纯，分类效果越好。</p>
+</li>
+<li><p>基尼指数的公式<br>$$<br>Gini(D)&#x3D;1−∑_{i&#x3D;1}^kp_i^2<br>$$</p>
+</li>
+<li><p><strong>基尼指数与信息增益的对比</strong>：</p>
+<ul>
+<li><strong>信息增益</strong>关注的是特征选择后的信息不确定性的减少，而基尼指数则关注通过某个特征划分数据集后的纯度。基尼指数在处理不平衡数据时效果较好。</li>
+<li><strong>优缺点</strong>：<ul>
+<li>优点：基尼指数计算简单，并且能有效处理不平衡数据。</li>
+<li>缺点：在某些情况下，基尼指数的表现可能不如信息增益比。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+</li>
+</ol>
+<h3 id="剪枝策略"><a href="#剪枝策略" class="headerlink" title="剪枝策略"></a>剪枝策略</h3><p>剪枝是用来去除决策树中过拟合部分的步骤。</p>
+<ol>
+<li><p>ID3：</p>
+<ul>
+<li>ID3 没有内置剪枝机制。通常，ID3 构建的树可能会过度拟合训练数据，因此需要在决策树构建后通过其他方法（如交叉验证）进行剪枝。</li>
+</ul>
+</li>
+<li><p>C4.5：</p>
+<ul>
+<li>C4.5 提出了 <strong>后剪枝（Post-pruning）</strong> 方法。C4.5 在构建树时会先完全生成一棵决策树，然后通过对每个子树进行剪枝来避免过拟合。剪枝过程通过 <strong>错误率的估计</strong> 来决定是否剪除某个节点。<ul>
+<li>C4.5 使用了 <strong>最小错误率</strong> 和 <strong>最小增益</strong> 等标准来进行剪枝。通过这些标准，可以去掉对训练数据拟合过度的部分，从而提高模型的泛化能力。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>CART：</p>
+<ul>
+<li><p>CART 使用 <strong>成本复杂度剪枝（Cost Complexity Pruning）</strong>，也叫 <strong>最小化误差剪枝（Error Complexity Pruning）</strong>。它通过计算每个节点的 <strong>复杂度参数</strong> 来判断是否剪枝。在剪枝过程中，CART 会遍历所有可能的子树，选择一个误差最小且复杂度最低的子树作为最终的模型。</p>
+</li>
+<li><p><strong>复杂度参数的定义</strong>：<br>$$<br>\alpha &#x3D; \frac{R(T) - R(T’)}{|T| - |T’|}<br>$$</p>
+<p>其中，R(T) 是树 TTT 的误差率，∣T∣ 是树的大小，T′ 是剪枝后的树，α 是剪枝的复杂度系数。</p>
+<ul>
+<li><strong>优缺点</strong>：<ul>
+<li>优点：CART 的剪枝机制可以有效控制树的复杂度，避免过拟合。</li>
+<li>缺点：剪枝过程可能需要更多的计算，尤其是在数据集较大时。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="处理连续特征"><a href="#处理连续特征" class="headerlink" title="处理连续特征"></a>处理连续特征</h3><ol>
+<li><p>ID3：</p>
+<ul>
+<li>处理连续特征：ID3 原生只支持 离散特征。对于连续特征，ID3 通常需要先将其离散化，将连续特征转化为离散区间，然后再进行处理。</li>
+</ul>
+</li>
+<li><p>C4.5：</p>
+<ul>
+<li>处理连续特征：C4.5 允许直接处理连续特征。它会 根据连续特征的值（如某个特征值的中位数）将数据集分成两个子集。然后，根据信息增益比来选择最优的切分点。</li>
+</ul>
+</li>
+<li><p>CART：</p>
+<ul>
+<li>处理连续特征：CART 也可以处理连续特征。它会通过 二分法 将连续特征分成两部分（小于某个阈值的部分和大于等于该阈值的部分），并根据基尼指数来选择最佳的切分点。</li>
+</ul>
+</li>
+</ol>
+<h3 id="处理缺失数据"><a href="#处理缺失数据" class="headerlink" title="处理缺失数据"></a>处理缺失数据</h3><p>缺失数据是决策树算法中常见的挑战之一。q</p>
+<ol>
+<li><p>ID3：</p>
+<ul>
+<li>缺失数据：ID3 没有专门的缺失数据处理机制。通常在构建树时，会忽略缺失的数据，或者将缺失值当作某个默认值来处理。</li>
+</ul>
+</li>
+<li><p>C4.5：</p>
+<ul>
+<li>缺失数据：C4.5 在遇到缺失数据时，会通过 概率分配 来处理缺失值。如果某个样本缺失了某个特征的值，C4.5 会计算该特征的不同取值的概率，并根据这些概率对数据进行划分。</li>
+</ul>
+</li>
+<li><p>CART：</p>
+<ul>
+<li>缺失数据：CART 使用 插补法 来处理缺失数据。对于某个样本的缺失特征，CART 会用 该特征的平均值（回归树）或 多数类值（分类树）来填补缺失数据。</li>
+</ul>
+</li>
+</ol>
+<h3 id="生成的树类型"><a href="#生成的树类型" class="headerlink" title="生成的树类型"></a>生成的树类型</h3><ol>
+<li>ID3：ID3 只生成 分类树，即每个叶子节点都对应一个类标签。</li>
+<li>C4.5：C4.5 也生成 分类树，但它可以处理连续数据，并且生成的树更为平衡。</li>
+<li>CART：CART 既可以生成 分类树（用于分类问题），也可以生成 回归树（用于回归问题）。</li>
+</ol>
+<h2 id="三类集成学习⽅法"><a href="#三类集成学习⽅法" class="headerlink" title="三类集成学习⽅法"></a>三类集成学习⽅法</h2><table>
+<thead>
+<tr>
+<th><strong>特性</strong></th>
+<th><strong>Bagging</strong></th>
+<th><strong>Boosting</strong></th>
+<th><strong>Stacking</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>基本思想</strong></td>
+<td>通过独立训练多个基学习器，减少方差</td>
+<td>逐步训练基学习器，减少偏差</td>
+<td>综合多个基学习器的预测结果，通过次级学习器进行组合</td>
+</tr>
+<tr>
+<td><strong>训练过程</strong></td>
+<td>并行化训练基学习器，投票或平均组合</td>
+<td>序列化训练，每个基学习器修正前一轮错误</td>
+<td>并行训练基学习器，次级学习器进行加权组合</td>
+</tr>
+<tr>
+<td><strong>降低的误差类型</strong></td>
+<td>主要降低方差（防止过拟合）</td>
+<td>主要降低偏差（提高准确度）</td>
+<td>同时降低偏差和方差</td>
+</tr>
+<tr>
+<td><strong>是否并行化</strong></td>
+<td>可以并行化训练基学习器</td>
+<td>训练过程是串行的，不能并行化</td>
+<td>基学习器可并行化，次级学习器不能并行</td>
+</tr>
+<tr>
+<td><strong>过拟合风险</strong></td>
+<td>较低，特别适用于高方差模型（如决策树）</td>
+<td>易过拟合，尤其在基学习器复杂时</td>
+<td>较低，但需要合理选择基学习器</td>
+</tr>
+<tr>
+<td><strong>典型算法</strong></td>
+<td>随机森林（Random Forest）</td>
+<td>AdaBoost，Gradient Boosting，XGBoost</td>
+<td>Stacking（Stacked Generalization）</td>
+</tr>
+</tbody></table>
+<h3 id="集成学习"><a href="#集成学习" class="headerlink" title="集成学习"></a>集成学习</h3><ol>
+<li><p><strong>集成学习（Ensemble Learning）</strong> 是一种将多个学习器（基学习器）组合成一个更强大的模型的技术。与单一模型不同，集成学习的目标是通过结合多个模型的预测结果来提高整体的性能。集成学习的关键思想是：<strong>多个模型的组合通常比单个模型更能捕捉数据的复杂性</strong>，从而提高预测的准确性和泛化能力。</p>
+<ul>
+<li><p><strong>基学习器（Base Learner）</strong>：集成学习中的每一个单独的学习模型，通常是比较简单的模型。例如，决策树、逻辑回归、支持向量机等。</p>
+</li>
+<li><p><strong>组合方法</strong>：集成学习通过某种方式将这些基学习器的结果进行 <strong>加权投票</strong>（分类任务）或 <strong>加权平均</strong>（回归任务），从而得到最终的预测结果。</p>
+</li>
+</ul>
+</li>
+<li><p>分类：</p>
+<ol>
+<li><strong>并行集成学习</strong>：多个基学习器在同一阶段独立训练和预测，然后将结果结合起来。这类方法通常可以并行化训练。<ul>
+<li><strong>例如</strong>：Bagging（如随机森林）。</li>
+</ul>
+</li>
+<li><strong>串行集成学习</strong>：基学习器是按顺序逐个训练的，每个基学习器都会在前一个基学习器的基础上进行改进。此类方法通常 <strong>不能并行化</strong>，训练过程是有依赖关系的。<ul>
+<li><strong>例如</strong>：Boosting（如 AdaBoost、XGBoost）。</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><p>意义</p>
+<ol>
+<li>提高模型的准确性</li>
+<li>防止过拟合</li>
+<li>处理不同类型的数据和特征</li>
+<li>增强模型的鲁棒性</li>
+<li>利用不同模型的优势</li>
+<li>改进模型的泛化能力</li>
+</ol>
+</li>
+</ol>
+<h3 id="Bagging（Bootstrap-Aggregating）"><a href="#Bagging（Bootstrap-Aggregating）" class="headerlink" title="Bagging（Bootstrap Aggregating）"></a>Bagging（Bootstrap Aggregating）</h3><ol>
+<li>训练过程（基本思想）<ol>
+<li><strong>数据采样</strong>：从原始训练集通过 <strong>自助采样法（bootstrap）</strong> 随机抽取多个训练子集。每个子集的大小与原始数据集相同，但由于是有放回采样，某些样本可能在一个子集中重复出现，而有些样本则可能缺失。</li>
+<li><strong>训练基学习器</strong>：在每个子集上训练一个基学习器。每个学习器的训练过程是独立的。</li>
+<li><strong>组合预测</strong>：对于分类任务，使用 <strong>多数投票</strong>（即选取各学习器预测结果中出现最多的类别）来做最终预测；对于回归任务，使用 <strong>平均值</strong> 作为最终预测结果。</li>
+</ol>
+</li>
+<li>应用特点<ol>
+<li><strong>降低方差</strong>：Bagging 通过使用多个基学习器来减少模型的方差，特别适用于高方差模型（如决策树）。</li>
+<li><strong>并行化</strong>：因为各基学习器的训练过程是独立的，所以 Bagging 具有很好的 <strong>并行化能力</strong>。</li>
+</ol>
+</li>
+</ol>
+<h3 id="Boosting"><a href="#Boosting" class="headerlink" title="Boosting"></a>Boosting</h3><ol>
+<li>基本思想<ol>
+<li><strong>Boosting</strong> 的基本思想是 <strong>逐步构建弱学习器</strong>，每一步都专注于 <strong>修正前一步的错误</strong>，即通过 <strong>加权调整</strong> 样本的重要性，使后续学习器更加关注难以预测的样本。最终的预测结果是所有弱学习器加权后的组合。</li>
+</ol>
+</li>
+<li>训练过程<ol>
+<li><strong>初始化训练</strong>：首先训练一个基学习器，并评估其表现。</li>
+<li><strong>样本加权</strong>：根据上一步的预测误差，对训练数据中的样本进行加权。错误预测的样本会被赋予更大的权重，正确预测的样本权重较小。</li>
+<li><strong>训练下一轮学习器</strong>：在加权后的数据集上训练下一个基学习器，使其更加关注误分类的样本。</li>
+<li><strong>组合预测</strong>：通过对所有基学习器的加权投票（分类任务）或加权平均（回归任务）来得出最终的预测结果。</li>
+</ol>
+</li>
+<li>应用特点<ol>
+<li><strong>降低偏差</strong>：Boosting 主要通过减少模型的偏差来提高模型的准确度，适合处理弱学习器难以拟合的数据。</li>
+<li><strong>序列化训练</strong>：由于每个学习器的训练过程都依赖于前一个学习器的结果，因此 Boosting 的训练过程是 <strong>串行化的</strong>，这意味着它不适合并行化。</li>
+<li><strong>容易过拟合</strong>：Boosting 对噪声比较敏感，容易在训练集上过拟合，尤其是基学习器过于复杂时。</li>
+</ol>
+</li>
+</ol>
+<h3 id="Stacking（Stacked-Generalization）"><a href="#Stacking（Stacked-Generalization）" class="headerlink" title="Stacking（Stacked Generalization）"></a>Stacking（Stacked Generalization）</h3><ol>
+<li>基本思想<ol>
+<li><strong>Stacking</strong> 是一种更复杂的集成学习方法，其基本思想是将多个不同类型的基学习器的预测结果作为输入，训练一个 <strong>次级学习器</strong>（meta-learner）来对这些预测结果进行加权组合，从而得到最终的预测结果。</li>
+<li>这使得 Stacking 在处理复杂任务时，比单一的模型表现更好，特别是在基学习器类型多样时。</li>
+</ol>
+</li>
+<li>训练过程<ol>
+<li><strong>训练基学习器</strong>：首先，训练多个不同类型的基学习器（例如，决策树、支持向量机、逻辑回归等），并用它们对训练数据进行预测。</li>
+<li><strong>生成次级数据集</strong>：将每个基学习器的预测结果作为特征，形成一个新的数据集。这个数据集的每一行是由各个基学习器对原数据的预测组成的。</li>
+<li><strong>训练次级学习器</strong>：使用新的数据集来训练一个 <strong>次级学习器</strong>，该学习器通常是一个简单的模型（如线性回归或逻辑回归），它的任务是 <strong>学习如何组合基学习器的预测</strong>，从而提高模型的准确性。</li>
+<li><strong>组合预测</strong>：最终的预测由次级学习器输出，即基学习器的加权组合。</li>
+</ol>
+</li>
+<li>应用特点<ol>
+<li><strong>降低偏差和方差</strong>：Stacking 通过综合多个不同类型的模型来降低偏差和方差，因此在许多任务中能够取得较好的效果。</li>
+<li><strong>适用多种基学习器</strong>：Stacking 可以组合不同类型的基学习器，利用它们各自的优势。</li>
+<li><strong>训练过程复杂</strong>：与 Bagging 和 Boosting 不同，Stacking 的训练过程更为复杂，因为它不仅需要训练多个基学习器，还需要训练一个次级学习器。</li>
+</ol>
+</li>
+</ol>
+<h2 id="三种聚类⽅法"><a href="#三种聚类⽅法" class="headerlink" title="三种聚类⽅法"></a>三种聚类⽅法</h2><h3 id="K-Means"><a href="#K-Means" class="headerlink" title="K-Means"></a>K-Means</h3><h4 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h4><ol>
+<li><p>定义：K-Means 是一种基于划分（partitioning）的聚类方法，其目标是将数据集划分为 K 个簇（cluster），使得每个数据点属于离它最近的簇中心（质心，centroid），并且所有数据点到其所属簇中心的距离平方和（即惯性，inertia 或 Within-Cluster Sum of Squares, WCSS）最小。</p>
+</li>
+<li><p>算法流程：</p>
+<ol>
+<li>随机选择 K 个初始质心。</li>
+<li>将每个数据点分配给距离最近的质心，形成 K 个簇。</li>
+<li>重新计算每个簇的质心（即簇中所有点的均值）。</li>
+<li>重复步骤 2 和 3，直到质心不再发生显著变化或达到最大迭代次数。</li>
+</ol>
+</li>
+<li><p>优点：</p>
+<ul>
+<li>简单、易于实现和理解。</li>
+<li>计算效率较高，适合大规模数据。</li>
+</ul>
+</li>
+<li><p>缺点：</p>
+<ul>
+<li><p>必须<strong>事先指定 K 值（簇的数量）</strong>。</p>
+</li>
+<li><p>对<strong>异常值敏感</strong>（异常点可能显著影响质心位置）。</p>
+</li>
+<li><p>只能发现<strong>凸形（通常是球形或类球形）的簇</strong>，对复杂形状的簇效果差。</p>
+</li>
+<li><p>对初始质心敏感，可能收敛到局部最优。</p>
+</li>
+</ul>
+</li>
+<li><p>适用场景：</p>
+<ul>
+<li>数据分布大致为<strong>球形或类球形的多个簇</strong>。</li>
+<li>簇之间<strong>分离较好，且大小相近</strong>。</li>
+<li>你知道（或可以合理猜测）<strong>簇的数量 K</strong>。</li>
+<li>比如：客户分群、图像压缩、文档主题初步聚类等。</li>
+</ul>
+</li>
+</ol>
+<h4 id="处理非球形簇的问题"><a href="#处理非球形簇的问题" class="headerlink" title="处理非球形簇的问题"></a>处理非球形簇的问题</h4><ol>
+<li>K-Means 的核心假设之一是：簇是凸的（通常是球形或类球形），且簇的密度相对均匀。这个假设源于它使用均值作为簇的中心，并通过最小化点到簇中心的距离来进行分配。</li>
+<li>问题具体表现：<ol>
+<li>对非球形簇（如环形、月牙形、L形等）效果差K-Means 倾向于将簇的中心放在“中间位置”，并通过距离（通常是欧氏距离）分配样本。如果真实簇的形状是非球形的（例如数据点分布在一个环上），K-Means 很可能会在环的内部找一个“中心点”作为质心，导致环上的点被错误地划分到多个簇，或者都归到一个错误的中心。</li>
+<li>依赖欧氏距离的局限性K-Means 默认使用欧氏距离来衡量数据点与质心的远近，这种距离度量对于方向性强的分布或复杂几何形态并不敏感，它更适合各向同性的、对称分布的数据。</li>
+<li>无法发现具有复杂内部结构的簇如果某些簇是嵌套的、有洞的、或者呈流形分布，K-Means 无法有效捕捉这些结构。</li>
+</ol>
+</li>
+</ol>
+<h3 id="DBSCAN"><a href="#DBSCAN" class="headerlink" title="DBSCAN"></a>DBSCAN</h3><ol>
+<li><p>基本思想：</p>
+<ol>
+<li><p>DBSCAN 是一种<strong>基于密度的聚类算法</strong>，它认为<strong>簇是由密度相连的数据点组成的区域，而低密度区域中的点是噪声（outliers）</strong>。</p>
+<p>核心概念：</p>
+<ul>
+<li><strong>ε (eps)：邻域半径</strong></li>
+<li><strong>MinPts：形成一个簇所需的最小邻域点数</strong></li>
+</ul>
+<p>一个点被认为是<strong>核心点（core point）</strong>，如果它的 ε 邻域内至少包含 MinPts 个点（包括自己）。通过核心点的“密度可达”关系，可以将相互密度连接的点聚集为一个簇。</p>
+</li>
+</ol>
+</li>
+<li><p>优点：</p>
+<ul>
+<li><strong>不需要预先指定簇的数量</strong>。</li>
+<li>能发现<strong>任意形状的簇</strong>（如非球形、环形等）。</li>
+<li>能识别并剔除<strong>噪声点（outliers）</strong>。</li>
+</ul>
+</li>
+<li><p>缺点：</p>
+<ul>
+<li>对参数 <strong>ε 和 MinPts 敏感</strong>，参数选择不当会影响聚类效果。</li>
+<li>对于<strong>密度差异较大的数据集效果不佳</strong>（即不同簇的密度相差悬殊时难以处理）。</li>
+<li>当数据维度很高时（高维数据），密度定义变得模糊（“维度灾难”）。</li>
+</ul>
+</li>
+<li><p>适用场景：</p>
+<ul>
+<li>簇的形状<strong>不规则、非球形</strong>。</li>
+<li>数据中含有噪声或离群点，希望算法能自动识别并排除。</li>
+<li>不知道簇的数量，或者簇的密度相对均匀。</li>
+<li>比如：地理信息聚类（如城市中密集的商铺）、异常检测、社交网络中的社区发现等。</li>
+</ul>
+</li>
+</ol>
+<h3 id="层次聚类"><a href="#层次聚类" class="headerlink" title="层次聚类"></a>层次聚类</h3><ol>
+<li><p>基本思想：<img src="D:\All_of_mine\大学\学习\大三上\大数据分析\hw\hw6\src\层次聚类树状图.png" alt="层次聚类树状图"></p>
+<p>层次聚类是一种基于数据点间相似性（或距离）构建树状结构的聚类方法。它分为两种主要类型：</p>
+<ul>
+<li>凝聚式（Agglomerative，自底向上）：每个点初始为一个簇，逐步合并最相似的簇，直到满足停止条件（如只剩一个簇，或达到指定的簇数）。</li>
+<li>分裂式（Divisive，自顶向下）：从所有数据点作为一个簇开始，逐步分裂为更小的簇。</li>
+</ul>
+<p>常用的是凝聚式层次聚类。</p>
+<p>在每一步，算法根据某种距离度量（如欧氏距离、曼哈顿距离）和连接标准（如单连接、全连接、平均连接、Ward等）来决定哪些簇应该合并。</p>
+<pre><code> 1. 单链接：两个簇之间的距离 = 两个簇中最近的两个数据点之间的距离（即最小距离）
+ 2. 全连接：两个簇之间的距离 = 两个簇中最远的两个数据点之间的距离（即最大距离）
+ 3. Ward：Ward 方法不是直接定义两个簇之间的距离，而是定义：合并两个簇后，总体 类内方差（intra-cluster variance） 的增量（或者说增加的平方误差）最小。换句话说，Ward 方法在每一步选择：合并后使得 所有点到其簇中心的平方距离之和（SSE）增加最小的那两个簇进行合并。
+</code></pre>
+</li>
+<li><p>优点：</p>
+<ul>
+<li>不需要预先指定簇的数量（但可以依据树状图后期决定）。</li>
+<li>可以生成层次化的聚类结果，便于分析和可视化（比如画出树状图 dendrogram）。</li>
+<li>对于小规模数据效果不错，解释性强。</li>
+</ul>
+</li>
+<li><p>缺点：</p>
+<ul>
+<li>计算复杂度高，不适合大规模数据集（时间复杂度通常为 O(n^3) 或优化后 O(n^2)）。</li>
+<li>一旦合并或分裂，无法撤销，缺乏灵活性。</li>
+<li>对噪声和异常值较为敏感。</li>
+<li>对高维数据的距离度量可能失效（维度灾难）。</li>
+</ul>
+</li>
+<li><p>适用场景：</p>
+<ul>
+<li>数据量不是特别大，希望探索数据的层次结构。</li>
+<li>想要直观地通过树状图分析不同层次的聚类情况。</li>
+<li>比如：基因表达数据分析、组织结构分析、文档主题的层级归纳等。</li>
+</ul>
+</li>
+</ol>
+<h2 id="PCA"><a href="#PCA" class="headerlink" title="PCA"></a>PCA</h2><h3 id="核心思想"><a href="#核心思想" class="headerlink" title="核心思想"></a>核心思想</h3><ol>
+<li>一句话理解：找到那些**最能代表数据分布方向（即数据变化最大的方向）**的轴（主成分），然后把数据投影到这些方向上，从而用更少的维度表示数据的大部分信息。</li>
+<li>这些新的维度（主成分）是彼此正交（不相关）的；</li>
+<li>第一个主成分方向是数据方差最大的方向，第二个主成分是在与第一个正交的方向上方差最大的，依此类推</li>
+</ol>
+<h3 id="协方差矩阵的作用"><a href="#协方差矩阵的作用" class="headerlink" title="协方差矩阵的作用"></a>协方差矩阵的作用</h3><ol>
+<li><p>概念：</p>
+<ol>
+<li><strong>方差</strong>：反映了单个特征（维度）上的数据分布范围，即该维度上的数据变化程度。方差越大，说明该方向上的信息越多。</li>
+<li><strong>协方差</strong>：反映了两个不同特征之间的变化趋势是否一致。如果协方差为正，说明两者倾向于同时增大或减小；为负则相反；接近零则说明几乎不相关。</li>
+<li><strong>协方差矩阵</strong>：<ul>
+<li><strong>对角线元素</strong>：是每个特征的<strong>方差</strong>（即该特征自身的变化幅度）；</li>
+<li><strong>非对角线元素</strong>：是<strong>不同特征之间的协方差</strong>（反映特征之间的相关性）。</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><p>如何发挥作用</p>
+<ol>
+<li><p>协方差矩阵的特征值和特征向量，决定了主成分的方向和重要性：</p>
+<ul>
+<li>对协方差矩阵 Σ 进行特征分解（Eigendecomposition）：<br>$$<br>Σ&#x3D;VΛV^T<br>$$</li>
+</ul>
+</li>
+</ol>
+<p>其中：</p>
+<ul>
+<li>Λ 是对角矩阵，对角线上的元素是特征值（λ₁, λ₂, …, λ_d），代表每个主成分方向上的方差大小</li>
+<li>V 的列是对应的特征向量，代表主成分的方向（即新的坐标轴方向）</li>
+</ul>
+<ol>
+<li>特征值越大，说明对应的主成分方向上数据方差越大，信息量越丰富；</li>
+<li>我们按照特征值从大到小排序，选择前 k 个最大的特征值对应的特征向量，作为新的 k 维空间的基，将数据投影过去，就实现了降维。</li>
+</ol>
+</li>
+</ol>
+<h2 id="SMOTE缓解不平衡问题"><a href="#SMOTE缓解不平衡问题" class="headerlink" title="SMOTE缓解不平衡问题"></a>SMOTE缓解不平衡问题</h2><ol>
+<li><p>核心思想：</p>
+<ol>
+<li>SMOTE 是一种数据层面的方法，用于解决少数类样本不足的问题。</li>
+<li>通过对少数类样本进行“人工合成”，生成一些新的、合理的少数类样本，从而增加少数类的样本数量，缓解类别不平衡。</li>
+<li>它不是简单地复制少数类样本（那样容易导致过拟合），而是基于现有少数类样本的特征，合成“看起来合理”的新样本。</li>
+</ol>
+</li>
+<li><p>工作原理</p>
+<ol>
+<li><p>假设我们有一个少数类的样本点 $x_i$，SMOTE 的操作步骤大致如下：</p>
+<ol>
+<li>选择一个少数类样本点$x_i$；</li>
+<li>计算该样本在少数类样本集中的 K 个最近邻（通常 K&#x3D;5）；</li>
+<li>从这 K 个近邻中随机选择一个样本点 $x_{nn}$ ；</li>
+<li>在$x_i$和 $x_{nn}$ 之间的连线上，随机选择一个位置，合成一个新的样本点：</li>
+</ol>
+<p>$$<br>x_{new}&#x3D;x_i+rand(0,1)×(x_{nn}−x_i)<br>$$</p>
+<ul>
+<li>这个公式的意思是：在特征空间中，在少数类样本$x_i$和$x_{nn}$之间的“线段”上，随机插值生成一个新的样本点，这个点看起来像是这两个真实样本的“混合体”，是合理的“人造”样本。</li>
+</ul>
+<ol start="5">
+<li>重复上述过程，为少数类生成足够多的新样本，使其数量接近或达到多数类的水平（或设定的平衡比例）。</li>
+</ol>
+</li>
+</ol>
+</li>
+<li><p>优点：</p>
+<ol>
+<li>有效增加少数类样本数量，缓解类别不平衡</li>
+<li>生成的新样本是基于真实数据的插值，比单纯复制样本更有效、更不容易导致过拟合</li>
+<li>简单易实现，是处理类别不平衡问题的经典方法之一</li>
+<li>可以与欠采样（如随机删除部分多数类样本）等方法联合使用，效果更佳</li>
+</ol>
+</li>
+<li><p>缺点：</p>
+<ol>
+<li>仅适用于数值型特征数据（因为需要在特征空间中进行插值），对于类别型变量不适用，需要额外处理；</li>
+<li>合成样本仍然是“人造”的，如果少数类样本本身很少或噪声较多，生成的新样本可能不太合理，有一定过拟合风险；</li>
+<li>SMOTE 是在原始特征空间中操作的，如果特征维度很高，合成样本的代表性可能下降（可考虑先降维）；</li>
+<li>它只解决训练集中的不平衡问题，不会改变测试集的分布，测试时仍需使用真实分布评估模型效果</li>
+</ol>
+</li>
+</ol>
+<h1 id="神经网络"><a href="#神经网络" class="headerlink" title="神经网络"></a>神经网络</h1><h2 id="感知机"><a href="#感知机" class="headerlink" title="感知机"></a>感知机</h2><h3 id="基本思想"><a href="#基本思想" class="headerlink" title="基本思想"></a>基本思想</h3><ol>
+<li><p>定义</p>
+<ol>
+<li>感知机是一种最简单的前馈神经网络模型，属于单层二分类线性模型，它是现代神经网络和深度学习的最基础组成单元之一。</li>
+</ol>
+</li>
+<li><p>目标：</p>
+<ol>
+<li>给定一组输入特征，感知机通过一个线性函数对输入进行加权求和，然后通过一个激活函数（通常是阶跃函数）输出一个类别标签，用于解决二分类问题。</li>
+</ol>
+</li>
+<li><p>基本结构</p>
+<ol>
+<li><p>设有一个样本的特征向量为：<br>$$<br>x&#x3D;[x1,x2,…,xn]（n维输入）<br>$$</p>
+</li>
+<li><p>感知机模型通过一组<strong>权重</strong> <em>w</em>1,<em>w</em>2,…,<em>w**n</em>和一个<strong>偏置项</strong> <em>b</em>，对输入进行<strong>线性组合</strong>：<br>$$<br>z&#x3D;w_1x_1+w_2x_2+⋯+w_nx_n+b&#x3D;W^TX+b<br>$$</p>
+</li>
+<li><p>然后，通过一个**激活函数（如阶跃函数 &#x2F; sign 函数）**进行二元分类决策：<br>$$<br>y&#x3D;\left{<br>         \begin{array}{<strong>lr</strong>}<br>         +1, \ \ 如果 z≥0,  &amp; \<br>         -1, \ \ 如果 z&lt;0,  &amp;<br>         \end{array}<br>\right. 或有时定义为 y&#x3D;sign(z)<br>$$</p>
+</li>
+</ol>
+</li>
+<li><p>训练过程</p>
+<ol>
+<li>感知机通过迭代的方式调整权重 w和偏置 b，使得模型能够正确分类训练数据。</li>
+</ol>
+</li>
+</ol>
+<h3 id="单层感知机无法解决-XOR（异或）问题"><a href="#单层感知机无法解决-XOR（异或）问题" class="headerlink" title="单层感知机无法解决 XOR（异或）问题"></a>单层感知机无法解决 XOR（异或）问题</h3><ol>
+<li><p>问题描述</p>
+<ol>
+<li>单层感知机本质是一个线性模型，它只能学习线性决策边界（一条直线&#x2F;一个超平面），而 XOR 是一个非线性可分问题，所以单层感知机无法找到一个线性超平面将两类样本正确分开。</li>
+</ol>
+</li>
+<li><p>解决策略</p>
+<ol>
+<li><strong>使用多层感知机（Multi-Layer Perceptron, MLP），即神经网络</strong></li>
+<li>隐藏层引入非线性变换，使网络可学习复杂的非线性决策边界，从而解决 XOR</li>
+</ol>
+</li>
+<li></li>
+</ol>
+<h2 id="反向传播神经⽹络"><a href="#反向传播神经⽹络" class="headerlink" title="反向传播神经⽹络"></a>反向传播神经⽹络</h2><h3 id="概述-1"><a href="#概述-1" class="headerlink" title="概述"></a>概述</h3><ol>
+<li><strong>它并不是具体的神经网络类型，而是一种训练算法。</strong></li>
+<li><strong>BP 神经网络（Backpropagation Neural Network，反向传播神经网络）</strong>。BP 神经网络是一种<strong>多层前馈神经网络</strong>，它通过<strong>有监督学习</strong>的方式进行训练，即给定输入和对应的正确输出（标签），网络通过不断调整内部参数（权重和偏置），使得输出尽可能接近真实值。</li>
+<li>一句话解释核心：<strong>利用“前向传播”计算输出，再通过“反向传播”将误差逐层传回，并基于梯度下降法更新网络参数，从而逐步优化模型。</strong></li>
+</ol>
+<h3 id="前向传播"><a href="#前向传播" class="headerlink" title="前向传播"></a>前向传播</h3><ol>
+<li><p>目的：根据当前的网络参数（权重和偏置），将输入数据逐层向前计算，最终得到网络的输出预测值。</p>
+</li>
+<li><p>一句话总结：<strong>前向传播就是：从输入层开始，逐层计算加权和（线性变换），再经过激活函数（非线性变换），最终得到网络输出的过程。这个过程只用到了当前的参数，不涉及任何更新。</strong></p>
+</li>
+<li><p>过程（以三层网络为例：输入层 → 隐藏层 → 输出层）：</p>
+<ol>
+<li><p>假设：</p>
+<ul>
+<li>输入层有 <em>n</em>个神经元，输入向量为：<strong>x</strong>&#x3D;[<em>x</em>1,<em>x</em>2,…,<em>x**n</em>]<em>T</em></li>
+<li>隐藏层有 <em>m</em>个神经元</li>
+<li>输出层有 <em>k</em>个神经元（对应分类或回归任务的输出）</li>
+</ul>
+</li>
+<li><p>步骤：</p>
+<ol>
+<li><p>输入层 → 隐藏层</p>
+<ol>
+<li><p>每个隐藏层神经元接收来自所有输入层神经元的加权输入，并加上偏置，然后通过激活函数输出。</p>
+</li>
+<li><p>设：</p>
+<ol>
+<li>输入到隐藏层的权重矩阵为：<strong>W</strong>(1)∈R<em>m</em>×<em>n</em></li>
+<li>隐藏层偏置向量：<strong>b</strong>(1)∈R<em>m</em></li>
+<li>激活函数：如 Sigmoid、ReLU、Tanh，记为 <em>σ</em></li>
+</ol>
+</li>
+<li><p>则隐藏层的**加权输入（净输入）**为：<br>$$<br>z^{(1)}&#x3D;W^{(1)}x+b^{(1)}<br>$$</p>
+</li>
+<li><p>隐藏层的**输出（激活值）**为：<br>$$<br>h&#x3D;σ(z^{(1)})<br>$$</p>
+</li>
+</ol>
+</li>
+<li><p>隐藏层 → 输出层</p>
+<ol>
+<li><p>类似地，输出层接收来自隐藏层的输出，再次进行加权求和 + 偏置 + 激活函数</p>
+</li>
+<li><p>设：</p>
+<ul>
+<li><p>隐藏到输出的权重矩阵：<strong>W</strong>(2)∈R<em>k</em>×<em>m</em></p>
+</li>
+<li><p>输出层偏置：<strong>b</strong>(2)∈R<em>k</em></p>
+</li>
+<li><p>输出层激活函数可能根据任务而定（比如分类用 Sigmoid &#x2F; Softmax，回归可能不用或用线性）</p>
+</li>
+</ul>
+</li>
+<li><p>输出层的净输入：<br>$$<br>z^{(2)}&#x3D;W^{(2)}x+b^{(2)}<br>$$</p>
+</li>
+<li><p>输出层的最终输出（预测值）：<br>$$<br>ypred&#x3D;f(z^{(2)})（比如用 Sigmoid 或 Softmax）<br>$$</p>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<h3 id="反向传播"><a href="#反向传播" class="headerlink" title="反向传播"></a>反向传播</h3><ol>
+<li><p>目的：通过计算预测输出与真实标签之间的<strong>误差</strong>，然后<strong>将该误差从输出层反向传播至每一层</strong>，从而计算出<strong>每一层参数（权重和偏置）的梯度</strong>，为参数更新提供依据。</p>
+</li>
+<li><p>一句话总结：这个过程会对<strong>每一层的所有权重和偏置</strong>都进行更新，从而一步步让网络的输出逼近真实值。</p>
+</li>
+<li><p>基本流程：</p>
+<ol>
+<li><p><strong>计算损失函数（Loss Function）</strong></p>
+<ol>
+<li><p>假设我们使用均方误差（MSE，回归）或交叉熵损失（Cross Entropy，分类）</p>
+</li>
+<li><p>这个损失函数反映了当前输出与真实值之间的差距，是我们优化的目标。</p>
+</li>
+</ol>
+</li>
+<li><p><strong>反向传播：从输出层开始，逐层回传误差并计算梯度</strong></p>
+<ol>
+<li><p>我们采用**链式法则（Chain Rule）**来计算损失函数对每一层参数（权重和偏置）的偏导数（即梯度）。</p>
+</li>
+<li><p>计算输出层的误差</p>
+</li>
+<li><p>根据输出层误差，计算隐藏层的误差。依次倒推</p>
+</li>
+<li><p>计算梯度（对参数的偏导数）</p>
+<ol>
+<li>这些梯度告诉我们：<strong>当权重或偏置发生微小变化时，损失函数会如何变化。</strong></li>
+</ol>
+</li>
+</ol>
+</li>
+<li><p><strong>参数更新（Gradient Descent）</strong></p>
+<ol>
+<li>得到梯度后，我们使用**梯度下降法（或其变种，如 SGD、Adam 等）**来更新参数：</li>
+<li>这个过程会对<strong>每一层的所有权重和偏置</strong>都进行更新，从而一步步让网络的输出逼近真实值。</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<h2 id="三大深度神经网络"><a href="#三大深度神经网络" class="headerlink" title="三大深度神经网络"></a>三大深度神经网络</h2><h3 id="前馈神经网络（Feedforward-Neural-Network-FNN）"><a href="#前馈神经网络（Feedforward-Neural-Network-FNN）" class="headerlink" title="前馈神经网络（Feedforward Neural Network, FNN）"></a>前馈神经网络（Feedforward Neural Network, FNN）</h3><h4 id="概述-2"><a href="#概述-2" class="headerlink" title="概述"></a>概述</h4><ol>
+<li>前馈神经网络是最简单、最基础的神经网络类型，也是其他复杂网络的基础。在 FNN 中，信息<strong>只沿着一个方向传播</strong>（从输入层 → 隐藏层 → 输出层），<strong>没有反馈或循环连接</strong>。</li>
+<li>特点：<ol>
+<li>每一层中的神经元与下一层的所有神经元相连接（全连接），称为<strong>全连接层（Dense Layer&#x2F;FC Layer）</strong>；</li>
+<li>数据流向是单向的，没有循环或记忆功能；</li>
+<li>通常使用激活函数引入非线性（如 ReLU、Sigmoid 等）。</li>
+</ol>
+</li>
+<li>工作原理<ol>
+<li>输入数据经过各层的加权求和与激活函数，逐层向前传播，最终在输出层得到预测结果；</li>
+<li>通过<strong>反向传播算法</strong>和<strong>梯度下降</strong>等方法优化网络参数，最小化损失函数。</li>
+</ol>
+</li>
+</ol>
+<h3 id="卷积神经网络（Convolutional-Neural-Network-CNN）"><a href="#卷积神经网络（Convolutional-Neural-Network-CNN）" class="headerlink" title="卷积神经网络（Convolutional Neural Network, CNN）"></a>卷积神经网络（Convolutional Neural Network, CNN）</h3><h4 id="概述-3"><a href="#概述-3" class="headerlink" title="概述"></a>概述</h4><ol>
+<li>卷积神经网络是专门为处理具有<strong>网格状拓扑结构的数据</strong>（如图像、视频）而设计的一种神经网络。它通过<strong>局部感知、权值共享、下采样</strong>等机制，大幅减少了参数数量，同时能够有效提取空间特征。</li>
+<li>结构特点<ol>
+<li><strong>卷积核</strong>：在卷积神经网络中，<strong>卷积核（也称为滤波器、过滤器）是一个小的矩阵（比如 3×3、5×5 等）</strong>，它是网络中可学习的参数，用来对输入数据（通常是图像）的局部区域进行<strong>卷积运算（Convolution Operation）</strong>，从而提取某种特定的<strong>局部特征</strong>。</li>
+<li><strong>卷积层（Convolutional Layer）</strong>：使用一组可学习的滤波器（卷积核）对输入数据进行<strong>局部区域卷积操作</strong>，提取局部特征（如边缘、纹理）；权值共享：同一个卷积核在整个图像上滑动使用，减少参数量；输出称为<strong>特征图（Feature Map）</strong>。</li>
+<li><strong>激活函数层</strong>（如 ReLU）：引入非线性。</li>
+<li><strong>池化层（Pooling Layer）</strong>：通常是最大池化（Max Pooling）或平均池化（Average Pooling）；降低特征图的空间尺寸，减少计算量，增强特征不变性。</li>
+<li><strong>全连接层（Fully Connected Layer）</strong>：将提取到的高级特征进行整合，用于最终分类或回归。</li>
+</ol>
+</li>
+</ol>
+<h4 id="工作原理"><a href="#工作原理" class="headerlink" title="工作原理"></a>工作原理</h4><ol>
+<li><p>通过卷积操作提取<strong>局部特征</strong>，通过<strong>池化</strong>逐步<strong>降维</strong>并保留重要信息；</p>
+<ol>
+<li>卷积核如何工作？<img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20251018140124542.png" alt="image-20251018140124542"></li>
+<li>卷积核的参数（权重）是<strong>可学习</strong>的，训练过程中自动调整以提取对任务最有用的特征；</li>
+<li><strong>参数共享</strong>：同一个卷积核在整个图像上滑动使用，大大减少参数数量；</li>
+<li>可以有多个卷积核（如 32 个、64 个），每个提取不同的特征，生成多个特征图。</li>
+</ol>
+</li>
+<li><p>通道</p>
+<ol>
+<li>可以理解为，某个点的多维度信息。比如在图片中，一个像素点的信息包含RGB三个维度（三种颜色）的信息，所以通道数为三。</li>
+<li>抽象的，这个维度可以更高。</li>
+</ol>
+</li>
+<li><p>池化</p>
+<ol>
+<li>对特征图进行<strong>降采样（Downsampling）</strong>，减少数据维度，降低计算量，同时增强特征的<strong>平移、缩放、旋转的鲁棒性</strong>。</li>
+<li>通常在卷积层之后使用，每隔一定区域取一个代表性值。<img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20251018140704218.png" alt="image-20251018140704218"></li>
+<li>常见池化方式：<ol>
+<li><strong>最大池化（Max Pooling）</strong>：取区域内最大值，最常用</li>
+<li><strong>平均池化（Average Pooling）</strong>：取区域内平均值</li>
+<li></li>
+<li><table>
+<thead>
+<tr>
+<th align="left">对比项</th>
+<th align="left"><strong>最大池化（Max Pooling）</strong></th>
+<th align="left"><strong>平均池化（Average Pooling）</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>操作</strong></td>
+<td align="left">取窗口内<strong>最大值</strong></td>
+<td align="left">取窗口内<strong>平均值</strong></td>
+</tr>
+<tr>
+<td align="left"><strong>关注点</strong></td>
+<td align="left">突出<strong>最显著、最强的特征</strong>（比如边缘、激活）</td>
+<td align="left">反映<strong>整体区域的平均信息</strong></td>
+</tr>
+<tr>
+<td align="left"><strong>对噪声的鲁棒性</strong></td>
+<td align="left">较强（不受个别噪点影响）</td>
+<td align="left">一般（会被平均稀释）</td>
+</tr>
+<tr>
+<td align="left"><strong>特征保留能力</strong></td>
+<td align="left">更好保留<strong>显著特征、纹理、轮廓</strong></td>
+<td align="left">更强调<strong>整体分布、背景信息</strong></td>
+</tr>
+<tr>
+<td align="left"><strong>常用场景</strong></td>
+<td align="left"><strong>图像分类、检测任务（主流选择）</strong></td>
+<td align="left"><strong>某些回归任务、全卷积网络等</strong></td>
+</tr>
+<tr>
+<td align="left"><strong>效果倾向</strong></td>
+<td align="left">特征更尖锐、显著</td>
+<td align="left">特征更平滑、稳定</td>
+</tr>
+</tbody></table>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+<li><p>最终通过全连接层进行决策（如分类）；</p>
+<ol>
+<li>展平：把卷积得到的所有特征图转化为一维向量，将空间特征转换为全连接网络可处理的格式</li>
+<li>全连接：把展平后的特征向量输入到全连接神经网络中，将学到的分布式特征表示映射到样本的类别得分或回归值。</li>
+</ol>
+</li>
+<li><p>同样采用反向传播与梯度下降优化参数。</p>
+</li>
+</ol>
+<h4 id="工作流程"><a href="#工作流程" class="headerlink" title="工作流程"></a>工作流程</h4><ol>
+<li><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">输入图像（H×W×C）</span><br><span class="line">       ↓</span><br><span class="line">[卷积层] → 提取局部特征 → 生成特征图</span><br><span class="line">       ↓</span><br><span class="line">[激活函数 e.g. ReLU] → 引入非线性</span><br><span class="line">       ↓</span><br><span class="line">[池化层] → 降维，减少计算（如 Max Pooling）</span><br><span class="line">       ↓</span><br><span class="line">（重复多个 [卷积 → 激活 → 池化] 的组合）</span><br><span class="line">       ↓</span><br><span class="line">[展平层] → 将多维特征图展平为一维向量</span><br><span class="line">       ↓</span><br><span class="line">[全连接层] → 整合所有特征，用于分类/回归</span><br><span class="line">       ↓</span><br><span class="line">[输出层] → 输出预测结果（如类别概率）</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="循环神经网络（Recurrent-Neural-Network-RNN）"><a href="#循环神经网络（Recurrent-Neural-Network-RNN）" class="headerlink" title="循环神经网络（Recurrent Neural Network, RNN）"></a>循环神经网络（Recurrent Neural Network, RNN）</h3><h4 id="概述-4"><a href="#概述-4" class="headerlink" title="概述"></a>概述</h4><ol>
+<li><p>循环神经网络是一类专门用于处理<strong>序列数据（如时间序列、文本、语音）<strong>的神经网络。与 FNN 不同，RNN 具有</strong>记忆能力</strong>，能够利用之前的信息影响当前的输出，因此适合处理有前后依赖关系的数据。</p>
+</li>
+<li><p>结构特点：</p>
+</li>
+</ol>
+<ul>
+<li><p>RNN 的关键特点是：<strong>神经元之间存在循环连接（反馈连接）</strong>，使得网络具有“记忆”前一时刻信息的能力；</p>
+</li>
+<li><p>在每一时间步，RNN 接收当前输入和上一时刻的隐状态，输出当前隐状态和（可能的）输出；</p>
+</li>
+<li><p>数学上，RNN 的隐状态更新公式大致为：$h_t$&#x3D;<em>f</em>(<em>W<strong>h</strong>h**t</em>−1+<em>W**x</em>$x_t$+<em>b</em>)<br>$$<br>h_t&#x3D;f(W_hh_{t-1}+W_xx_t+b)<br>$$</p>
+</li>
+</ul>
+<p>   其中 $h_t$是当前时刻的隐状态，$x_t$是当前输入，$h_t$−1是上一时刻的隐状态。</p>
+<h4 id="工作原理-1"><a href="#工作原理-1" class="headerlink" title="工作原理"></a>工作原理</h4><ol>
+<li><p>循环结构（核心机制）</p>
+<ul>
+<li>RNN 在每一时间步接收两个输入：当前时刻的输入数据（比如一个词、一个时间点的数值）上一时刻的隐藏状态（即之前积累的信息）</li>
+<li>然后通过一个循环计算单元，输出：当前时刻的隐藏状态（新的记忆）当前时刻的输出（可以是预测、分类等）</li>
+</ul>
+<p> 这个过程在时间上是重复展开的（unrolled），形成对整个序列的处理。</p>
+</li>
+<li><p>标准 RNN 在处理<strong>长序列</strong>时，往往会遇到<strong>梯度消失或梯度爆炸</strong>，导致难以学到远距离的依赖关系。</p>
+<ol>
+<li><p>为什么在RNN强调，在FNN和CNN力却不提及？</p>
+<ol>
+<li>反向传播时逐层计算的，在FNN和CNN中，每一层计算的参数不多</li>
+<li>但是RNN在序列上延伸，每一步是串联起来的，在反向传播时会连乘，参数越来越多。</li>
+</ol>
+</li>
+<li><p>梯度消失</p>
+<ol>
+<li>定义：在反向传播过程中，梯度随着网络层数的增加变得越来越小，趋近于 0，导致深层网络的参数几乎得不到更新，模型学不动了，训练停滞。</li>
+<li>原因：在反向传播中，梯度是从输出层逐层反向传播到输入层的，每一层的梯度是通过链式法则相乘得到的。如果这些连乘的因子中，有很多<strong>小于 1 的数</strong>（比如激活函数导数接近 0，或权重初始化过小），那么随着层数增多，梯度就会<strong>指数级地变小</strong>，最终趋近于 0。</li>
+</ol>
+</li>
+<li><p>梯度爆炸</p>
+<ol>
+<li>定义：在反向传播过程中，梯度值变得非常大，甚至无限增长（溢出），导致参数更新幅度过大，模型无法收敛，损失函数震荡甚至发散。</li>
+<li>原因：和梯度消失类似，连乘的因子中，有很多<strong>大于 1 的数</strong>，那么随着层数或时间步的增加，梯度就会<strong>指数级地变大</strong>，导致数值溢出或参数更新过大。</li>
+</ol>
+</li>
+<li><p>解决策略：使用优化后的循环模型</p>
+<p>1. </p>
+<ol start="2">
+<li><table>
+<thead>
+<tr>
+<th align="left">模型</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>LSTM（长短期记忆网络）</strong></td>
+<td align="left">通过<strong>门控机制（输入门、遗忘门、输出门）</strong>，有选择地记住或遗忘信息，能很好地捕捉长距离依赖，缓解梯度消失.</td>
+</tr>
+<tr>
+<td align="left"><strong>GRU（门控循环单元）</strong></td>
+<td align="left">LSTM 的简化版，效果相当但参数更少，同样能缓解梯度问题</td>
+</tr>
+</tbody></table>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<h4 id="工作流程-1"><a href="#工作流程-1" class="headerlink" title="工作流程"></a>工作流程</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">输入序列</span><br><span class="line">↓</span><br><span class="line">[循环层（RNN层）] → 融合当前输入与上一时刻记忆，计算当前隐藏状态</span><br><span class="line">↓</span><br><span class="line">[激活函数 e.g. Tanh] → 引入非线性变换（将线性组合通过 tanh 压缩到 [-1, 1]，增强表达能力）</span><br><span class="line">↓</span><br><span class="line">（可选）[输出层] → 根据当前隐藏状态生成当前时刻输出（如 y_t）（例如：y_t=softmax(Vh_t+c)，用于分类或预测）→ 每个时间步可输出，也可只在最后输出</span><br><span class="line">↓</span><br><span class="line">（重复多个 [循环 → 激活 → (输出)] 的组合）依次处理x_1到 x_T，得到 h_1,...,h _T）</span><br><span class="line">↓</span><br><span class="line">[展平或直接使用隐藏状态]（可以选择使用所有隐藏状态，或仅使用最后一个h_T作为整个序列的表示）</span><br><span class="line">↓</span><br><span class="line">[全连接层（可选）] → 整合序列信息，用于最终决策（例如将h_T映射到类别空间，用于分类任务）</span><br><span class="line">↓</span><br><span class="line">[输出层] → 输出最终预测结果（如：类别概率、数值预测、序列标签等）</span><br></pre></td></tr></table></figure>
+
+<h4 id="LSTM长短期记忆网络"><a href="#LSTM长短期记忆网络" class="headerlink" title="LSTM长短期记忆网络"></a>LSTM长短期记忆网络</h4><ol>
+<li><p>核心思想</p>
+<ol>
+<li>LSTM 是一种特殊的 RNN，它在每个时间步不仅维护一个隐藏状态（hidden state），还维护一个<strong>细胞状态（cell state）</strong>，后者可以看作是网络的“长期记忆”。LSTM 通过引入<strong>三个门结构</strong>：<strong>遗忘门（Forget Gate）、输入门（Input Gate）、输出门（Output Gate）</strong>，来控制信息的保留、更新和输出，从而有效地学习长期依赖关系</li>
+</ol>
+</li>
+<li><p>LSTM 的基本结构与变量说明</p>
+<ol>
+<li>在每个时间步 t，LSTM 接收当前输入 $x_t$和上一时间步的隐藏状态 $h_{t-1}$，并操作以下主要变量：<ol>
+<li><strong>隐藏状态（Hidden State）</strong>：$h_t$，用于传递信息到下一个时间步或输出层。</li>
+<li><strong>细胞状态（Cell State）</strong>：$C_t$，相当于“记忆单元”，贯穿整个序列，承载长期信息。</li>
+<li><strong>三个门控向量（都是通过 sigmoid 函数输出 0~1 的值，用于控制信息流）</strong>：<ol>
+<li>遗忘门（Forget Gate）：决定丢弃细胞状态中的哪些信息。</li>
+<li>输入门（Input Gate）：决定哪些新信息需要写入细胞状态。</li>
+<li>输出门（Output Gate）：决定当前隐藏状态的输出内容。</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+<li><p>基本工作原理</p>
+<ol>
+<li><p><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20251121100949500.png" alt="image-20251121100949500"></p>
+</li>
+<li><p>为了实现记忆，引入了记忆元，并通过三个门控制记忆。遗忘门控制过去的记忆的记忆程度，输入门控制当前输入对候选记忆的影响，输出门控制“真正的”记忆元对现在状态H的影响</p>
+</li>
+</ol>
+</li>
+<li><p>工作流程</p>
+<ol>
+<li><p>遗忘阶</p>
+<ol>
+<li><p><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20251121102532474.png" alt="image-20251121102532474"></p>
+</li>
+<li><p>对上一阶段的记忆进行选择，选出重要的相关部分，遗忘无关信息</p>
+</li>
+<li><p>使用sigmoid函数激活，取值范围[0, 1]</p>
+</li>
+</ol>
+</li>
+<li><p>选择记忆阶段</p>
+<ol>
+<li><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20251121102934942.png" alt="image-20251121102934942"></li>
+<li>对当前时刻的信息进行筛选，选出重要的部分添加到记忆中</li>
+<li>使用sigmoid函数激活，取值范围[0, 1]</li>
+<li><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20251121103039608.png" alt="image-20251121103039608"></li>
+<li>前两个阶段的输出相加，就得到了当前阶段的记忆</li>
+</ol>
+</li>
+<li><p>输出状态</p>
+<ol>
+<li><p><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20251121103205331.png" alt="image-20251121103205331"></p>
+</li>
+<li><p>记忆元先通过tanh函数缩放到[-1, 1]，然后和输出门逐元素相乘</p>
+</li>
+<li><p>输出门越大，记忆元中的信息就会越多的保存到当前隐藏层输出中</p>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+<li><p>LSTM 中的各个门及其作用详解</p>
+<ol>
+<li>遗忘门（Forget Gate）<ol>
+<li><strong>作用：</strong> 控制上一时间步的细胞状态 <em>C**t</em>−1中的哪些信息需要被遗忘（即丢弃）。</li>
+<li><strong>公式：</strong><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20251120212439270.png" alt="image-20251120212439270"></li>
+</ol>
+</li>
+</ol>
+<p><strong>解释：</strong></p>
+<p>如果 <em>f**t</em>接近 0，表示遗忘该信息；接近 1 则表示保留。它决定了细胞状态 <em>C**t</em>−1中的哪些内容应该被保留到当前时间步。</p>
+<hr>
+<ol start="2">
+<li>输入门（Input Gate）<ol>
+<li><strong>作用：</strong> 决定哪些<strong>新信息</strong>需要被加入到细胞状态中，即控制新内容的写入。</li>
+<li><strong>公式分为两部分：</strong><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20251120212509500.png" alt="image-20251120212509500"></li>
+</ol>
+</li>
+</ol>
+<p><strong>解释：</strong></p>
+<p>输入门与候选状态共同作用，决定哪些新信息被存储进细胞状态，实现“记忆更新”。</p>
+<hr>
+<ol start="3">
+<li>输出门（Output Gate）<ol>
+<li><strong>作用：</strong> 控制当前时间步的**隐藏状态 *h**t***（即输出给下一层或下一时间步的内容），它基于当前的细胞状态，但经过筛选。</li>
+</ol>
+</li>
+</ol>
+<p><strong>公式：</strong><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20251120212558392.png" alt="image-20251120212558392"></p>
+<p><strong>解释：</strong></p>
+<p>输出门控制了当前细胞状态中有多少信息被暴露或传递出去，从而影响后续时间步的决策。</p>
+<hr>
+<ol start="4">
+<li>LSTM 总结：门的作用回顾</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th align="left">门名称</th>
+<th align="left">控制目标</th>
+<th align="left">作用简述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">遗忘门</td>
+<td align="left">细胞状态中的旧信息</td>
+<td align="left">决定哪些历史信息需要丢弃，解决“记忆污染”问题</td>
+</tr>
+<tr>
+<td align="left">输入门</td>
+<td align="left">新的候选信息</td>
+<td align="left">决定哪些新信息需要被添加到记忆中，更新细胞状态</td>
+</tr>
+<tr>
+<td align="left">输出门</td>
+<td align="left">当前隐藏状态（输出内容）</td>
+<td align="left">决定当前细胞状态中哪些信息作为输出传递给下一层</td>
+</tr>
+</tbody></table>
+</li>
+</ol>
+<h4 id="GRU门控循环单元"><a href="#GRU门控循环单元" class="headerlink" title="GRU门控循环单元"></a>GRU门控循环单元</h4><ol>
+<li><p>是什么</p>
+<ol>
+<li>GRU 是 LSTM 的一种简化版本，由 Cho 等人于 2014 年提出。GRU 同样使用门控机制来控制信息的流动，但<strong>相比 LSTM，它合并了细胞状态和隐藏状态，同时只使用了两个门：重置门（Reset Gate）和更新门（Update Gate）</strong>，结构更简单，计算效率更高，在很多任务中表现与 LSTM 相当甚至更优。</li>
+</ol>
+</li>
+<li><p>GRU 的基本结构与变量说明</p>
+<p>GRU 在每个时间步也接收当前输入 <em>x**t</em>和上一时间步的隐藏状态 <em>h**t</em>−1，并引入以下两个门：</p>
+<ul>
+<li><strong>更新门（Update Gate）</strong>：决定保留多少旧信息，更新多少新信息（类似 LSTM 中遗忘门和输入门的组合）。</li>
+<li><strong>重置门（Reset Gate）</strong>：决定如何将新的输入与历史状态结合起来，控制过去信息的“相关性”。</li>
+</ul>
+<p>此外，GRU <strong>没有独立的细胞状态</strong>，而是直接更新隐藏状态 <em>h**t</em>。</p>
+</li>
+<li><p>基本工作原理</p>
+<ol>
+<li><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20251121104101413.png" alt="image-20251121104101413"></li>
+<li>作为“简化版LSTM”，这里GRU只提出了两个门：重置门控制历史状态对当前输入的影响，更新门控制历史状态和候选信息对当前输出的影响。</li>
+</ol>
+</li>
+<li><p>工作流程</p>
+<ol>
+<li>更新门<ol>
+<li><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20251121104557384.png" alt="image-20251121104557384"></li>
+</ol>
+</li>
+</ol>
+<p><strong>作用：</strong> 控制前一时间步的隐藏状态中有多少信息需要被“重置”或忽略，即决定如何将新输入与历史状态结合。</p>
+<p><strong>公式：</strong><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20251121100218626.png" alt="image-20251121100218626"></p>
+<hr>
+<p>（2）更新门（Update Gate）</p>
+<p><strong>作用：</strong> 控制保留多少之前的隐藏状态（历史信息），以及更新多少新的候选状态（新信息）。</p>
+<p><strong>公式：</strong></p>
+<ul>
+<li><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20251121100248396.png" alt="image-20251121100248396"></li>
+</ul>
+<p><strong>解释：</strong></p>
+<p>更新门实际上做了 LSTM 中“遗忘门 + 输入门”的一部分工作，通过控制新旧信息的融合比例，实现状态的更新。</p>
+<hr>
+<ol start="4">
+<li>GRU 总结：门的作用回顾</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th align="left">门名称</th>
+<th align="left">控制目标</th>
+<th align="left">作用简述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">重置门</td>
+<td align="left">历史隐藏状态</td>
+<td align="left">决定如何将新输入与过去状态结合，控制历史信息的贡献度</td>
+</tr>
+<tr>
+<td align="left">更新门</td>
+<td align="left">新旧隐藏状态的比例</td>
+<td align="left">决定保留多少旧信息，更新多少新信息</td>
+</tr>
+</tbody></table>
+</li>
+</ol>
+<h4 id="BiLSTM双向长短期记忆网络"><a href="#BiLSTM双向长短期记忆网络" class="headerlink" title="BiLSTM双向长短期记忆网络"></a>BiLSTM双向长短期记忆网络</h4><ol>
+<li><p>基本原理</p>
+<ol>
+<li>BiLSTM 是在 LSTM 基础上的一种扩展，其核心思想是：同时使用两个独立的 LSTM 层，一个按正向顺序处理序列，另一个按反向顺序处理序列，最后将两个方向的隐藏状态进行合并（通常是拼接），从而让每个时间步都能同时“看到”过去和未来的信息。</li>
+<li>结构组成：<ul>
+<li><strong>正向 LSTM</strong>：按 <em>t</em>&#x3D;1→2→⋯→<em>T</em>的顺序处理序列，得到正向隐藏状态序列 <em>h**t</em>。</li>
+<li><strong>反向 LSTM</strong>：按 <em>t</em>&#x3D;<em>T</em>→<em>T</em>−1→⋯→1的顺序处理序列，得到反向隐藏状态序列 <em>h**t</em>。</li>
+<li><strong>合并策略</strong>：通常将同一时间步的正向与反向隐藏状态进行<strong>拼接（concatenate）</strong>。这样，每个时间步的表示 <em>h**t</em>就包含了该位置的前后文信息。</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><p>与LSTM的对比</p>
+<p>1. </p>
+<ol start="2">
+<li><table>
+<thead>
+<tr>
+<th align="left">对比维度</th>
+<th align="left">标准 RNN</th>
+<th align="left">LSTM</th>
+<th align="left">BiLSTM</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>梯度问题</strong></td>
+<td align="left">容易出现梯度消失&#x2F;爆炸，难以学习长距离依赖</td>
+<td align="left">通过门控机制与细胞状态，有效缓解梯度消失，擅长长序列建模</td>
+<td align="left">同 LSTM，且能利用双向上下文</td>
+</tr>
+<tr>
+<td align="left"><strong>记忆能力</strong></td>
+<td align="left">几乎没有长期记忆能力</td>
+<td align="left">通过细胞状态实现长期记忆的保存与更新</td>
+<td align="left">同 LSTM，同时获取前后文信息</td>
+</tr>
+<tr>
+<td align="left"><strong>信息利用</strong></td>
+<td align="left">仅使用当前及之前的信息（单向）</td>
+<td align="left">仅使用当前及之前的信息（单向）</td>
+<td align="left">同时利用当前位置的前后文信息（双向）</td>
+</tr>
+<tr>
+<td align="left"><strong>序列理解能力</strong></td>
+<td align="left">弱，尤其对长文本、复杂依赖任务效果差</td>
+<td align="left">强，适合处理长序列、复杂语义</td>
+<td align="left">更强，对上下文语境敏感的任务效果显著提升</td>
+</tr>
+<tr>
+<td align="left"><strong>应用效果</strong></td>
+<td align="left">一般，逐渐被替代</td>
+<td align="left">广泛用于各类序列任务</td>
+<td align="left">在需要上下文信息的任务中表现尤为出色</td>
+</tr>
+</tbody></table>
+</li>
+</ol>
+</li>
+</ol>
+<h2 id="Transformer-架构及其变体"><a href="#Transformer-架构及其变体" class="headerlink" title="Transformer 架构及其变体"></a>Transformer 架构及其变体</h2><h3 id="概述-5"><a href="#概述-5" class="headerlink" title="概述"></a>概述</h3><pre><code>1. 是什么
+	1. 在现代深度学习，特别是自然语言处理（NLP）和序列建模任务中，**Transformer 架构及其变体**已经成为主流模型，比如 BERT、GPT、T5 等。这些模型虽然应用广泛，但它们的核心结构都可以归类为以下三种基本架构之一：
+    	1. Encoder-only（仅编码器）结构
+    	2. Decoder-only（仅解码器）结构
+    	3. Encoder-Decoder（编码器-解码器）结构
+	2. 这三种结构本质上都来源于 Transformer 模型，它们在组件构成、信息流动方式以及适用任务上有明显区别。理解它们的差异及适用场景，对于模型选型、任务设计和算法优化至关重要。
+</code></pre>
+<ol start="2">
+<li>基本概念与结构来源<ol>
+<li><strong>Encoder（编码器）</strong>：负责对输入序列进行编码，提取高层次语义表示，通常由多个相同的编码层堆叠而成，每层包含多头自注意力机制和前馈网络。</li>
+<li><strong>Decoder（解码器）</strong>：负责根据编码器的输出（或部分信息）逐步生成目标序列，常用于生成式任务，也包含自注意力与交叉注意力机制。</li>
+</ol>
+</li>
+</ol>
+<h3 id="注意力机制"><a href="#注意力机制" class="headerlink" title="注意力机制"></a>注意力机制</h3><ul>
+<li>Attention Is All You Need</li>
+</ul>
+<ol>
+<li><p><strong>自注意力机制（Self-Attention）</strong> </p>
+<ol>
+<li><p>是一种让模型在处理一个序列（比如一句话）时，能够<strong>自动关注这个序列中其他相关部分</strong>的机制。</p>
+</li>
+<li><p>理解</p>
+<ol>
+<li><blockquote>
+<p>当模型处理某个词时，它不仅仅看这个词本身，还会“看看”这句话里的其他词，找到和它最相关的信息，从而更好地理解这个词的含义。</p>
+<p>.</p>
+<p>比如说“书”一词，他可以指书本，也可以指《尚书》。单独作为一个词时，他有自己的嵌入向量。但是他可能注意到了上下文，知道了这里应该指书本，于是嵌入向量向书本的一方偏移。这个发现上下文含义的过程就是自注意力机制。</p>
+</blockquote>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+<li><p><strong>掩码自注意力</strong></p>
+<ol>
+<li>在解码器生成token时，不能让解码器看到未来的词（就像看答案），他只能看到前面的词，并以此推理、生成token。否则就是“从答案出发”写过程了。</li>
+</ol>
+</li>
+<li><p><strong>交叉注意力机制</strong></p>
+<ol>
+<li><p>是什么</p>
+<ol>
+<li><p>交叉注意力机制（Cross-Attention） 是注意力机制的一种扩展形式，它可以让一个序列（称为 Query）去关注另一个不同的序列（称为 Key 和 Value），从而实现两个序列之间的信息交互与融合。</p>
+<p>简单来说：</p>
+<blockquote>
+<p>交叉注意力让一组 token（比如问题、目标语言）去“查询”另一组 token（比如上下文、源语言），从而获取与之相关的信息。</p>
+</blockquote>
+</li>
+<li><p>它最常用于 Transformer 的 Encoder-Decoder 架构中，尤其是在机器翻译、文本摘要、对话系统等任务里，让解码器（Decoder）能够关注编码器（Encoder）的输出，实现从源序列到目标序列的信息传递。</p>
+</li>
+</ol>
+</li>
+<li><p>通俗解释</p>
+<ol>
+<li><p>假设我们在进行机器翻译，任务是把一句英文翻译成中文：</p>
+<ul>
+<li>Encoder（编码器）：处理输入的英文句子，得到一组表示（Key 和 Value）。</li>
+<li>Decoder（解码器）：逐步生成中文翻译，每一步生成一个中文词。</li>
+</ul>
+</li>
+<li><p>在生成每个中文词时，Decoder 不仅仅看已经生成的中文词（这部分用自注意力），还需要<strong>去看输入的英文句子，从中找到与当前要生成的中文词最相关的信息</strong>。 这时就需要用交叉注意力：</p>
+<ul>
+<li><strong>Query（查询）</strong>：来自 Decoder 当前要生成的词（或隐藏状态）→ 表示“我想知道什么”</li>
+<li><strong>Key 和 Value（键与值）</strong>：来自 Encoder 的输出（即源语言句子的表示）→ 表示“有什么信息可供查询”</li>
+</ul>
+</li>
+<li><p>模型会计算 Query 和 Key 的相似度，得到注意力权重，然后根据这些权重，从 Value（也就是 Encoder 的信息）中提取相关内容，帮助当前生成更准确。</p>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<h3 id="Encoder-only（仅编码器）结构"><a href="#Encoder-only（仅编码器）结构" class="headerlink" title="Encoder-only（仅编码器）结构"></a>Encoder-only（仅编码器）结构</h3><ol>
+<li><p>结构组成：</p>
+<ul>
+<li>只有 <strong>Encoder 部分</strong>，没有 Decoder。</li>
+<li>输入一个序列，经过多层编码后，输出该序列的<strong>全局语义表示（上下文嵌入）</strong>。</li>
+</ul>
+</li>
+<li><p>工作原理：</p>
+<ul>
+<li>输入序列通过 <strong>自注意力机制（Self-Attention）</strong> 捕捉内部各位置的关系。</li>
+<li>最终输出的向量可用于表示整个输入序列的语义，常用于<strong>序列理解类任务</strong>。</li>
+</ul>
+</li>
+<li><p>典型模型：</p>
+<ul>
+<li><strong>BERT</strong></li>
+<li><strong>RoBERTa、ALBERT、DistilBERT</strong> 等基于 BERT 的改进模型</li>
+</ul>
+</li>
+<li><p>优点：</p>
+<ul>
+<li>能充分理解输入序列的上下文语义。</li>
+<li>适合<strong>不需要生成新内容，而是理解、判断、分类的任务</strong>。</li>
+</ul>
+</li>
+<li><p>缺点：</p>
+<ul>
+<li><strong>不能生成新序列</strong>，因为它没有解码器结构。</li>
+</ul>
+</li>
+<li><p>适用场景</p>
+<p>1. </p>
+<ol start="2">
+<li><table>
+<thead>
+<tr>
+<th align="left">任务类型</th>
+<th align="left">说明</th>
+<th align="left">示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>文本分类</strong></td>
+<td align="left">判断文本的主题、情感、领域等</td>
+<td align="left">情感分析、垃圾邮件识别</td>
+</tr>
+<tr>
+<td align="left"><strong>命名实体识别（NER）</strong></td>
+<td align="left">识别文本中具有特定意义的实体</td>
+<td align="left">人名、地名、机构名抽取</td>
+</tr>
+<tr>
+<td align="left"><strong>问答系统（QA）</strong></td>
+<td align="left">给定上下文和问题，定位答案区间</td>
+<td align="left">SQuAD 数据集任务</td>
+</tr>
+<tr>
+<td align="left"><strong>句子&#x2F;文本匹配</strong></td>
+<td align="left">判断两个句子是否语义相似、相关</td>
+<td align="left">语义文本相似度（STS）、复述检测</td>
+</tr>
+<tr>
+<td align="left"><strong>序列标注</strong></td>
+<td align="left">对序列中每个 token 打标签</td>
+<td align="left">POS 词性标注、槽位填充（Slot Filling）</td>
+</tr>
+</tbody></table>
+</li>
+</ol>
+</li>
+</ol>
+<h3 id="Decoder-only（仅解码器）结构"><a href="#Decoder-only（仅解码器）结构" class="headerlink" title="Decoder-only（仅解码器）结构"></a>Decoder-only（仅解码器）结构</h3><ol>
+<li><p>结构组成：</p>
+<ul>
+<li><p>只有 <strong>Decoder 部分</strong>，没有 Encoder。</p>
+</li>
+<li><p>通常基于 <strong>掩码自注意力（Masked Self-Attention）</strong>，确保在生成当前 token 时，模型只能看到当前及之前的 token，不能“偷看”未来信息。</p>
+</li>
+</ul>
+</li>
+<li><p>工作原理：</p>
+<ul>
+<li><p>模型根据已经生成的 token 和可能的提示（prompt &#x2F; input），<strong>一步一步地预测下一个 token</strong>，适用于<strong>自回归式生成任务</strong>。</p>
+</li>
+<li><p>通过不断迭代，逐步生成完整的目标序列。</p>
+</li>
+</ul>
+</li>
+<li><p>典型模型：</p>
+<ul>
+<li><p><strong>GPT（Generative Pre-trained Transformer）系列</strong>：GPT、GPT-2、GPT-3、GPT-4、ChatGPT</p>
+<blockquote>
+<p>虽然 GPT 是 Decoder-only，<strong>但它仍然需要对输入（即你的提示词 &#x2F; Prompt）进行编码（Embedding）和上下文建模</strong>，只不过：</p>
+<ul>
+<li>它使用的是 Transformer 的 Decoder 结构，而不是 Encoder。</li>
+<li>它对输入也进行<strong>Token 嵌入（Embedding） + 位置编码</strong>，和 Encoder 做的事情类似。</li>
+<li>它使用的是 掩码自注意力（Masked Self-Attention），确保在处理第 i 个词时，只能看到第 1 到 i-1 个词（不能偷看后面）。</li>
+</ul>
+<p> <strong>也就是说：GPT 把你的提示词当作一个“序列”输入到 Decoder 中，通过自注意力机制对它们进行编码和理解，然后基于此生成后续内容。</strong></p>
+<table>
+<thead>
+<tr>
+<th align="left">问题</th>
+<th align="left">答案</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">GPT 是不是不编码提示词？</td>
+<td align="left">不是！它对提示词也进行了编码（嵌入 + 注意力），只是没有专门的 Encoder 模块。</td>
+</tr>
+<tr>
+<td align="left">为什么是 Decoder-only？</td>
+<td align="left">因为 GPT是生成式模型，只用 Decoder 就能同时完成“理解输入 + 生成输出”，不需要分离的 Encoder。</td>
+</tr>
+<tr>
+<td align="left">它怎么理解我的输入（Prompt）？</td>
+<td align="left">把输入当作一个序列，通过 Decoder 的自注意力机制进行编码和建模，再基于此生成后续内容。</td>
+</tr>
+<tr>
+<td align="left">为什么不用 Encoder-Decoder？</td>
+<td align="left">为了简化结构、提升效率、统一训练与推理流程，GPT 选择仅用 Decoder 实现理解与生成</td>
+</tr>
+</tbody></table>
+</blockquote>
+</li>
+<li><p><strong>LLaMA、Falcon、Mistral 等大语言模型（LLMs）</strong></p>
+</li>
+</ul>
+</li>
+<li><p>适用任务（生成类任务）：</p>
+</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th align="left">任务类型</th>
+<th align="left">说明</th>
+<th align="left">示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>文本生成</strong></td>
+<td align="left">根据提示生成连贯的文本内容</td>
+<td align="left">文章生成、故事创作、对话生成</td>
+</tr>
+<tr>
+<td align="left"><strong>代码生成</strong></td>
+<td align="left">根据注释或需求生成程序代码</td>
+<td align="left">GitHub Copilot、CodeX</td>
+</tr>
+<tr>
+<td align="left"><strong>对话系统（Chatbot）</strong></td>
+<td align="left">与用户进行多轮自然语言交互</td>
+<td align="left">智能客服、虚拟助手</td>
+</tr>
+<tr>
+<td align="left"><strong>机器翻译（部分实现）</strong></td>
+<td align="left">根据源语言生成目标语言（若输入已嵌入提示）</td>
+<td align="left">简单翻译任务</td>
+</tr>
+<tr>
+<td align="left"><strong>摘要生成</strong></td>
+<td align="left">根据输入文本生成简洁摘要</td>
+<td align="left">新闻摘要、会议纪要</td>
+</tr>
+</tbody></table>
+<ol start="5">
+<li><p>优点：</p>
+<ul>
+<li><p>擅长<strong>生成连贯、上下文相关的文本</strong>。</p>
+</li>
+<li><p>模型结构简单，推理时只需 decoder，计算效率高（相对 encoder-decoder）。</p>
+</li>
+</ul>
+</li>
+<li><p>缺点：</p>
+<ul>
+<li><p><strong>缺乏显式的编码器结构，对复杂输入的结构化理解能力较弱</strong>（不过通过 prompt engineering 可部分弥补）。</p>
+</li>
+<li><p>对需要同时理解输入 + 生成输出的任务（如翻译、问答），不如 encoder-decoder 灵活。</p>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="Encoder-Decoder（编码器-解码器）结构"><a href="#Encoder-Decoder（编码器-解码器）结构" class="headerlink" title="Encoder-Decoder（编码器-解码器）结构"></a>Encoder-Decoder（编码器-解码器）结构</h3><ol>
+<li><p>结构组成：</p>
+<ul>
+<li><p>包含完整的 <strong>Encoder 和 Decoder 两部分</strong>，两者通过**交叉注意力机制（Cross-Attention）**相连。</p>
+</li>
+<li><p><strong>Encoder 负责理解输入序列</strong>，<strong>Decoder 负责基于编码信息生成目标序列</strong>。</p>
+</li>
+</ul>
+</li>
+<li><p>工作原理：</p>
+<ul>
+<li><p>输入序列（如源语言句子）通过 Encoder 编码成一个或多个上下文向量。</p>
+</li>
+<li><p>Decoder 在生成目标序列（如目标语言句子）时，通过<strong>交叉注意力机制关注 Encoder 的输出</strong>，从而实现输入到输出的信息映射。</p>
+</li>
+</ul>
+</li>
+<li><p>典型模型：</p>
+<ul>
+<li><p><strong>Transformer（原始论文模型）</strong></p>
+</li>
+<li><p><strong>T5（Text-To-Text Transfer Transformer）</strong></p>
+</li>
+<li><p><strong>BART（Bidirectional and Auto-Regressive Transformer）</strong></p>
+</li>
+<li><p><strong>mBART、PEGASUS</strong> 等</p>
+</li>
+</ul>
+</li>
+<li><p>适用任务（理解 + 生成类 &#x2F; 序列到序列任务）：</p>
+</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th align="left">任务类型</th>
+<th align="left">说明</th>
+<th align="left">示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>机器翻译（Machine Translation）</strong></td>
+<td align="left">源语言 → 目标语言</td>
+<td align="left">英文 → 中文翻译</td>
+</tr>
+<tr>
+<td align="left"><strong>文本摘要（Text Summarization）</strong></td>
+<td align="left">长文本 → 摘要</td>
+<td align="left">新闻摘要生成</td>
+</tr>
+<tr>
+<td align="left"><strong>问答系统（问答生成）</strong></td>
+<td align="left">问题 + 上下文 → 答案文本</td>
+<td align="left">开放域问答</td>
+</tr>
+<tr>
+<td align="left"><strong>对话生成（多轮生成）</strong></td>
+<td align="left">用户输入 → 系统回复</td>
+<td align="left">多轮对话系统</td>
+</tr>
+<tr>
+<td align="left"><strong>语音转文本后再生成（ASR + TTS）</strong></td>
+<td align="left">语音 → 中间表示 → 自然语言</td>
+<td align="left">语音问答系统</td>
+</tr>
+<tr>
+<td align="left"><strong>图像描述生成（Image Captioning）</strong></td>
+<td align="left">图像特征 → 描述文本</td>
+<td align="left">AI 看图说话</td>
+</tr>
+</tbody></table>
+<ol start="5">
+<li><p>优点：</p>
+<ul>
+<li><p>同时具备<strong>强大的理解能力（Encoder）和生成能力（Decoder）</strong>。</p>
+</li>
+<li><p>适合处理<strong>输入与输出均为序列，且两者结构&#x2F;语义均较复杂</strong>的任务。</p>
+</li>
+</ul>
+</li>
+<li><p>缺点：</p>
+<ul>
+<li><p>模型结构更复杂，训练成本更高。</p>
+</li>
+<li><p>推理时需要同时运行 encoder 和 decoder，计算开销较大。</p>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="序列生成任务评价指标"><a href="#序列生成任务评价指标" class="headerlink" title="序列生成任务评价指标"></a>序列生成任务评价指标</h3><ol>
+<li><p><strong>BLEU</strong> </p>
+<ol>
+<li>是最经典、最广泛使用的机器翻译评价指标，由 IBM 研究者在 2002 年提出。它通过比较<strong>模型生成的译文（Candidate）与一个或多个参考译文（Reference）之间的 n-gram 匹配程度</strong>，来衡量生成结果的质量。</li>
+</ol>
+<blockquote>
+<p> 核心思想： 生成文本与参考文本在 n-gram（如 1~4 个词连续组合）层面越匹配，BLEU 分数越高，说明生成质量越好。</p>
+</blockquote>
+<ol start="2">
+<li><p>计算方法（简化版）：BLEU 的计算主要包括两个部分：</p>
+<ol>
+<li><p><strong>n-gram 精度（Precision）</strong></p>
+<ul>
+<li>统计生成文本中每个 n-gram（比如 1-gram: 单词，2-gram: 词对，…）出现的次数，</li>
+<li>并计算这些 n-gram 在参考译文中也出现了多少次，取<strong>最小值（避免夸大）</strong>，</li>
+<li>最终对多个 n（通常为 1~4）做加权平均。</li>
+</ul>
+</li>
+<li><p><strong>BP（Brevity Penalty，长度惩罚）</strong></p>
+<ul>
+<li>如果生成的句子比参考句子短太多，即使 n-gram 匹配很高，也会扣分。</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><p>适用场景</p>
+<table>
+<thead>
+<tr>
+<th align="left">任务类型</th>
+<th align="left">是否适用</th>
+<th align="left">原因</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>机器翻译</strong></td>
+<td align="left">非常常用</td>
+<td align="left">标准评价指标，广泛用于 MT 任务（如 WMT 比赛）</td>
+</tr>
+<tr>
+<td align="left"><strong>文本摘要</strong></td>
+<td align="left">可用</td>
+<td align="left">但更推荐 ROUGE（见下）</td>
+</tr>
+<tr>
+<td align="left"><strong>对话生成 &#x2F; 问答</strong></td>
+<td align="left">一般</td>
+<td align="left">对语义要求高，BLEU 对词面匹配敏感，不太关注语义正确性</td>
+</tr>
+<tr>
+<td align="left"><strong>代码生成</strong></td>
+<td align="left">不适用</td>
+<td align="left">代码不是自然语言，要用 CodeBLEU（见下）</td>
+</tr>
+</tbody></table>
+<p> <strong>优点：</strong> 客观、可复现、与人工评价有一定相关性</p>
+<p> <strong>缺点：</strong> 只看词面 n-gram 匹配，<strong>不关心语义、词序灵活性、同义词替换等</strong></p>
+</li>
+</ol>
+</li>
+<li><p>CodeBLEU（针对代码生成任务）</p>
+<ol>
+<li>概述<ol>
+<li><strong>CodeBLEU</strong> 是在 BLEU 基础上，为<strong>代码生成任务（如自动编程、代码补全、SQL 生成等）</strong> 设计的改进评价指标，由华为研究者提出。</li>
+</ol>
+</li>
+</ol>
+<blockquote>
+<p>代码 ≠ 自然语言，不能只看词频匹配！CodeBLEU 综合考虑了：</p>
+<ul>
+<li><strong>Token 级 BLEU（词法层面）</strong></li>
+<li><strong>语法树结构（AST，Abstract Syntax Tree）相似度</strong></li>
+<li><strong>数据流信息</strong></li>
+<li><strong>代码功能正确性（可选，需额外工具）</strong></li>
+</ul>
+</blockquote>
+<hr>
+<ol start="2">
+<li>计算思路（简化）</li>
+</ol>
+<p>CodeBLEU 分数通常是几部分的加权组合：<br>$$<br>CodeBLEU&#x3D;w_1⋅BLEU+w_2⋅AST+w_3⋅Dataflow+…<br>$$</p>
+<ul>
+<li>BLEU：普通词法 n-gram 匹配</li>
+<li>AST：抽象语法树匹配（代码结构是否相似）</li>
+<li>Dataflow：变量使用、控制流等是否合理</li>
+<li>不同任务可调整权重</li>
+</ul>
+<hr>
+<ol start="3">
+<li>适用场景</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th align="left">任务类型</th>
+<th align="left">是否适用</th>
+<th align="left">原因</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>代码生成 &#x2F; 补全 &#x2F; 翻译</strong></td>
+<td align="left">✅ 推荐</td>
+<td align="left">比 BLEU 更适合代码，综合语法与结构信息</td>
+</tr>
+<tr>
+<td align="left"><strong>自然语言生成</strong></td>
+<td align="left">❌ 不适用</td>
+<td align="left">是为代码任务定制的</td>
+</tr>
+</tbody></table>
+<p><strong>优点：</strong> 更贴近代码语义与结构，评价更准确</p>
+<p><strong>缺点：</strong> 实现复杂，依赖语法树等工具</p>
+</li>
+<li><p>ROUGE（Recall-Oriented Understudy for Gisting Evaluation）</p>
+</li>
+<li><p>概述</p>
+</li>
+</ol>
+<p>   ROUGE 是用于文本摘要（Text Summarization）任务的主要评价指标，由 Lin 等人提出。它侧重于衡量生成摘要与参考摘要之间的词重叠度（尤其是召回率）。</p>
+<blockquote>
+<p>与 BLEU 不同，ROUGE 更关注<strong>生成内容是否覆盖了参考中的重要信息（词、短语、n-gram）</strong>。</p>
+</blockquote>
+<hr>
+<ol start="2">
+<li>常见变体</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th align="left">指标</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>ROUGE-N</strong></td>
+<td align="left">N-gram 重叠（如 ROUGE-1：单词；ROUGE-2：词对）</td>
+</tr>
+<tr>
+<td align="left"><strong>ROUGE-L</strong></td>
+<td align="left">基于最长公共子序列（LCS），衡量生成与参考之间的最佳匹配顺序</td>
+</tr>
+<tr>
+<td align="left"><strong>ROUGE-S &#x2F; ROUGE-W</strong></td>
+<td align="left">基于跳跃 n-gram 或加权匹配</td>
+</tr>
+</tbody></table>
+<hr>
+<ol start="4">
+<li>适用场景</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th align="left">任务类型</th>
+<th align="left">是否适用</th>
+<th align="left">原因</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>文本摘要</strong></td>
+<td align="left">主流指标</td>
+<td align="left">重点看是否涵盖关键信息</td>
+</tr>
+<tr>
+<td align="left"><strong>机器翻译</strong></td>
+<td align="left">可用但非主流</td>
+<td align="left">一般更偏向 BLEU</td>
+</tr>
+<tr>
+<td align="left"><strong>问答 &#x2F; 对话</strong></td>
+<td align="left">可尝试</td>
+<td align="left">但通常不用作主要指标</td>
+</tr>
+</tbody></table>
+<p>   <strong>优点：</strong> 更关注内容覆盖，对词序相对宽容</p>
+<p>   <strong>缺点：</strong> 仍基于词面匹配，不涉及深层语义</p>
+<ol start="4">
+<li><p>METEOR（Metric for Evaluation of Translation with Explicit ORdering）</p>
+<ol>
+<li>简介</li>
+</ol>
+<p><strong>METEOR</strong> 是一种兼顾<strong>精确率、召回率、词义相似性、词序</strong>的评价指标，由 Banerjee &amp; Lavie 提出，目标是<strong>更贴近人工评价</strong>。</p>
+<blockquote>
+<p>它不仅看词是否出现，还考虑了：</p>
+<ul>
+<li><strong>同义词匹配（通过 WordNet）</strong></li>
+<li><strong>词干还原（stemming）</strong></li>
+<li><strong>词序与句法结构</strong></li>
+<li><strong>精确率 + 召回率的调和</strong></li>
+</ul>
+</blockquote>
+<hr>
+<ol start="2">
+<li><p>计算思路（简化）: METEOR 分数综合考虑：</p>
+<ul>
+<li><p>匹配的 unigrams（词）数量</p>
+</li>
+<li><p>是否同义词 &#x2F; 词干相同</p>
+</li>
+<li><p>词序信息</p>
+</li>
+<li><p>使用 F-mean（精确率与召回率的加权调和）</p>
+</li>
+</ul>
+</li>
+</ol>
+<hr>
+<ol start="3">
+<li>适用场景</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th align="left">任务类型</th>
+<th align="left">是否适用</th>
+<th align="left">原因</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>机器翻译</strong></td>
+<td align="left">✅ 推荐（比 BLEU 更接近人工）</td>
+<td align="left">更关注语义相似性</td>
+</tr>
+<tr>
+<td align="left"><strong>文本生成 &#x2F; 摘要</strong></td>
+<td align="left">✅ 可用</td>
+<td align="left">对语义更友好</td>
+</tr>
+<tr>
+<td align="left"><strong>代码 &#x2F; 对话</strong></td>
+<td align="left">⚠️ 较少用</td>
+<td align="left">不是主流</td>
+</tr>
+</tbody></table>
+<p><strong>优点：</strong> 更接近人工判断，<strong>考虑同义词与词序</strong></p>
+<p><strong>缺点：</strong> 计算复杂，使用不如 BLEU 广泛</p>
+</li>
+</ol>
+<h2 id="⽣成式对抗⽹络（GAN）"><a href="#⽣成式对抗⽹络（GAN）" class="headerlink" title="⽣成式对抗⽹络（GAN）"></a>⽣成式对抗⽹络（GAN）</h2><h3 id="概述-6"><a href="#概述-6" class="headerlink" title="概述"></a>概述</h3><ol>
+<li><p>是什么</p>
+<ol>
+<li>生成式对抗网络（Generative Adversarial Network，GAN）由生成器（Generator）和判别器（Discriminator）这两个核心部分组成，二者通过对抗博弈的方式进行训练，以提升各自的性能。</li>
+<li>基本结构<ol>
+<li>生成器（Generator）功能：生成器的任务是学习从一个潜在空间到目标数据分布的映射。简单来说，就是根据随机输入的噪声向量 <em>z</em>，生成尽可能逼真的数据样本，这些数据样本与真实数据分布相似。<ol>
+<li>结构：一般由多层神经网络构成，常见的如多层全连接网络或者卷积神经网络（在处理图像等数据时）。</li>
+<li>例如，在图像生成任务中，生成器可能是一个反卷积神经网络（也称为转置卷积网络），它可以将低维的噪声向量逐步转换为高维的图像数据。</li>
+</ol>
+</li>
+<li>判别器（Discriminator）功能：判别器的作用是区分输入的数据是来自真实数据分布还是由生成器生成的假数据。它接收真实数据样本和生成器生成的假数据样本作为输入，然后输出一个概率值，表示输入数据是真实数据的可能性。<ol>
+<li>结构：同样由多层神经网络组成，其结构与生成器类似，但在设计上更侧重于对数据的特征提取和分类能力。</li>
+<li>例如，在图像判别任务中，判别器也是一个卷积神经网络，通过对图像的特征提取和分析，判断图像的真实性。</li>
+</ol>
+</li>
+</ol>
+</li>
+<li><strong>生成器和判别器以对抗的方式进行交互，生成器试图生成能够欺骗判别器的假数据，而判别器则努力准确区分真实数据和假数据，二者在不断的博弈过程中逐渐提升性能，是为对抗</strong></li>
+</ol>
+</li>
+<li><p>工作原理</p>
+<ol>
+<li><p>目标：GAN 的训练过程是一个迭代优化的过程，目标是找到生成器和判别器的最优参数，使得生成器能够生成与真实数据分布高度相似的数据，同时判别器难以区分真实数据和生成器生成的数据。其训练过程主要基于一个极小极大博弈的目标函数。</p>
+<ol>
+<li><p>$$<br>\min_{G}\max_{D}V(D,G)&#x3D;E_{x∼pdata(x)}[logD(x)]+E_{z∼pz(z)}[log(1−D(G(z)))]<br>$$</p>
+</li>
+<li><p>等式左侧：即要求只考虑D的情况下，最大化损失函数（以便判别器更好的区分），然后再只考虑G的情况下，最小化损失函数（以便生成器更好的拟合）。</p>
+</li>
+</ol>
+</li>
+<li><p>工作步骤：</p>
+<ol>
+<li>训练步骤初始化：随机初始化生成器 <em>G</em>和判别器 <em>D</em>的参数。</li>
+<li>训练判别器：固定生成器的参数，通过优化判别器的参数，使其能够更好地区分真实数据和生成器生成的假数据。</li>
+<li>训练生成器：固定判别器的参数，通过优化生成器的参数，使其生成的数据能够更有效地欺骗判别器。</li>
+<li>迭代训练：重复步骤 2 和步骤 3，不断交替训练判别器和生成器，直到达到预设的训练轮数或者满足一定的收敛条件。</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<h3 id="Wasserstein-GAN（WGAN）"><a href="#Wasserstein-GAN（WGAN）" class="headerlink" title="Wasserstein GAN（WGAN）"></a>Wasserstein GAN（WGAN）</h3><ol>
+<li><p>核心区别：损失函数不同。</p>
+<ol>
+<li><p>传统GAN使用的是JS散度（Jensen - Shannon散度）来衡量真实数据分布 <em>Pr</em>和生成数据分布 <em>Pg</em>之间的差异，JS散度衡量的是 两个分布 *P*和 *Q*有多“不同”，数值越小，说明两个分布越相似。其判别器的目标是最大化如下目标函数：</p>
+<ol>
+<li>$$<br>V(D,G) &#x3D; {E}<em>{x \sim P_r}[\log D(x)] + {E}</em>{x \sim P_g}[\log(1 - D(x))]<br>$$</li>
+</ol>
+</li>
+<li><p>WGAN使用Wasserstein距离（也称为推土机距离）来衡量两个分布之间的差异。Wasserstein距离定义为：$W(P_r, P_g) &#x3D; \inf_{\gamma \in \Pi(P_r, P_g)} \mathbb{E}_{(x,y) \sim \gamma}[|x - y|]$，即把真实分布 <em>Pr</em>的数据“移动”成生成分布 <em>Pg</em>的数据所需的最小“成本”，这里的“成本”是样本间的欧氏距离 ∥<em>x</em>−<em>y</em>∥。判别器目标是最大化这个函数： </p>
+<ol>
+<li>$$<br>L &#x3D; {E}<em>{x \sim P_r}[D(x)] - {E}</em>{x \sim P_g}[D(x)]<br>$$</li>
+</ol>
+</li>
+</ol>
+</li>
+<li><p>由此引出的差异</p>
+<p>1. </p>
+<ol start="2">
+<li><table>
+<thead>
+<tr>
+<th align="left"><strong>对比维度</strong></th>
+<th align="left"><strong>传统GAN</strong></th>
+<th align="left"><strong>Wasserstein GAN (WGAN)</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>分布差异度量</strong></td>
+<td align="left">JS散度：当真实分布 <em>P**r</em>和生成分布 <em>P**g</em>不重叠时，<strong>退化为常数 log2，导致梯度消失</strong></td>
+<td align="left">Wasserstein距离：<strong>即使分布不重叠，仍能提供有意义的梯度，反映分布间的“平移距离”</strong></td>
+</tr>
+<tr>
+<td align="left"><strong>训练稳定性</strong></td>
+<td align="left">极不稳定： - 判别器过强时，生成器梯度消失（JS散度为常数） - 容易出现模式崩溃（生成单一模式样本）</td>
+<td align="left">更稳定： - Wasserstein距离提供平滑梯度 - 判别器（Critic）不会过强，生成器持续学习</td>
+</tr>
+<tr>
+<td align="left"><strong>模式崩溃问题</strong></td>
+<td align="left">常见： - 生成器可能只生成少数几种样本（陷入局部最优）</td>
+<td align="left">缓解： - 更稳定的训练使生成器能覆盖更多数据模式</td>
+</tr>
+<tr>
+<td align="left"><strong>判别器&#x2F;Critic设计</strong></td>
+<td align="left">判别器输出概率（0~1），使用Sigmoid激活函数</td>
+<td align="left">Critic输出实数（无Sigmoid），不直接预测概率</td>
+</tr>
+<tr>
+<td align="left"><strong>额外技术要求</strong></td>
+<td align="left">无特殊约束</td>
+<td align="left">需保证Critic的Lipschitz连续性（通常通过权重裁剪或梯度惩罚实现）</td>
+</tr>
+</tbody></table>
+</li>
+</ol>
+</li>
+</ol>
+<h3 id="条件⽣成式对抗⽹络（Conditional-GAN，cGAN）"><a href="#条件⽣成式对抗⽹络（Conditional-GAN，cGAN）" class="headerlink" title="条件⽣成式对抗⽹络（Conditional GAN，cGAN）"></a>条件⽣成式对抗⽹络（Conditional GAN，cGAN）</h3><ol>
+<li><p><strong>核心思想</strong></p>
+<ol>
+<li><p>传统的GAN（如原始GAN、DCGAN等）生成的样本是<strong>无条件的</strong>（unconditional），即生成器（Generator）随机生成数据，无法控制生成内容的属性（如生成特定类别的图像、特定风格的文本等）。</p>
+</li>
+<li><p>cGAN 的核心思想是<strong>将条件信息（condition）同时输入生成器和判别器</strong>，使它们在训练时都“知道”要生成或判断什么内容。例如：</p>
+<ul>
+<li><p>在图像生成任务中，可以控制生成<strong>特定类别的图像</strong>（如“生成一张猫的图片”）。</p>
+</li>
+<li><p>在文本生成任务中，可以控制生成<strong>符合特定主题的句子</strong>（如“生成一篇关于AI的短文”）。</p>
+</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><p><strong>结构</strong></p>
+<ol>
+<li>生成器：输入 &#x3D; 随机噪声向量 *z*+ 条件信息 *c*输出 &#x3D; 符合条件 *c*的生成数据（如图像、文本等）（例如，<em>c</em>可以是类别标签、文本描述、用户指定的属性等）</li>
+<li>判别器：输入 &#x3D; 真实数据（或生成数据） + 条件信息 *c*输出 &#x3D; 判断该数据是否真实（且是否符合条件 *c*）</li>
+<li>数学目标函数（cGAN的损失函数）：</li>
+</ol>
+</li>
+</ol>
+<p>$$<br>\min_{G}\max_{D}V(D,G)&#x3D;E_{x∼pdata(x)}[logD(x|c)]+E_{z∼pz(z)}[log(1−D(G(z|c)|c))]<br>$$</p>
+<p>（即判别器要区分<strong>真实数据+条件</strong>和<strong>生成数据+条件</strong>，生成器要欺骗判别器）</p>
+<ol start="3">
+<li><p><strong>实现方式</strong></p>
+<ol>
+<li>条件信息 *c*的形式：<ol>
+<li>类别标签（Class Label）：如MNIST手写数字分类（0~9），生成器输入“生成数字3”。</li>
+<li>文本描述（Text Description）：如用自然语言描述生成图像（如“一只红色的猫”）。</li>
+<li>用户指定属性（Attributes）：如生成特定发型、肤色的人脸图像。</li>
+</ol>
+</li>
+<li>如何输入条件 *c*：<ol>
+<li>直接拼接（Concatenation）：将 <em>c</em>和 <em>z</em>拼接后输入生成器（最简单的方式）。</li>
+<li>嵌入（Embedding）：如果 <em>c</em>是离散的（如类别标签），先将其转换为嵌入向量（embedding），再与噪声 <em>z</em>结合。</li>
+<li>条件批归一化（Conditional BatchNorm）：在生成器中使用条件信息调整批归一化层的参数。**</li>
+</ol>
+</li>
+</ol>
+</li>
+<li><p><strong>典型应用</strong></p>
+<ul>
+<li><p>图像生成：如条件MNIST（生成特定数字）、条件CelebA（生成特定属性的人脸）。</p>
+</li>
+<li><p>图像翻译（Image-to-Image Translation）：如将黑白图像着色、将草图生成真实图像（Pix2Pix）。</p>
+</li>
+<li><p>文本到图像生成（Text-to-Image）：如根据文字描述生成对应图像（StackGAN、AttnGAN）。</p>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="可控生成（Controllable-Generation）"><a href="#可控生成（Controllable-Generation）" class="headerlink" title="可控生成（Controllable Generation）"></a>可控生成（Controllable Generation）</h3><ol>
+<li><p><strong>基本思想</strong></p>
+<ol>
+<li><p>可控生成（Controllable Generation） 是比cGAN更广泛的概念，它指的是让生成模型能够按照用户指定的多种控制条件生成数据，而不仅仅是简单的类别标签。</p>
+<ul>
+<li><p>cGAN 是可控生成的一种特例（控制条件通常是类别标签或简单属性）。</p>
+</li>
+<li><p>更高级的可控生成 可以控制： 多个属性（Multi-Attribute Control）：如生成“戴眼镜、棕色头发、微笑的女性人脸”。 连续控制（Continuous Control）：如调节生成图像的“亮度、风格强度、人脸年龄”等。 交互式控制（Interactive Control）：如用户实时调整生成参数（如GANpaint、StyleGAN的潜空间控制）。</p>
+</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><p><strong>实现方法</strong></p>
+<ol>
+<li><p>基于cGAN的扩展</p>
+<ul>
+<li><p>多条件输入（Multiple Conditions）： 例如，生成人脸时，同时输入性别、年龄、发型、表情等多个条件。</p>
+</li>
+<li><p>条件嵌入（Condition Embedding）： 如果条件是文本或复杂属性，先将其编码为向量（如用BERT、MLP），再输入生成器。</p>
+</li>
+</ul>
+</li>
+<li><p>潜空间控制（Latent Space Manipulation）</p>
+<ul>
+<li><p>GAN的潜空间（Latent Space） 是一个高维向量 z，生成器通过 z生成数据。</p>
+</li>
+<li><p>可控生成的关键：找到潜空间中哪些维度控制哪些属性（如“第10维控制微笑，第20维控制头发颜色”）。</p>
+</li>
+<li><p>方法： 线性插值（Linear Interpolation）：在潜空间中调整某些维度，观察生成数据的变化。 属性解耦（Disentangled Representation Learning）：让潜空间的不同维度控制不同属性（如StyleGAN、β-VAE）。 潜空间优化（Latent Optimization）：通过优化算法（如梯度下降）调整 z，使生成结果符合用户要求。</p>
+</li>
+</ul>
+</li>
+<li><p>条件批归一化 &amp; 注意力机制</p>
+<ul>
+<li><p>条件批归一化（Conditional BatchNorm）：让生成器的不同层根据条件调整特征。</p>
+</li>
+<li><p>注意力机制（Attention）：让生成器聚焦于特定区域（如文本到图像生成时，让模型关注描述的物体）。</p>
+</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><p><strong>典型应用</strong></p>
+<ul>
+<li><p>文本到图像生成（Text-to-Image）：如 DALL·E、Stable Diffusion（根据文字生成图像）。</p>
+</li>
+<li><p>图像编辑（Image Editing）：如 GANpaint（修改生成图像的局部区域）。</p>
+</li>
+<li><p>人脸生成 &amp; 控制：如 StyleGAN（控制年龄、姿势、表情）。</p>
+</li>
+<li><p>音乐&#x2F;视频生成：如 根据用户输入生成特定风格的音乐或视频。</p>
+</li>
+</ul>
+</li>
+<li><ol start="3">
+<li>cGAN vs. 可控生成（对比总结）</li>
+</ol>
+</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th><strong>特性</strong></th>
+<th><strong>Conditional GAN (cGAN)</strong></th>
+<th><strong>可控生成（Controllable Generation）</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>控制方式</strong></td>
+<td>通常基于<strong>单一条件</strong>（如类别标签）</td>
+<td>可以基于<strong>多条件、连续控制、交互式控制</strong></td>
+</tr>
+<tr>
+<td><strong>输入条件</strong></td>
+<td>类别标签、文本、简单属性</td>
+<td>多属性、潜空间调节、用户交互</td>
+</tr>
+<tr>
+<td><strong>典型方法</strong></td>
+<td>cGAN（条件输入+判别器）</td>
+<td>潜空间控制、注意力机制、条件批归一化</td>
+</tr>
+<tr>
+<td><strong>应用场景</strong></td>
+<td>生成特定类别的图像&#x2F;文本</td>
+<td>精细控制生成内容（如人脸属性、风格强度）</td>
+</tr>
+<tr>
+<td><strong>代表模型</strong></td>
+<td>Pix2Pix、AC-GAN</td>
+<td>StyleGAN、DALL·E、GANpaint</td>
+</tr>
+</tbody></table>
+<h2 id="强化学习（Reinforcement-Learning）"><a href="#强化学习（Reinforcement-Learning）" class="headerlink" title="强化学习（Reinforcement Learning）"></a>强化学习（Reinforcement Learning）</h2><blockquote>
+<p>在网上看到的用AI来玩游戏的就属于强化学习了</p>
+</blockquote>
+<h3 id="概述-7"><a href="#概述-7" class="headerlink" title="概述"></a>概述</h3><ol>
+<li><p>是什么</p>
+<ol>
+<li><p>强化学习是一种通过智能体（Agent）与环境（Environment）交互来学习最优策略（Policy）的学习范式，其核心目标是让智能体在动态环境中采取一系列行动（Actions），以最大化长期累积奖励（Rewards）。</p>
+</li>
+<li><p>核心结构：强化学习的核心要素可以概括为 5 个关键组成部分，它们共同构成了RL的基本框架：</p>
+<ol>
+<li><p><strong>智能体（Agent）</strong></p>
+<ol>
+<li>定义：智能体是执行动作的决策者（如机器人、游戏玩家、算法等）。</li>
+<li>作用：观察环境状态，选择动作，并通过与环境交互学习最优策略。</li>
+<li>示例：在围棋游戏中，智能体就是下棋的AI（如AlphaGo）；在自动驾驶中，智能体就是控制车辆的决策系统。</li>
+</ol>
+</li>
+<li><p><strong>环境（Environment）</strong></p>
+<ul>
+<li><p>定义：环境是智能体所处的外部世界，它接收智能体的动作并返回新的状态和奖励。</p>
+</li>
+<li><p>作用：动态响应智能体的行为，并提供反馈（状态和奖励）。</p>
+</li>
+<li><p>示例：在机器人控制中，环境可能是物理世界；在游戏中，环境可能是游戏规则和虚拟世界。</p>
+</li>
+</ul>
+</li>
+<li><p><strong>状态（State, S）</strong></p>
+<ul>
+<li><p>定义：状态是环境在某一时刻的描述，包含了智能体做出决策所需的所有信息。</p>
+</li>
+<li><p>特点：在马尔可夫决策过程（MDP）中，当前状态包含了历史信息（马尔可夫性），即未来只依赖于当前状态，而与过去无关。</p>
+</li>
+<li><p>示例： 在围棋中，状态可以是棋盘的当前布局。 在自动驾驶中，状态可以是车辆的速度、位置、周围障碍物等。</p>
+</li>
+</ul>
+</li>
+<li><p><strong>动作（Action, A）</strong></p>
+<ul>
+<li><p>定义：动作是智能体在某个状态下可以采取的行为。</p>
+</li>
+<li><p>特点：动作空间（Action Space）可以是离散的（如“左转、右转、直行”）或连续的（如“方向盘角度 0~360°”）。</p>
+</li>
+<li><p>示例： 在游戏中，动作可能是“向上移动、攻击、跳跃”。 在机器人控制中，动作可能是“移动左腿、施加力矩”。</p>
+</li>
+</ul>
+</li>
+<li><p><strong>奖励（Reward, R）</strong></p>
+<ul>
+<li><p>定义：奖励是环境在智能体采取某个动作后返回的即时反馈信号，用于衡量该动作的好坏。</p>
+</li>
+<li><p>特点：奖励通常是标量（正、负或零），智能体的目标是最大化长期累积奖励。</p>
+</li>
+<li><p>示例： 在围棋中，胜利可能获得 +1 奖励，失败获得 -1 奖励。 在机器人导航中，到达目标位置可能获得 +10 奖励，撞墙可能获得 -5 奖励。</p>
+</li>
+</ul>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+<li><p>工作原理</p>
+<ol>
+<li><p>强化学习的基本流程</p>
+<ol>
+<li>智能体（Agent） 观察当前环境状态（State）。</li>
+<li>智能体 根据策略（Policy）选择一个动作（Action）。</li>
+<li>环境（Environment） 接收动作并转移到新的状态，同时返回一个奖励（Reward）。</li>
+<li>智能体 根据新的状态和奖励，更新策略，以在未来获得更高的累积奖励。</li>
+</ol>
+<ul>
+<li>这一过程不断循环，形成一个马尔可夫决策过程（Markov Decision Process, MDP）。</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><p><strong>强化学习的交互过程</strong></p>
+</li>
+</ol>
+<p>强化学习的交互过程可以用 <strong>马尔可夫决策过程（MDP）</strong> 来形式化描述，其核心要素包括：</p>
+<table>
+<thead>
+<tr>
+<th><strong>符号</strong></th>
+<th><strong>含义</strong></th>
+<th><strong>说明</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>S</td>
+<td>状态空间（State Space）</td>
+<td>所有可能的状态集合</td>
+</tr>
+<tr>
+<td>A</td>
+<td>动作空间（Action Space）</td>
+<td>所有可能的动作集合</td>
+</tr>
+<tr>
+<td>P(s’, s, a)</td>
+<td>状态转移概率（Transition Probability）</td>
+<td>在状态 s下采取动作 a并转移到状态 s′的概率</td>
+</tr>
+<tr>
+<td>R(s,a,s′)</td>
+<td>奖励函数（Reward Function）</td>
+<td>在状态 s下采取动作 a并转移到状态 s′后获得的即时奖励</td>
+</tr>
+<tr>
+<td>γ</td>
+<td>折扣因子（Discount Factor）</td>
+<td>用于权衡短期和长期奖励（0 ≤ γ ≤ 1）</td>
+</tr>
+</tbody></table>
+<ol>
+<li><p><strong>马尔可夫性（Markov Property）</strong></p>
+<ul>
+<li><p>定义：未来状态 st+1只依赖于当前状态 st和当前动作 at，而与过去的状态和动作无关。</p>
+</li>
+<li><p>数学表达：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">P(st+1∣st,at,st−1,at−1,…)=P(st+1∣st,at)</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p><strong>智能体的目标</strong></p>
+<ol>
+<li>智能体的目标是找到一个<strong>最优策略（Optimal Policy）</strong> π∗(a∣s)，使得在长期内获得的<strong>累积奖励（Return）</strong> 最大化。</li>
+<li><strong>累积奖励（Return, Gt）</strong>：</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Gt=Rt+1+γRt+2+γ2Rt+3+⋯=k=0∑∞γkRt+k+1</span><br></pre></td></tr></table></figure>
+
+<p>（γ是折扣因子，用于平衡短期和长期奖励）</p>
+<ol start="3">
+<li><p><strong>策略（Policy, π）</strong>： 策略是智能体在某个状态 s下选择动作 a的规则。 可以是 <strong>确定性策略</strong>（a&#x3D;π(s)）或 <strong>随机性策略</strong>（π(a∣s)表示在状态 s下选择动作 a的概率）。</p>
+</li>
+<li><p><strong>目标</strong>：找到最优策略 π∗，使得 <strong>长期累积奖励 Gt最大化</strong>：</p>
+</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">π∗=argπmaxEπ[k=0∑∞γkRt+k+1]</span><br></pre></td></tr></table></figure></li>
+</ol>
+<hr>
+<ol start="4">
+<li><p>强化学习的核心挑战</p>
+<ol>
+<li><p>探索与利用（Exploration vs. Exploitation） 探索：尝试新的动作，发现可能更好的策略。 利用：选择已知能获得高奖励的动作。 挑战：如何在探索新策略和利用已知策略之间取得平衡？</p>
+</li>
+<li><p>延迟奖励（Delayed Reward） 智能体的某些动作可能不会立即获得奖励，而是影响未来的长期奖励。 挑战：如何让智能体学会考虑长期影响，而不仅仅是短期奖励？</p>
+</li>
+<li><p>高维状态与动作空间（High-Dimensional Spaces） 在复杂任务（如机器人控制、游戏AI）中，状态和动作空间可能非常大甚至连续。 挑战：如何高效地搜索最优策略？</p>
+</li>
+</ol>
+</li>
+</ol>
+<hr>
+<ol start="5">
+<li>强化学习的典型算法（简要提及）</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th><strong>算法类型</strong></th>
+<th><strong>代表算法</strong></th>
+<th><strong>特点</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>值函数方法（Value-Based）</strong></td>
+<td>Q-Learning、Deep Q-Network (DQN)</td>
+<td>学习状态-动作值函数 Q(s,a)，选择最大 Q值的动作</td>
+</tr>
+<tr>
+<td><strong>策略梯度方法（Policy-Based）</strong></td>
+<td>REINFORCE、Proximal Policy Optimization (PPO)</td>
+<td>直接优化策略 (\pi(a</td>
+</tr>
+<tr>
+<td><strong>Actor-Critic 方法</strong></td>
+<td>A2C、A3C、SAC</td>
+<td>结合值函数和策略梯度，兼顾稳定性和灵活性</td>
+</tr>
+<tr>
+<td><strong>基于模型的方法（Model-Based）</strong></td>
+<td>Dyna-Q</td>
+<td>学习环境模型，用于预测未来状态和奖励</td>
+</tr>
+</tbody></table>
+<h3 id="Actor-Critic方法"><a href="#Actor-Critic方法" class="headerlink" title="Actor-Critic方法"></a>Actor-Critic方法</h3><ol>
+<li><p>Actor-Critic方法的基本思想</p>
+<ol>
+<li>Actor-Critic（演员-评论家） 是强化学习中一类重要的 结合值函数（Value Function）和策略（Policy） 的方法，它综合了 值函数方法和策略梯度方法 的优点，旨在 更高效、更稳定地学习最优策略。</li>
+</ol>
+</li>
+<li><p>核心概念</p>
+<ul>
+<li><p><strong>Actor（演员）</strong>： 负责策略，即根据当前状态选择动作。 通常是一个 <strong>策略网络（Policy Network）</strong>，输出动作的概率分布（在随机策略中）或直接输出动作（在确定性策略中）。 <strong>目标</strong>：学习一个 最优策略 π(a∣s)，使得长期累积奖励最大化。</p>
+</li>
+<li><p><strong>Critic（评论家）</strong>： 负责评估，即评估当前状态或状态-动作对的价值（如状态值函数 V(s)或动作值函数 Q(s,a)）。 通常是一个 <strong>值函数网络（Value Network）</strong>，用于估计 当前策略下的长期回报。 <strong>目标</strong>：评估 Actor 选择的动作有多好，并提供 改进策略的信号（如TD误差）。</p>
+</li>
+</ul>
+</li>
+<li><p>为什么需要Actor-Critic？</p>
+<ul>
+<li><p>纯策略梯度方法： 直接优化策略，但 方差大（高方差梯度估计），训练不稳定。</p>
+</li>
+<li><p>纯值函数方法： 适用于离散动作空间，但在 连续动作空间中难以直接优化策略。</p>
+</li>
+<li><p><strong>Actor-Critic</strong>： Actor 负责探索（选择动作），Critic 负责评估（指导Actor改进）。 结合策略梯度和值函数估计，降低方差，提高训练稳定性。</p>
+</li>
+</ul>
+</li>
+<li><p>训练过程</p>
+<ol>
+<li><p>Actor-Critic 方法的核心是 <strong>Actor 和 Critic 同时学习</strong>：</p>
+<ul>
+<li><p><strong>Actor</strong> 学习 <strong>策略 π(a∣s)</strong>（如何选择动作）。</p>
+</li>
+<li><p><strong>Critic</strong> 学习 <strong>值函数 V(s)或 Q(s,a)</strong>（如何评估动作的好坏）。</p>
+</li>
+</ul>
+</li>
+<li><p>基本流程</p>
+<ol>
+<li><strong>Actor</strong> 根据当前状态 st选择一个动作 at（基于策略 π(a∣s)）。</li>
+<li><strong>环境</strong> 接收动作 at，返回下一个状态 st+1和奖励 rt。</li>
+<li><strong>Critic</strong> 计算 <strong>TD误差（Temporal Difference Error）</strong> 或 <strong>值函数误差</strong>，用于评估当前动作的好坏。</li>
+<li><strong>Critic</strong> 更新值函数（如 V(s)或 Q(s,a)），提供更准确的评估。</li>
+<li><strong>Actor</strong> 根据 <strong>Critic 的反馈（如TD误差）</strong> 更新策略（如调整动作选择概率）。</li>
+<li><strong>循环</strong>：不断重复上述过程，直到策略收敛。</li>
+</ol>
+</li>
+</ol>
+</li>
+<li><p>关键组件</p>
+<ol>
+<li><p><strong>Critic 的值函数（Value Function）</strong>：Critic 通常学习以下两种值函数之一：</p>
+<ol>
+<li><p><strong>状态值函数 V(s)</strong>：</p>
+<ul>
+<li><p>估计在状态 s下，<strong>遵循当前策略 π的长期回报</strong>。</p>
+</li>
+<li><p><strong>TD误差（Temporal Difference Error）</strong>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">δt=rt+γV(st+1)−V(st)</span><br></pre></td></tr></table></figure>
+
+<p>（γ是折扣因子，rt是即时奖励，V(st+1)是下一状态的值）</p>
+</li>
+</ul>
+</li>
+<li><p><strong>动作值函数 Q(s,a)</strong>：</p>
+<ul>
+<li><p>估计在状态 s下采取动作 a的长期回报。</p>
+</li>
+<li><p><strong>TD误差</strong>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">δt=rt+γQ(st+1,at+1)−Q(st,at)</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ol>
+</li>
+<li><p>Actor 的策略（Policy）</p>
+<ul>
+<li><p><strong>策略 π(a∣s)</strong> 可以是 <strong>随机策略（概率分布）</strong> 或 <strong>确定性策略（直接输出动作）</strong>。</p>
+</li>
+<li><p><strong>Actor 的更新</strong> 通常基于 <strong>Critic 提供的TD误差 δt</strong>，例如：</p>
+<ul>
+<li><p><strong>策略梯度更新</strong>（适用于随机策略）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">∇θJ(θ)≈E[δt⋅∇θlogπθ(at∣st)]</span><br></pre></td></tr></table></figure>
+
+<p>（θ是策略网络的参数，δt是Critic提供的TD误差）</p>
+</li>
+<li><p><strong>确定性策略梯度（如DDPG）</strong>：适用于连续动作空间。</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><p>Actor-Critic方法的优点</p>
+<ol>
+<li>结合策略梯度和值函数： 策略梯度方法（Actor） 直接优化策略，但方差大。 值函数方法（Critic） 提供更稳定的评估信号，降低方差。</li>
+<li>适用于连续动作空间（如机器人控制）。</li>
+<li>比纯策略梯度方法更稳定（Critic 提供TD误差指导）。</li>
+<li>比纯值函数方法（如Q-Learning）更灵活（适用于连续动作）。</li>
+</ol>
+</li>
+</ol>
+<h3 id="强化学习在生成模型中的潜在应用"><a href="#强化学习在生成模型中的潜在应用" class="headerlink" title="强化学习在生成模型中的潜在应用"></a><strong>强化学习在生成模型中的潜在应用</strong></h3><ol>
+<li><p>核心思想</p>
+<ol>
+<li>将生成过程视为<strong>序列决策问题</strong>，用强化学习（RL）的<strong>奖励信号</strong>直接优化生成结果（如文本质量、图像美观度等），弥补传统方法（如最大似然）只能优化局部目标的不足。</li>
+</ol>
+</li>
+<li><p>典型应用与实例</p>
+<ol>
+<li><p>文本生成（如翻译、对话、故事）</p>
+<ul>
+<li><p><strong>问题</strong>：传统模型（如NLP）倾向生成“安全但平淡”的文本（追求单词语义正确，而非整体质量）。</p>
+</li>
+<li><p><strong>RL作用</strong>：用<strong>全局奖励</strong>（如BLEU分数、用户满意度）优化生成策略，提升连贯性&#x2F;创意性。</p>
+</li>
+<li><p><strong>实例</strong>：谷歌机器翻译引入RL优化BLEU；对话系统优化回复质量。</p>
+</li>
+</ul>
+</li>
+<li><p>图像生成（如文本到图像、艺术创作）</p>
+<ul>
+<li><p><strong>问题</strong>：生成图像需匹配复杂条件（如文本描述），传统方法难直接优化匹配度。</p>
+</li>
+<li><p><strong>RL作用</strong>：通过奖励（如图像-文本对齐度、美学评分）指导生成，提升细节与相关性。</p>
+</li>
+<li><p><strong>实例</strong>：AttnGAN结合RL优化图像与文本匹配；艺术生成追求风格一致性。</p>
+</li>
+</ul>
+</li>
+<li><p>分子&#x2F;药物设计（生成功能性分子）</p>
+<ul>
+<li><p><strong>问题</strong>：需生成具有特定性质（如药效、稳定性）的分子结构。</p>
+</li>
+<li><p><strong>RL作用</strong>：以分子性质（如生物活性、毒性）为奖励，指导分子图逐步构建。</p>
+</li>
+<li><p><strong>实例</strong>：RL生成高药物相似性分子（优化QED&#x2F;LogP指标）。</p>
+</li>
+</ul>
+</li>
+<li><p>游戏&#x2F;虚拟内容生成</p>
+<ul>
+<li><p><strong>问题</strong>：自动生成游戏关卡&#x2F;地图需平衡难度与趣味性。</p>
+</li>
+<li><p><strong>RL作用</strong>：以玩家体验（如挑战性、探索性）为奖励，优化内容设计。</p>
+</li>
+<li><p><strong>实例</strong>：RL生成Mario&#x2F;Doom游戏关卡。</p>
+</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><p>常用RL方法</p>
+<ul>
+<li><strong>策略梯度（如REINFORCE）</strong>：直接优化生成策略（适合文本&#x2F;分子）。</li>
+<li><strong>Actor-Critic</strong>：结合策略与值函数，更稳定（适合图像&#x2F;复杂生成）。</li>
+<li><strong>奖励驱动</strong>：用外部指标（BLEU、化学性质、用户反馈）定义奖励。</li>
+</ul>
+</li>
+<li><p>核心优势</p>
+<ul>
+<li><p>优化<strong>复杂目标</strong>（如美学、功能性、用户偏好）</p>
+</li>
+<li><p>适配<strong>序列生成任务</strong>（文本&#x2F;图像&#x2F;分子逐步构建）</p>
+</li>
+<li><p>灵活设计<strong>奖励信号</strong>（模拟&#x2F;人工&#x2F;仿真反馈）</p>
+</li>
+</ul>
+</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/12/04/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%85%AB%E8%82%A1/" rel="prev" title="计算机网络八股">
+                  <i class="fa fa-angle-left"></i> 计算机网络八股
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2025/12/04/python%E6%A0%B8%E5%BF%83%E5%BA%93%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="next" title="python核心库学习笔记">
+                  python核心库学习笔记 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">mukongshan</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>

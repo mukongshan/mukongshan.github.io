@@ -1,0 +1,3108 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 8.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous" defer></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"kongshan.me","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.26.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":null,"gitalk":{"enable":true,"github_id":"mukongshan","repo":"mukongshan.github.io","client_id":"Ov23lifObx8GLwJlVsh3","client_secret":"ebc5f2cd8493752a92129fa16b4bf1635308b0d6","admin_user":"mukongshan","distraction_free_mode":true,"language":"zh-CN"}},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="基础知识基础工具Linux 目录结构：  &#x2F;bin  存放常用的二进制可执行文件（命令），如 ls、cp、mv、cat。 所有用户都可以使用。   &#x2F;sbin  存放系统管理用的二进制程序，如 reboot、ifconfig。 一般由 root 管理员使用。   &#x2F;boot  启动相关文件，比如内核 vmlinuz、引导程序 grub 配置。 系统开机时最先用到。   &#x2F;dev  存放设备文件（不">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java开发生态学习">
+<meta property="og:url" content="https://kongshan.me/2025/12/04/Java%E5%BC%80%E5%8F%91%E7%94%9F%E6%80%81%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:site_name" content="kongshan&#39;s blog">
+<meta property="og:description" content="基础知识基础工具Linux 目录结构：  &#x2F;bin  存放常用的二进制可执行文件（命令），如 ls、cp、mv、cat。 所有用户都可以使用。   &#x2F;sbin  存放系统管理用的二进制程序，如 reboot、ifconfig。 一般由 root 管理员使用。   &#x2F;boot  启动相关文件，比如内核 vmlinuz、引导程序 grub 配置。 系统开机时最先用到。   &#x2F;dev  存放设备文件（不">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250916142637090.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250924222402373.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250924223517546.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250915132417733.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250915134257450.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250915133740199.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250914173532423.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250914174059346.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250914174201047.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250914174323359.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250915140828453.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250915141214215.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250920131017877.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250920150345535.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250915141413962.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250920150332000.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250922212806241.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250923095045954.png">
+<meta property="article:published_time" content="2025-12-03T17:00:00.000Z">
+<meta property="article:modified_time" content="2025-12-03T09:05:34.793Z">
+<meta property="article:author" content="mukongshan">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250916142637090.png">
+
+
+<link rel="canonical" href="https://kongshan.me/2025/12/04/Java%E5%BC%80%E5%8F%91%E7%94%9F%E6%80%81%E5%AD%A6%E4%B9%A0/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://kongshan.me/2025/12/04/Java%E5%BC%80%E5%8F%91%E7%94%9F%E6%80%81%E5%AD%A6%E4%B9%A0/","path":"2025/12/04/Java开发生态学习/","title":"Java开发生态学习"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Java开发生态学习 | kongshan's blog</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+
+  <script src="/js/third-party/pace.js" defer></script>
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">kongshan's blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-blog"><a href="/blog/" rel="section"><i class="fa fa-book-open fa-fw"></i>博客</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="nav-number">1.</span> <span class="nav-text">基础知识</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E5%B7%A5%E5%85%B7"><span class="nav-number">1.1.</span> <span class="nav-text">基础工具</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Linux"><span class="nav-number">1.1.1.</span> <span class="nav-text">Linux</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BE%8B%E5%A6%82%EF%BC%9Agit-clone-https-github-com-username-repo-git"><span class="nav-number">2.</span> <span class="nav-text">例如：git clone https:&#x2F;&#x2F;github.com&#x2F;username&#x2F;repo.git</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AE%80%E6%B4%81%E7%89%88%E6%97%A5%E5%BF%97"><span class="nav-number">3.</span> <span class="nav-text">简洁版日志</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BE%8B%E5%A6%82%EF%BC%9Agit-add-index-html"><span class="nav-number">4.</span> <span class="nav-text">例如：git add index.html</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0%E6%89%80%E6%9C%89%E4%BF%AE%E6%94%B9%E7%9A%84%E6%96%87%E4%BB%B6"><span class="nav-number">5.</span> <span class="nav-text">添加所有修改的文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%88%96%E8%80%85%E4%BD%BF%E7%94%A8%E6%9B%B4%E7%8E%B0%E4%BB%A3%E7%9A%84%E5%91%BD%E4%BB%A4"><span class="nav-number">6.</span> <span class="nav-text">或者使用更现代的命令</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%88%96"><span class="nav-number">7.</span> <span class="nav-text">或</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BC%BA%E5%88%B6%E5%88%A0%E9%99%A4%E6%9C%AA%E5%90%88%E5%B9%B6%E7%9A%84%E5%88%86%E6%94%AF"><span class="nav-number">8.</span> <span class="nav-text">强制删除未合并的分支</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E6%AC%A1%E6%8E%A8%E9%80%81%E6%97%B6%E4%BD%BF%E7%94%A8-u-%E8%AE%BE%E7%BD%AE%E4%B8%8A%E6%B8%B8%E5%88%86%E6%94%AF"><span class="nav-number">9.</span> <span class="nav-text">第一次推送时使用 -u 设置上游分支</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B9%8B%E5%90%8E%E5%8F%AF%E4%BB%A5%E7%9B%B4%E6%8E%A5%E4%BD%BF%E7%94%A8-git-push"><span class="nav-number">10.</span> <span class="nav-text">之后可以直接使用 git push</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%AF%94%E8%BE%83%E5%B7%A5%E4%BD%9C%E5%8C%BA%E5%92%8C%E6%9A%82%E5%AD%98%E5%8C%BA"><span class="nav-number">11.</span> <span class="nav-text">比较工作区和暂存区</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%AF%94%E8%BE%83%E6%9A%82%E5%AD%98%E5%8C%BA%E5%92%8C%E6%9C%80%E6%96%B0%E6%8F%90%E4%BA%A4"><span class="nav-number">12.</span> <span class="nav-text">比较暂存区和最新提交</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%80%E5%8F%91%E6%A1%86%E6%9E%B6"><span class="nav-number">12.1.</span> <span class="nav-text">开发框架</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SpringBoot"><span class="nav-number">12.1.1.</span> <span class="nav-text">SpringBoot</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MyBatis"><span class="nav-number">12.1.2.</span> <span class="nav-text">MyBatis</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%AD%98%E5%82%A8"><span class="nav-number">12.2.</span> <span class="nav-text">数据存储</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#MySQL"><span class="nav-number">12.2.1.</span> <span class="nav-text">MySQL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MongoDB"><span class="nav-number">12.2.2.</span> <span class="nav-text">MongoDB</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Redis"><span class="nav-number">12.2.3.</span> <span class="nav-text">Redis</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%AD%E9%97%B4%E4%BB%B6"><span class="nav-number">12.3.</span> <span class="nav-text">中间件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Tomcat"><span class="nav-number">12.3.1.</span> <span class="nav-text">Tomcat</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Kafka"><span class="nav-number">12.3.2.</span> <span class="nav-text">Kafka</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ZooKeeper"><span class="nav-number">12.3.3.</span> <span class="nav-text">ZooKeeper</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ElasticSearch"><span class="nav-number">12.3.4.</span> <span class="nav-text">ElasticSearch</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%83%A8%E7%BD%B2%E8%BF%90%E7%BB%B4"><span class="nav-number">12.4.</span> <span class="nav-text">部署运维</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Docker"><span class="nav-number">12.4.1.</span> <span class="nav-text">Docker</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Jenkins"><span class="nav-number">12.4.2.</span> <span class="nav-text">Jenkins</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Nginx"><span class="nav-number">12.4.3.</span> <span class="nav-text">Nginx</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#k8s"><span class="nav-number">12.4.4.</span> <span class="nav-text">k8s</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E5%B8%83%E6%9E%B6%E6%9E%84"><span class="nav-number">12.5.</span> <span class="nav-text">分布架构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SpringCloud"><span class="nav-number">12.5.1.</span> <span class="nav-text">SpringCloud</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Dubbo"><span class="nav-number">12.5.2.</span> <span class="nav-text">Dubbo</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AF%A6%E8%A7%A3"><span class="nav-number">13.</span> <span class="nav-text">详解</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Spring"><span class="nav-number">13.1.</span> <span class="nav-text">Spring</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis-1"><span class="nav-number">13.2.</span> <span class="nav-text">Redis</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-number">13.2.1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="nav-number">13.2.2.</span> <span class="nav-text">数据结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B"><span class="nav-number">13.2.3.</span> <span class="nav-text">线程模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8C%81%E4%B9%85%E6%9C%BA%E5%88%B6"><span class="nav-number">13.2.4.</span> <span class="nav-text">持久机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%AB%98%E5%8F%AF%E7%94%A8%E4%B8%8E%E6%89%A9%E5%B1%95%EF%BC%88%E9%9B%86%E7%BE%A4%E7%AD%96%E7%95%A5%EF%BC%89"><span class="nav-number">13.2.5.</span> <span class="nav-text">高可用与扩展（集群策略）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8B%E5%8A%A1"><span class="nav-number">13.2.6.</span> <span class="nav-text">事务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Lua-%E8%84%9A%E6%9C%AC"><span class="nav-number">13.2.7.</span> <span class="nav-text">Lua 脚本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%87%E6%9C%9F%E7%AD%96%E7%95%A5%E4%B8%8E%E5%86%85%E5%AD%98%E6%B7%98%E6%B1%B0%E6%9C%BA%E5%88%B6"><span class="nav-number">13.2.8.</span> <span class="nav-text">过期策略与内存淘汰机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Redis%E5%AE%9E%E7%8E%B0%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81"><span class="nav-number">13.2.9.</span> <span class="nav-text">Redis实现分布式锁</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E4%B8%8E%E4%BC%98%E5%8C%96%E5%BB%BA%E8%AE%AE"><span class="nav-number">13.2.10.</span> <span class="nav-text">常见问题与优化建议</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%A2%E9%98%85%E4%B8%8E%E5%8F%91%E5%B8%83"><span class="nav-number">13.2.11.</span> <span class="nav-text">订阅与发布</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#docker%E5%AE%9E%E6%88%98"><span class="nav-number">13.3.</span> <span class="nav-text">docker实战</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85docker"><span class="nav-number">13.3.1.</span> <span class="nav-text">安装docker</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%B8%E5%BF%83%E5%AE%9E%E6%88%98"><span class="nav-number">13.3.2.</span> <span class="nav-text">核心实战</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Deployment"><span class="nav-number">13.3.2.1.</span> <span class="nav-text">Deployment</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Ingress"><span class="nav-number">13.3.2.2.</span> <span class="nav-text">Ingress</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%AB%98%E7%BA%A7"><span class="nav-number">13.3.2.3.</span> <span class="nav-text">高级</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Kubesphere"><span class="nav-number">13.4.</span> <span class="nav-text">Kubesphere</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85"><span class="nav-number">13.4.1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%9A%E7%A7%9F%E6%88%B7"><span class="nav-number">13.4.2.</span> <span class="nav-text">多租户</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%83%A8%E7%BD%B2%E5%BA%94%E7%94%A8"><span class="nav-number">13.4.3.</span> <span class="nav-text">部署应用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0-1"><span class="nav-number">13.4.3.1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%89%E8%A3%85MySQL"><span class="nav-number">13.4.3.2.</span> <span class="nav-text">安装MySQL</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%89%E8%A3%85redis"><span class="nav-number">13.4.3.3.</span> <span class="nav-text">安装redis</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%89%E8%A3%85ElasticSearch"><span class="nav-number">13.4.3.4.</span> <span class="nav-text">安装ElasticSearch</span></a></li></ol></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="mukongshan"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">mukongshan</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">19</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/mukongshan" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;mukongshan" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:2087179041@qq.com" title="E-Mail → mailto:2087179041@qq.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://kongshan.me/2025/12/04/Java%E5%BC%80%E5%8F%91%E7%94%9F%E6%80%81%E5%AD%A6%E4%B9%A0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="mukongshan">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="kongshan's blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Java开发生态学习 | kongshan's blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Java开发生态学习
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-12-04 01:00:00" itemprop="dateCreated datePublished" datetime="2025-12-04T01:00:00+08:00">2025-12-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-12-03 17:05:34" itemprop="dateModified" datetime="2025-12-03T17:05:34+08:00">2025-12-03</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/tech/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h1><h2 id="基础工具"><a href="#基础工具" class="headerlink" title="基础工具"></a>基础工具</h2><h3 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h3><ol>
+<li><p>目录结构：</p>
+<ol>
+<li><p><strong><code>/bin</code></strong></p>
+<ul>
+<li>存放常用的二进制可执行文件（命令），如 <code>ls</code>、<code>cp</code>、<code>mv</code>、<code>cat</code>。</li>
+<li>所有用户都可以使用。</li>
+</ul>
+</li>
+<li><p><strong><code>/sbin</code></strong></p>
+<ul>
+<li>存放系统管理用的二进制程序，如 <code>reboot</code>、<code>ifconfig</code>。</li>
+<li>一般由 root 管理员使用。</li>
+</ul>
+</li>
+<li><p><strong><code>/boot</code></strong></p>
+<ul>
+<li>启动相关文件，比如内核 <code>vmlinuz</code>、引导程序 <code>grub</code> 配置。</li>
+<li>系统开机时最先用到。</li>
+</ul>
+</li>
+<li><p><strong><code>/dev</code></strong></p>
+<ul>
+<li>存放设备文件（不是实际的硬件，而是设备接口）。</li>
+<li>比如 <code>/dev/sda</code>（硬盘）、<code>/dev/tty</code>（终端）、<code>/dev/null</code>。</li>
+</ul>
+</li>
+<li><p><strong><code>/etc</code></strong></p>
+<ul>
+<li>存放系统配置文件，例如：<ul>
+<li><code>/etc/passwd</code> 用户信息</li>
+<li><code>/etc/fstab</code> 磁盘挂载</li>
+<li><code>/etc/apt/</code> apt 软件源配置</li>
+</ul>
+</li>
+<li>里面通常没有二进制程序，主要是文本配置文件。</li>
+</ul>
+</li>
+<li><p><strong><code>/home</code></strong></p>
+<ul>
+<li>普通用户的主目录。</li>
+<li>例如用户 <code>hua</code> 的主目录是 <code>/home/hua</code>，里面存放桌面、下载、配置等。</li>
+</ul>
+</li>
+<li><p><strong><code>/lib</code></strong></p>
+<ul>
+<li>存放系统运行所需的共享库文件（类似 Windows 的 DLL）。</li>
+<li>比如 <code>/lib/x86_64-linux-gnu/</code>。</li>
+</ul>
+</li>
+<li><p><strong><code>/media</code></strong></p>
+<ul>
+<li>挂载点目录，系统自动挂载 U 盘、光盘时会放在这里。</li>
+<li>如 <code>/media/username/USB_DRIVE</code>。</li>
+</ul>
+</li>
+<li><p><strong><code>/mnt</code></strong></p>
+<ul>
+<li>传统的临时挂载点，管理员手动挂载磁盘时常用。</li>
+</ul>
+</li>
+<li><p><strong><code>/opt</code></strong></p>
+<ul>
+<li>第三方应用软件目录。</li>
+<li>比如你单独安装的软件可能放在 <code>/opt/google/chrome/</code>。</li>
+</ul>
+</li>
+<li><p><strong><code>/proc</code></strong></p>
+<ul>
+<li>虚拟文件系统，内核和进程信息接口。</li>
+<li>比如 <code>/proc/cpuinfo</code> 查看 CPU 信息，<code>/proc/meminfo</code> 查看内存信息。</li>
+</ul>
+</li>
+<li><p><strong><code>/root</code></strong></p>
+<ul>
+<li>root 管理员的主目录（类似 <code>/home/root</code>）。</li>
+</ul>
+</li>
+<li><p><strong><code>/run</code></strong></p>
+<ul>
+<li>存放系统运行时数据（PID 文件、socket 等）。</li>
+<li>系统重启后会清空。</li>
+</ul>
+</li>
+<li><p><strong><code>/srv</code></strong></p>
+<ul>
+<li>存放一些服务（service）运行需要的数据，如 FTP、HTTP 服务器数据。</li>
+</ul>
+</li>
+<li><p><strong><code>/sys</code></strong></p>
+<ul>
+<li>内核接口虚拟文件系统，提供硬件信息和控制。</li>
+<li>比如 <code>/sys/class/net/</code> 可以看到网卡信息。</li>
+</ul>
+</li>
+<li><p><strong><code>/tmp</code></strong></p>
+<ul>
+<li>临时文件目录，任何用户都可使用。</li>
+<li>重启后一般会被清空。</li>
+</ul>
+</li>
+<li><p><strong><code>/usr</code></strong></p>
+<ul>
+<li>最庞大的目录，存放用户软件与资源。</li>
+<li>细分为：<ul>
+<li><code>/usr/bin</code>：用户程序</li>
+<li><code>/usr/sbin</code>：管理员程序</li>
+<li><code>/usr/lib</code>：库文件</li>
+<li><code>/usr/share</code>：共享数据、文档、图标</li>
+<li><code>/usr/local</code>：用户本地安装的软件</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong><code>/var</code></strong></p>
+<ul>
+<li>存放可变数据（log 日志、缓存、邮件、数据库等）。</li>
+<li>例如：<ul>
+<li><code>/var/log</code>：系统日志</li>
+<li><code>/var/tmp</code>：临时文件</li>
+<li><code>/var/www</code>：网站文件（如果装了 Apache&#x2F;Nginx）</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>总结</p>
+<ol>
+<li><pre><code>小总结：
+
+程序相关：/bin /sbin /lib /usr /opt
+
+配置相关：/etc
+
+用户相关：/home /root
+
+运行相关：/proc /sys /dev /run /tmp
+
+数据相关：/var /srv /media /mnt
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">       2. </span><br><span class="line"></span><br><span class="line">### git</span><br><span class="line"></span><br><span class="line">1. 是什么</span><br><span class="line"></span><br><span class="line">   1. Git 是一个**分布式版本控制系统**，用于跟踪文件的变化，协调多人协作开发，管理项目的历史版本。</span><br><span class="line">   2. 核心概念</span><br><span class="line">      1. **仓库（Repository / Repo）**一个 Git 仓库就是项目文件加上其版本历史记录的集合。可以是本地仓库（Local Repository），也可以是远程仓库（Remote Repository，如 GitHub、GitLab 等）。</span><br><span class="line">      2. **提交（Commit）**每次对文件的修改，当你觉得可以保存一个版本时，就可以做一个“提交”。每个提交都有一个唯一的 SHA-1 哈希值，记录了该版本的所有更改内容及提交信息。</span><br><span class="line">      3. **分支（Branch）**分支是独立开发线，允许你在不影响主线（通常是 `main`或 `master`）的情况下进行新功能开发或修复。默认分支通常是 `main`或 `master`。</span><br><span class="line">      4. **工作区、暂存区、版本库</span><br><span class="line">         1. **工作区（Working Directory）**：你直接编辑的文件区域。</span><br><span class="line">         2. **暂存区（Stage/Index）**：通过 `git add`将要提交的变更放入暂存区。</span><br><span class="line">         3. **版本库（Repository）**：通过 `git commit`将暂存区的变更保存到本地仓库中。</span><br><span class="line">      5. **远程仓库（Remote）**托管在网络上的仓库，比如 GitHub 上的项目，可以通过 `git remote`进行关联。</span><br><span class="line"></span><br><span class="line">2. 常用命令</span><br><span class="line"></span><br><span class="line">   1. 配置 Git</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</code></pre>
+</li>
+</ol>
+</li>
+</ol>
+<p>   git config –global user.name “你的名字”<br>   git config –global user.email “你的邮箱”<br>   <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&gt; 设置全局用户信息，每次提交都会记录是谁提交的。</span><br><span class="line"></span><br><span class="line">查看配置：</span><br><span class="line"></span><br></pre></td></tr></table></figure><br>   git config –list<br>   <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">   ------</span><br><span class="line"></span><br><span class="line">2. 创建仓库</span><br><span class="line"></span><br><span class="line">   初始化一个新的 Git 仓库：</span><br><span class="line"></span><br></pre></td></tr></table></figure><br>   git init<br>   <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">克隆一个远程仓库：</span><br><span class="line"></span><br></pre></td></tr></table></figure><br>   git clone &lt;远程仓库地址&gt;</p>
+<h1 id="例如：git-clone-https-github-com-username-repo-git"><a href="#例如：git-clone-https-github-com-username-repo-git" class="headerlink" title="例如：git clone https://github.com/username/repo.git"></a>例如：git clone <a target="_blank" rel="noopener" href="https://github.com/username/repo.git">https://github.com/username/repo.git</a></h1>   <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">   ------</span><br><span class="line"></span><br><span class="line">3. 查看状态与日志</span><br><span class="line"></span><br><span class="line">   查看当前仓库的状态（哪些文件被修改、暂存等）：</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>   git status<br>   <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">查看提交历史：</span><br><span class="line"></span><br></pre></td></tr></table></figure><br>   git log</p>
+<h1 id="简洁版日志"><a href="#简洁版日志" class="headerlink" title="简洁版日志"></a>简洁版日志</h1><p>   git log –oneline<br>   <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">   ------</span><br><span class="line"></span><br><span class="line">4. 添加与提交</span><br><span class="line"></span><br><span class="line">   将工作区的修改添加到暂存区：</span><br><span class="line"></span><br></pre></td></tr></table></figure><br>   git add &lt;文件名&gt;</p>
+<h1 id="例如：git-add-index-html"><a href="#例如：git-add-index-html" class="headerlink" title="例如：git add index.html"></a>例如：git add index.html</h1><h1 id="添加所有修改的文件"><a href="#添加所有修改的文件" class="headerlink" title="添加所有修改的文件"></a>添加所有修改的文件</h1><p>   git add .<br>   <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">提交暂存区的修改到本地仓库：</span><br><span class="line"></span><br></pre></td></tr></table></figure><br>   git commit -m “提交说明”<br>   <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">   ------</span><br><span class="line"></span><br><span class="line">5. 分支操作</span><br><span class="line"></span><br><span class="line">   查看当前分支：</span><br><span class="line"></span><br></pre></td></tr></table></figure><br>   git branch<br>   <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">创建新分支：</span><br><span class="line"></span><br></pre></td></tr></table></figure><br>   git branch &lt;分支名&gt;<br>   <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">切换分支：</span><br><span class="line"></span><br></pre></td></tr></table></figure><br>   git checkout &lt;分支名&gt;</p>
+<h1 id="或者使用更现代的命令"><a href="#或者使用更现代的命令" class="headerlink" title="或者使用更现代的命令"></a>或者使用更现代的命令</h1><p>   git switch &lt;分支名&gt;<br>   <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">创建并切换到新分支：</span><br><span class="line"></span><br></pre></td></tr></table></figure><br>   git checkout -b &lt;新分支名&gt;</p>
+<h1 id="或"><a href="#或" class="headerlink" title="或"></a>或</h1><p>   git switch -c &lt;新分支名&gt;<br>   <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">合并分支（通常在主分支上合并其他分支）：</span><br><span class="line"></span><br></pre></td></tr></table></figure><br>   git merge &lt;要合并的分支名&gt;<br>   <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">删除分支：</span><br><span class="line"></span><br></pre></td></tr></table></figure><br>   git branch -d &lt;分支名&gt;</p>
+<h1 id="强制删除未合并的分支"><a href="#强制删除未合并的分支" class="headerlink" title="强制删除未合并的分支"></a>强制删除未合并的分支</h1><p>   git branch -D &lt;分支名&gt;<br>   <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">   ------</span><br><span class="line"></span><br><span class="line">6. 与远程仓库交互</span><br><span class="line"></span><br><span class="line">   查看远程仓库：</span><br><span class="line"></span><br></pre></td></tr></table></figure><br>   git remote -v<br>   <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">添加远程仓库：</span><br><span class="line"></span><br></pre></td></tr></table></figure><br>   git remote add origin &lt;远程仓库地址&gt;<br>   <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">推送本地分支到远程：</span><br><span class="line"></span><br></pre></td></tr></table></figure><br>   git push -u origin &lt;分支名&gt;</p>
+<h1 id="第一次推送时使用-u-设置上游分支"><a href="#第一次推送时使用-u-设置上游分支" class="headerlink" title="第一次推送时使用 -u 设置上游分支"></a>第一次推送时使用 -u 设置上游分支</h1><h1 id="之后可以直接使用-git-push"><a href="#之后可以直接使用-git-push" class="headerlink" title="之后可以直接使用 git push"></a>之后可以直接使用 git push</h1>   <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">从远程拉取更新（拉取并尝试合并）：</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>   git pull<br>   <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">从远程获取更新（不自动合并）：</span><br><span class="line"></span><br></pre></td></tr></table></figure><br>   git fetch<br>   <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">   ------</span><br><span class="line"></span><br><span class="line">7. 撤销与回退</span><br><span class="line"></span><br><span class="line">   撤销工作区的修改（未 add）：</span><br><span class="line"></span><br></pre></td></tr></table></figure><br>   git checkout – &lt;文件名&gt;<br>   <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">撤销暂存区的修改（已 add 但未 commit）：</span><br><span class="line"></span><br></pre></td></tr></table></figure><br>   git reset HEAD &lt;文件名&gt;<br>   <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">回退到某个提交（谨慎使用！会修改历史）：</span><br><span class="line"></span><br></pre></td></tr></table></figure><br>   git reset –hard <commit-id><br>   <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">查看所有提交记录，找到想要的 commit-id：</span><br><span class="line"></span><br></pre></td></tr></table></figure><br>   git log –oneline<br>   <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">   ------</span><br><span class="line"></span><br><span class="line">8. 其他实用命令</span><br><span class="line"></span><br><span class="line">   比较差异：</span><br><span class="line"></span><br></pre></td></tr></table></figure><br>   git diff</p>
+<h1 id="比较工作区和暂存区"><a href="#比较工作区和暂存区" class="headerlink" title="比较工作区和暂存区"></a>比较工作区和暂存区</h1><p>   git diff –staged</p>
+<h1 id="比较暂存区和最新提交"><a href="#比较暂存区和最新提交" class="headerlink" title="比较暂存区和最新提交"></a>比较暂存区和最新提交</h1>   <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">储藏当前修改（临时保存，用于切换分支等场景）：</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>   git stash<br>   git stash pop<br>   <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">查看远程分支：</span><br><span class="line"></span><br></pre></td></tr></table></figure><br>   git branch -r<br>   <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">查看所有分支（本地+远程）：</span><br><span class="line"></span><br></pre></td></tr></table></figure><br>   git branch -a<br>   <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">### maven</span><br><span class="line"></span><br><span class="line">1. 是什么</span><br><span class="line"></span><br><span class="line">   1. **Apache Maven** 是一个 项目管理和构建自动化工具，主要用于 Java 项目，但也可以用于其他语言的项目。</span><br><span class="line">   2. 它基于 项目对象模型（POM, Project Object Model） 的概念，通过一个名为 `pom.xml`的配置文件来管理项目的 构建、依赖、文档、报告、发布 等各个方面。</span><br><span class="line"></span><br><span class="line">2. 主要功能</span><br><span class="line"></span><br><span class="line">   1. </span><br><span class="line"></span><br><span class="line">   2. | 功能                                  | 说明                                                       |</span><br><span class="line">      | :------------------------------------ | :--------------------------------------------------------- |</span><br><span class="line">      | **依赖管理（Dependency Management）** | 自动下载和管理项目所需的第三方库（jar 包），无需手动导入。 |</span><br><span class="line">      | **标准化的项目结构**                  | Maven 规定了统一的目录结构，便于团队协作和工具支持。       |</span><br><span class="line">      | **构建生命周期（Build Lifecycle）**   | 定义了清晰的构建过程，如编译、测试、打包、部署等。         |</span><br><span class="line">      | **插件机制（Plugins）**               | 支持各种插件来扩展功能，如编译插件、打包插件、测试插件等。 |</span><br><span class="line">      | **多模块项目管理（Multi-module）**    | 支持将一个大项目拆分为多个子模块，便于管理和复用。         |</span><br><span class="line">      | **一键构建与部署**                    | 通过简单的命令即可完成编译、测试、打包、发布等操作。       |</span><br><span class="line"></span><br><span class="line">3. 核心概念</span><br><span class="line"></span><br><span class="line">   1. **POM（Project Object Model）**</span><br><span class="line">      1. Maven 项目的核心配置文件，名称固定为：`pom.xml`</span><br><span class="line">      2. 定义了项目的基本信息、依赖、插件、构建配置等。</span><br><span class="line">      3. 所有的 Maven 项目都围绕 POM 文件来管理。</span><br><span class="line"></span><br><span class="line">   2. **坐标（Coordinates）**</span><br><span class="line"></span><br><span class="line">      1. 每个依赖库（第三方 jar 包）都通过一组唯一标识来定位，称为 **Maven 坐标**，包括：</span><br><span class="line"></span><br><span class="line">         - **groupId**：组织或公司名，如 `org.springframework`</span><br><span class="line"></span><br><span class="line">         - **artifactId**：项目或模块名称，如 `spring-core`</span><br><span class="line"></span><br><span class="line">         - **version**：版本号，如 `5.3.10`</span><br><span class="line"></span><br><span class="line">           - 示例：</span><br><span class="line"></span><br><span class="line">           - ```xml</span><br><span class="line">             &lt;dependency&gt;  &lt;groupId&gt;org.springframework&lt;/groupId&gt;</span><br><span class="line">                 &lt;artifactId&gt;spring-core&lt;/artifactId&gt;</span><br><span class="line">                 &lt;version&gt;5.3.10&lt;/version&gt;</span><br><span class="line">             &lt;/dependency&gt;</span><br></pre></td></tr></table></figure></p>
+<ol start="3">
+<li><p><strong>仓库（Repositories）</strong></p>
+<p>Maven 从仓库中下载依赖包，分为：</p>
+<ul>
+<li><strong>本地仓库（Local Repository）</strong>：在你电脑上的一个目录（默认是 <code>~/.m2/repository</code>），存放已下载的 jar 包。</li>
+<li><strong>中央仓库（Central Repository）</strong>：Maven 官方维护的远程仓库，地址是 <a target="_blank" rel="noopener" href="https://repo.maven.apache.org,包含绝大多数开源/">https://repo.maven.apache.org，包含绝大多数开源</a> Java 库。</li>
+<li><strong>私服（Nexus、JFrog 等）</strong>：企业内部搭建的 Maven 仓库，用于管理内部共享的 jar 包。</li>
+</ul>
+</li>
+<li><p><strong>构建生命周期（Build Lifecycle）</strong></p>
+<p>Maven 的构建过程分为几个标准的生命周期阶段（Phases），常用的有：</p>
+<table>
+<thead>
+<tr>
+<th align="left">阶段</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>validate</code></td>
+<td align="left">验证项目是否正确，所需信息是否完整</td>
+</tr>
+<tr>
+<td align="left"><code>compile</code></td>
+<td align="left">编译源代码（通常是我们写的 java 代码）</td>
+</tr>
+<tr>
+<td align="left"><code>test</code></td>
+<td align="left">运行单元测试（使用 JUnit 等）</td>
+</tr>
+<tr>
+<td align="left"><code>package</code></td>
+<td align="left">打包，如生成 jar、war 文件</td>
+</tr>
+<tr>
+<td align="left"><code>install</code></td>
+<td align="left">将打包结果安装到本地仓库，供其他项目使用</td>
+</tr>
+<tr>
+<td align="left"><code>deploy</code></td>
+<td align="left">将最终包发布到远程仓库（如 Nexus）</td>
+</tr>
+</tbody></table>
+</li>
+</ol>
+</li>
+</ol>
+<blockquote>
+<p>你运行某个阶段时，Maven 会自动执行它之前的所有阶段。</p>
+<p>例如运行 <code>mvn install</code>，会依次执行 validate → compile → test → package → install。</p>
+</blockquote>
+<ol start="4">
+<li><p>常用命令</p>
+<ol>
+<li><table>
+<thead>
+<tr>
+<th align="left">命令</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>mvn clean</code></td>
+<td align="left">清理 target 目录，删除之前构建的文件</td>
+</tr>
+<tr>
+<td align="left"><code>mvn compile</code></td>
+<td align="left">编译主代码（src&#x2F;main&#x2F;java）</td>
+</tr>
+<tr>
+<td align="left"><code>mvn test</code></td>
+<td align="left">编译并运行测试代码（src&#x2F;test&#x2F;java）</td>
+</tr>
+<tr>
+<td align="left"><code>mvn package</code></td>
+<td align="left">打包项目，生成 jar&#x2F;war 文件（在 target&#x2F; 目录下）</td>
+</tr>
+<tr>
+<td align="left"><code>mvn install</code></td>
+<td align="left">打包并安装到本地仓库，供其他项目依赖</td>
+</tr>
+<tr>
+<td align="left"><code>mvn deploy</code></td>
+<td align="left">打包并发布到远程仓库（一般用于发布正式版本）</td>
+</tr>
+<tr>
+<td align="left"><code>mvn dependency:tree</code></td>
+<td align="left">查看项目的依赖树，排查依赖冲突</td>
+</tr>
+<tr>
+<td align="left"><code>mvn help:effective-pom</code></td>
+<td align="left">查看生效的 POM 配置（包含继承与默认配置）</td>
+</tr>
+</tbody></table>
+</li>
+</ol>
+</li>
+<li><p>maven默认项目结构</p>
+<ol>
+<li><table>
+<thead>
+<tr>
+<th align="left">用途</th>
+<th align="left">目录</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">源代码</td>
+<td align="left"><code>src/main/java</code></td>
+<td align="left">项目的 Java 源代码</td>
+</tr>
+<tr>
+<td align="left">资源文件</td>
+<td align="left"><code>src/main/resources</code></td>
+<td align="left">配置文件，如 <code>.properties</code>, <code>.xml</code>等</td>
+</tr>
+<tr>
+<td align="left">测试代码</td>
+<td align="left"><code>src/test/java</code></td>
+<td align="left">单元测试代码，如 JUnit</td>
+</tr>
+<tr>
+<td align="left">测试资源</td>
+<td align="left"><code>src/test/resources</code></td>
+<td align="left">测试用的配置文件</td>
+</tr>
+<tr>
+<td align="left">构建输出</td>
+<td align="left"><code>target/</code></td>
+<td align="left">编译后的 class 文件、打包的 jar&#x2F;war 等都放在这里（自动生成）</td>
+</tr>
+</tbody></table>
+</li>
+</ol>
+</li>
+<li><p>pom文件解析</p>
+<ol>
+<li><table>
+<thead>
+<tr>
+<th align="left">元素</th>
+<th align="left">是否必需</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong><code>&lt;project&gt;</code></strong></td>
+<td align="left">✅ 必需</td>
+<td align="left">整个 POM 文件的根元素。</td>
+</tr>
+<tr>
+<td align="left"><strong><code>&lt;modelVersion&gt;</code></strong></td>
+<td align="left">✅ 必需</td>
+<td align="left">POM 模型的版本，目前固定为 <code>4.0.0</code>。</td>
+</tr>
+<tr>
+<td align="left"><strong><code>&lt;groupId&gt;</code></strong></td>
+<td align="left">✅ 必需</td>
+<td align="left">项目所属的组织或公司，通常是反转的域名，如：<code>com.example</code>、<code>org.springframework</code>。</td>
+</tr>
+<tr>
+<td align="left"><strong><code>&lt;artifactId&gt;</code></strong></td>
+<td align="left">✅ 必需</td>
+<td align="left">项目&#x2F;模块的名称，通常是项目名，如：<code>my-app</code>、<code>user-service</code>。</td>
+</tr>
+<tr>
+<td align="left"><strong><code>&lt;version&gt;</code></strong></td>
+<td align="left">✅ 必需</td>
+<td align="left">项目的版本号，如：<code>1.0.0</code>、<code>1.0-SNAPSHOT</code>（SNAPSHOT 表示开发中的快照版本）。</td>
+</tr>
+<tr>
+<td align="left"><strong><code>&lt;packaging&gt;</code></strong></td>
+<td align="left">❌ 可选，默认为 <code>jar</code></td>
+<td align="left">项目的打包方式，常见有： • <code>jar</code>（默认）：普通 Java 应用 • <code>war</code>：Web 应用 • <code>pom</code>：父模块（用于多模块管理）</td>
+</tr>
+<tr>
+<td align="left"><strong><code>&lt;name&gt;</code></strong></td>
+<td align="left">❌ 可选</td>
+<td align="left">项目名称，用于展示，非必须。</td>
+</tr>
+<tr>
+<td align="left"><strong><code>&lt;description&gt;</code></strong></td>
+<td align="left">❌ 可选</td>
+<td align="left">项目描述信息。</td>
+</tr>
+<tr>
+<td align="left"><strong><code>&lt;dependencies&gt;</code></strong></td>
+<td align="left">❌ 可选</td>
+<td align="left">定义项目所依赖的第三方库（jar 包）。</td>
+</tr>
+<tr>
+<td align="left"><strong><code>&lt;dependency&gt;</code></strong></td>
+<td align="left">在 <code>&lt;dependencies&gt;</code>中使用</td>
+<td align="left">每一个依赖项，包括 <code>groupId</code>、<code>artifactId</code>、<code>version</code>。</td>
+</tr>
+<tr>
+<td align="left"><strong><code>&lt;build&gt;</code></strong></td>
+<td align="left">❌ 可选</td>
+<td align="left">定义项目的构建配置，比如编译器版本、插件配置等。</td>
+</tr>
+<tr>
+<td align="left"><strong><code>&lt;plugins&gt;</code></strong></td>
+<td align="left">在 <code>&lt;build&gt;</code>中使用</td>
+<td align="left">定义要使用的 Maven 插件及其配置，如编译插件、打包插件等。</td>
+</tr>
+</tbody></table>
+</li>
+<li><p>项目坐标（GAV）</p>
+<p>Maven 通过以下三个属性来唯一标识一个项目，称为 <strong>GAV 坐标</strong>：</p>
+<table>
+<thead>
+<tr>
+<th align="left">元素</th>
+<th align="left">说明</th>
+<th align="left">示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>groupId</strong></td>
+<td align="left">项目所属组织，通常是反转域名</td>
+<td align="left"><code>com.example</code>、<code>org.apache</code></td>
+</tr>
+<tr>
+<td align="left"><strong>artifactId</strong></td>
+<td align="left">项目&#x2F;模块名称</td>
+<td align="left"><code>my-app</code>、<code>spring-core</code></td>
+</tr>
+<tr>
+<td align="left"><strong>version</strong></td>
+<td align="left">项目版本</td>
+<td align="left"><code>1.0.0</code>、<code>2.5.4-SNAPSHOT</code></td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>这三个属性合起来就像项目的身份证，Maven 通过它们去仓库中找到对应的 jar 包或项目。</p>
+</blockquote>
+<hr>
+</li>
+<li><p>依赖管理 <code>&lt;dependencies&gt;</code></p>
+<p>通过 <code>&lt;dependencies&gt;</code>声明项目所需的第三方库，Maven 会自动从本地仓库或远程仓库下载这些依赖。</p>
+<p>示例：引入 JUnit（测试框架）</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>junit<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>junit<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>4.13.2<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">scope</span>&gt;</span>test<span class="tag">&lt;/<span class="name">scope</span>&gt;</span> <span class="comment">&lt;!-- 表示只在测试时使用 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>scope（作用域）</strong> 可选值：<code>compile</code>（默认）：编译、测试、运行都有效<code>provided</code>：编译和测试时有效，运行时由容器提供（如 Servlet API）<code>runtime</code>：运行和测试时有效，编译时不需要<code>test</code>：仅在测试代码中有效（如 JUnit）</li>
+</ul>
+</li>
+<li><p>构建配置 <code>&lt;build&gt;</code></p>
+<ol>
+<li>用于配置项目的构建过程，比如指定 Java 版本、使用特定插件等。</li>
+<li>示例：配置 Java 编译版本为 11</li>
+</ol>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">build</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">plugins</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.maven.plugins<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>maven-compiler-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.11.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">source</span>&gt;</span>11<span class="tag">&lt;/<span class="name">source</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">target</span>&gt;</span>11<span class="tag">&lt;/<span class="name">target</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">build</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>这会告诉 Maven：“请使用 JDK 11 来编译我的代码”。</p>
+<hr>
+</li>
+<li><p>属性（Properties）</p>
+<p>可以定义一些变量，便于统一管理版本号等。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">properties</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">java.version</span>&gt;</span>11<span class="tag">&lt;/<span class="name">java.version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">maven.compiler.source</span>&gt;</span>$&#123;java.version&#125;<span class="tag">&lt;/<span class="name">maven.compiler.source</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">maven.compiler.target</span>&gt;</span>$&#123;java.version&#125;<span class="tag">&lt;/<span class="name">maven.compiler.target</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">project.build.sourceEncoding</span>&gt;</span>UTF-8<span class="tag">&lt;/<span class="name">project.build.sourceEncoding</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">properties</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+</li>
+</ol>
+<h2 id="开发框架"><a href="#开发框架" class="headerlink" title="开发框架"></a>开发框架</h2><h3 id="SpringBoot"><a href="#SpringBoot" class="headerlink" title="SpringBoot"></a>SpringBoot</h3><h3 id="MyBatis"><a href="#MyBatis" class="headerlink" title="MyBatis"></a>MyBatis</h3><h2 id="数据存储"><a href="#数据存储" class="headerlink" title="数据存储"></a>数据存储</h2><h3 id="MySQL"><a href="#MySQL" class="headerlink" title="MySQL"></a>MySQL</h3><h3 id="MongoDB"><a href="#MongoDB" class="headerlink" title="MongoDB"></a>MongoDB</h3><ol>
+<li>是什么<ol>
+<li>非关系型数据库</li>
+<li>数据结构灵活，没有了“列”概念</li>
+<li>存储的单元叫“文档”（Document）</li>
+</ol>
+</li>
+</ol>
+<h3 id="Redis"><a href="#Redis" class="headerlink" title="Redis"></a>Redis</h3><ol>
+<li>数据库和服务之间的中间件，用以提高并发量。</li>
+<li>本地缓存<ol>
+<li>工作逻辑类比cache，工作原理K-V</li>
+</ol>
+</li>
+<li>远程缓存<ol>
+<li>业务逻辑需要多个实例。但是如果一个商品的多个实例都有缓存的话就浪费空间了。于是需要一个远程缓存。</li>
+<li>并发问题：通过单线程避免。</li>
+</ol>
+</li>
+<li>支持多种数据结构：不只是string&lt;&#x3D;&gt;string，允许先进先出的List，去重的Set，排序的ZSet</li>
+<li>内存过期、内存淘汰：参考cache的淘汰策略</li>
+<li>持久化：<img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250916142637090.png"><ol>
+<li>需要避免当缓存重启后没有内存数据，让所有业务全部交给数据库导致崩溃。</li>
+<li>定期将缓存数据转储到磁盘文件中。</li>
+</ol>
+</li>
+<li>简化网络协议</li>
+</ol>
+<h2 id="中间件"><a href="#中间件" class="headerlink" title="中间件"></a>中间件</h2><h3 id="Tomcat"><a href="#Tomcat" class="headerlink" title="Tomcat"></a>Tomcat</h3><h3 id="Kafka"><a href="#Kafka" class="headerlink" title="Kafka"></a>Kafka</h3><h3 id="ZooKeeper"><a href="#ZooKeeper" class="headerlink" title="ZooKeeper"></a>ZooKeeper</h3><h3 id="ElasticSearch"><a href="#ElasticSearch" class="headerlink" title="ElasticSearch"></a>ElasticSearch</h3><ol>
+<li>倒排索引（inverted index）</li>
+<li>term index<ol>
+<li><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250924222402373.png" alt="image-20250924222402373"></li>
+</ol>
+</li>
+<li>Stored Fields<ol>
+<li>存放文本本身的地方</li>
+<li>行式存储</li>
+</ol>
+</li>
+<li>Doc Values<ol>
+<li>将散落在文档中的某个字段集中存放（比如你要排序啥的）</li>
+<li>列式存储</li>
+</ol>
+</li>
+<li>Segment<ol>
+<li>对上面的信息的封装</li>
+<li>是能够实现搜索的最小单元</li>
+<li>segment只读，不可修改。如果要修改，则生成新的segment。这样做避免了并发写带来的低效。</li>
+</ol>
+</li>
+<li>Lucene：<ol>
+<li>一个开源基础搜索库，单机文本搜索库</li>
+</ol>
+</li>
+<li>Elastic Search<img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250924223517546.png" alt="image-20250924223517546"><ol>
+<li>对Lucene扩展之后，得到了高并发高可用持久化的分布式搜索引擎</li>
+</ol>
+</li>
+</ol>
+<h2 id="部署运维"><a href="#部署运维" class="headerlink" title="部署运维"></a>部署运维</h2><h3 id="Docker"><a href="#Docker" class="headerlink" title="Docker"></a>Docker</h3><ol>
+<li><p>Docker是什么？</p>
+<ol>
+<li>是一个 <strong>容器化平台</strong>（一个客户端和服务端的中间件），可以把你的应用程序和它所依赖的环境（运行时、库、配置）打包成一个 <strong>镜像（image）</strong>，然后运行在一个轻量级的 <strong>容器（container）</strong> 里。<img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250915132417733.png" alt="image-20250915132417733"></li>
+<li>和虚拟机不同，Docker 容器不需要完整的操作系统，而是共享宿主机的内核。</li>
+</ol>
+</li>
+<li><p>镜像是什么？</p>
+<ol>
+<li>程序的运行依赖于环境，而操作系统是环境的重要部分。操作系统分为用户空间和内核空间，运行程序只需要关注用户空间。</li>
+<li>为了能运行程序，docker把程序所依赖的环境一起打包，“压缩”成一个“压缩文件”，称为镜像。</li>
+</ol>
+</li>
+<li><p>容器是什么？</p>
+<ol>
+<li>镜像通过docker run把镜像“解压缩”之后的一个独立的环境和程序。</li>
+<li>一个操作系统内核可以运行多个容器</li>
+</ol>
+</li>
+<li><p>Dockerfile是什么？</p>
+<ol>
+<li>从安装镜像到程序运行中间还有一些准备工作要做，就像制定镜像、创建文件夹之类的。而Linux中所有任务都可以通过命令行实现，所以用Dockerfile把准备工作列出来，像一个ToDoList，然后交给程序运行。</li>
+</ol>
+</li>
+<li><p>registry是什么？</p>
+<ol>
+<li>管理镜像仓库推拉能力的服务。</li>
+</ol>
+</li>
+<li><p>docker的架构原理：client-server架构</p>
+<ol>
+<li>client：docker-cli（我们在命令行输入的命令就是docker-cli）<ol>
+<li>常见命令：<ol>
+<li>docker build：docker会根据Dockerfile指令一层层构建容器镜像文件</li>
+<li>docker push &#x2F; pull：docker会通过外部registry交互推拉镜像文件</li>
+<li>docker run：会调用Containerd组件来驱使runC组件来创建和运行容器<img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250915134257450.png" alt="image-20250915134257450"></li>
+</ol>
+</li>
+</ol>
+</li>
+<li>server：docker daemon（守护进程）<img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250915133740199.png" alt="image-20250915133740199"><ol>
+<li>核心职责：解析命令，创建和管理各个容器。</li>
+<li>docker daemon可以分为docker server（就是一个HTTP服务器），Engine（用于指派Job），Job（实际执行各种工作）</li>
+</ol>
+</li>
+</ol>
+</li>
+<li><p>docker compose是什么</p>
+<ol>
+<li>如果说docker是管理一个容器，则docker compose是管理多个容器</li>
+<li>需要部署一套多个容器时，一个个docker run很不方便。</li>
+<li>可以通过yaml文件写清楚要部署的文件有哪些，部署顺序，占多少cpu等等。</li>
+<li>最后通过docker-compose up命令自动化部署</li>
+</ol>
+</li>
+<li><p>docker swarm是什么</p>
+<ol>
+<li>如果说docker compose是管理一套服务多个容器，docker swarm就是管理多套服务和多个服务器。</li>
+<li>如果某台服务器炸了，那么就把上面的服务迁移到另外一套服务器上。</li>
+<li>也可以根据需要对服务扩缩容。</li>
+</ol>
+</li>
+<li><p>docker和k8s的关系</p>
+<ol>
+<li>k8s原来是docker swarm的竞品（）功能很像。</li>
+<li>docker compose &lt;&#x3D; 类比 &#x3D;&gt; Pod</li>
+<li>docker swarm &lt;&#x3D; 类比 &#x3D;&gt; k8s</li>
+</ol>
+</li>
+<li><p>常用命令</p>
+<ol>
+<li><p>镜像（Image）管理</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">***docker pull ubuntu:22.04         # 拉取镜像</span><br><span class="line">***docker images                    # 列出本地镜像</span><br><span class="line">***docker rmi &lt;image_id&gt;            # 删除镜像</span><br><span class="line">*docker tag &lt;image_id&gt; myapp:v1   # 给镜像打标签</span><br><span class="line">*docker build -t myapp:v1 .       # 用 Dockerfile 构建镜像</span><br><span class="line">docker save -o &lt;image_id&gt; filename.tar         # 保存镜像为.tar文件</span><br><span class="line">docker load -i &lt;image_id&gt; filename.tar</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>容器（Container）管理</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">docker run -it ubuntu:22.04 bash   # 运行交互式容器并进入 bash</span><br><span class="line">***docker run --name=my_nginx_01 --restart=always -d -p 8080:80 nginx     # 后台运行 nginx，映射端口</span><br><span class="line">***docker ps                          # 查看正在运行的容器</span><br><span class="line">**docker ps -a                       # 查看所有容器（包括已退出）</span><br><span class="line">***docker stop &lt;container_id&gt;         # 停止容器</span><br><span class="line">***docker start &lt;container_id&gt;        # 启动已停止的容器</span><br><span class="line">***docker restart &lt;container_id&gt;      # 重启容器</span><br><span class="line">***docker rm &lt;container_id&gt;           # 删除容器</span><br><span class="line">**docker exec -it &lt;id&gt; bash          # 进入正在运行的容器</span><br><span class="line">docker logs -f &lt;container_id&gt;      # 查看容器日志（实时跟随）</span><br><span class="line">docker cp &lt;id&gt;:/path /path    # 把容器内的内容复制出来。也可以交换路径顺序，表示复制进去。</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p> 日常组合示例</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># 拉取 Nginx 并运行</span><br><span class="line">docker run -d --name web -p 8080:80 nginx</span><br><span class="line"></span><br><span class="line"># 构建并运行本地项目</span><br><span class="line">docker build -t myapp:v1 .</span><br><span class="line">docker run -d -p 5000:5000 myapp:v1</span><br></pre></td></tr></table></figure></li>
+</ol>
+</li>
+</ol>
+<h3 id="Jenkins"><a href="#Jenkins" class="headerlink" title="Jenkins"></a>Jenkins</h3><h3 id="Nginx"><a href="#Nginx" class="headerlink" title="Nginx"></a>Nginx</h3><ol>
+<li>是一个高性能 Web 服务器和反向代理服务器（一个客户端和服务端的中间件）。</li>
+<li>nginx 的主要功能<ol>
+<li>Web 服务器<ul>
+<li>可以直接提供静态资源（HTML、CSS、JS、图片等）。</li>
+</ul>
+</li>
+<li>反向代理 &#x2F; 负载均衡<img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250914173532423.png" alt="image-20250914173532423"><ul>
+<li>接收用户请求，然后把请求转发给后端（如 Node.js、Java、Python 应用）。</li>
+<li>可以把流量分配给多台后端服务器，实现负载均衡。</li>
+</ul>
+</li>
+<li>缓存功能<img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250914174059346.png" alt="image-20250914174059346"><ul>
+<li>静态资源缓存，减少后端压力。</li>
+</ul>
+</li>
+<li>模块化网管能力<img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250914174201047.png" alt="image-20250914174201047"></li>
+<li>SSL&#x2F;TLS<ul>
+<li>可以做 HTTPS 加密终端，统一管理证书。</li>
+</ul>
+</li>
+<li>高并发<ul>
+<li>基于事件驱动（epoll&#x2F;kqueue），能轻松支撑上万并发连接。</li>
+<li>多进程（Worker），每个进程单线程。</li>
+</ul>
+</li>
+<li>Master进程<img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250914174323359.png" alt="image-20250914174323359"></li>
+</ol>
+</li>
+</ol>
+<h3 id="k8s"><a href="#k8s" class="headerlink" title="k8s"></a>k8s</h3><ol>
+<li><p>k8s是什么</p>
+<ol>
+<li>Kubernetes（简称 K8s）是一个容器编排系统，主要用来自动管理大量的 Docker 容器</li>
+<li>介于应用服务和服务器之间</li>
+<li>通过yaml文件配置定义应用的部署顺序等信息，自动部署各个应用到服务器上</li>
+<li>能自动扩缩容</li>
+<li>能够在服务器炸了之后自动把应用部署到其他服务器</li>
+</ol>
+</li>
+<li><p>k8s的架构原理</p>
+<ol>
+<li><p>k8s会把服务器分为两部分：控制平面和Node。前者控制后者，后者执行具体应用</p>
+</li>
+<li><p>控制平面：<img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250915140828453.png" alt="image-20250915140828453"></p>
+<ol>
+<li>API Server：通过接口操作服务器资源，而不需要具体登录到各个服务器。</li>
+<li>Scheduler：自动化决策服务器的cpu和内存是否能够部署应用</li>
+<li>Controller Mgt：自动化创建、关闭服务</li>
+<li>ETCD：存储层。上面过程中产生的数据存到这里。</li>
+</ol>
+</li>
+<li><p>Node：<img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250915141214215.png" alt="image-20250915141214215"></p>
+<ol>
+<li><p>可以是真机服务器，也可以是虚拟机</p>
+</li>
+<li><p>多个应用服务共享一台Node的内存和CPU。</p>
+</li>
+<li><p>不用手动上传代码，而是把代码打包为容器镜像，然后通过简单的命令部署。</p>
+</li>
+<li><p>Kubelet：用于接受控制命令，管理Pod。</p>
+</li>
+<li><p>Kube Proxy：用于网络通讯，可以联系Node内外的应用</p>
+</li>
+<li><p>Container runtime：用于下载和部署镜像</p>
+</li>
+<li><p>Pod：应用容器、日志容器、监控容器组成一个Pod。pod运行在Node上。k8s可以调度Pod。</p>
+<ul>
+<li><strong>Pod是k8s的最小调度单位</strong></li>
+</ul>
+</li>
+</ol>
+</li>
+<li><p>工作负载：<img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250920131017877.png" alt="image-20250920131017877"></p>
+</li>
+<li><p>Cluster（集群）<img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250920150345535.png" alt="image-20250920150345535"><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250915141413962.png" alt="image-20250915141413962"></p>
+<ol>
+<li>控制平面和Node组成了Cluster</li>
+<li>一般在公司中会有多个集群，比如开发集群、测试集群。</li>
+<li>通过Ingress控制器把器群的服务暴露给外部</li>
+</ol>
+</li>
+<li><p>kubectl</p>
+<ol>
+<li>是命令行工具，封装好了控制k8s控制平面的命令</li>
+<li>如何使用kubectl<ol>
+<li>编写yaml文件，定义Pod里用了哪些镜像，占用多少内存和cpu等信息</li>
+<li>通过kubectl apply -f XXX.yaml命令应用配置。</li>
+<li>剩下的交给k8s就好了。至此就完成了一个Pod的部署。</li>
+</ol>
+</li>
+</ol>
+</li>
+<li><p>ConfigMap：配置集</p>
+</li>
+<li><p>Secret：用来存储敏感信息的</p>
+</li>
+<li><p>如何调用服务呢</p>
+<ol>
+<li>以前不用k8s，一个HTTP请求会到达nginx，然后到达服务器，然后返回响应</li>
+<li>现在用k8s，请求会先到Ingress控制器，然后到Kube Proxy，找到对应的Pod服务，然后转发到对应的容器服务，并返回响应。</li>
+</ol>
+</li>
+</ol>
+</li>
+<li><p>k8s指令</p>
+<ol>
+<li><pre><code class="language-bash"># 创建pod
+kubectl run my-nginx --image=nginx:1.25.2 --port=80
+
+
+# 查看集群所有节点
+kubectl get nodes
+
+# 应用配置文件，创建资源
+kubectl apply -f xxxx.yaml
+
+# 查看集群中部署了哪些应用
+kubectl get pods -A
+
+# 修改镜像
+kubectl set image &lt;资源类型&gt;/&lt;资源名&gt; &lt;容器名&gt;=&lt;镜像地址:tag&gt; -n &lt;命名空间&gt;
+
+# 创建、删除命名空间
+kubectl create\delete ns &lt;namespace&gt;
+
+# 查看状态
+kubectl describe pod &lt;pod_name&gt;
+
+# 每个pod都会分配一个IP，使用pod的ip+port即可访问
+kubectl get pod -owide
+
+# 
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">4. 四个组件的关系</span><br><span class="line"></span><br><span class="line">   1. ```</span><br><span class="line">          +----------------+</span><br><span class="line">          |   Deployment   |</span><br><span class="line">          |  (nginx-app)   |</span><br><span class="line">          +----------------+</span><br><span class="line">                   |</span><br><span class="line">                   |  创建 &amp; 管理</span><br><span class="line">                   v</span><br><span class="line">          +----------------+</span><br><span class="line">          |   ReplicaSet   |</span><br><span class="line">          | (nginx-rs-xxx) |</span><br><span class="line">          +----------------+</span><br><span class="line">                   |</span><br><span class="line">             ---------------------------------</span><br><span class="line">             |                               |</span><br><span class="line">             v                               v</span><br><span class="line">         +----------------+             +----------------+</span><br><span class="line">         |      Pod       |             |      Pod       |</span><br><span class="line">         | (nginx-xxx-1)  |             | (nginx-xxx-2)  |</span><br><span class="line">         |  Container:    |             |  Container:    |</span><br><span class="line">         |  nginx         |             |  nginx         |</span><br><span class="line">         +----------------+             +----------------+</span><br><span class="line">                 ^                               ^</span><br><span class="line">                 |                               |</span><br><span class="line">                 |  Selector: app=my-nginx-03    |</span><br><span class="line">                 |                               |</span><br><span class="line">                 +-------------+-----------------+</span><br><span class="line">                               |</span><br><span class="line">                               v</span><br><span class="line">                      +----------------+</span><br><span class="line">                      |    Service     |</span><br><span class="line">                      | (NodePort 30080)|</span><br><span class="line">                      +----------------+</span><br><span class="line">                               |</span><br><span class="line">                     外部访问：http://&lt;NodeIP&gt;:30080</span><br></pre></td></tr></table></figure>
+</code></pre>
+</li>
+</ol>
+</li>
+</ol>
+<h2 id="分布架构"><a href="#分布架构" class="headerlink" title="分布架构"></a>分布架构</h2><h3 id="SpringCloud"><a href="#SpringCloud" class="headerlink" title="SpringCloud"></a>SpringCloud</h3><h3 id="Dubbo"><a href="#Dubbo" class="headerlink" title="Dubbo"></a>Dubbo</h3><h1 id="详解"><a href="#详解" class="headerlink" title="详解"></a>详解</h1><h2 id="Spring"><a href="#Spring" class="headerlink" title="Spring"></a>Spring</h2><p>详见其他笔记</p>
+<h2 id="Redis-1"><a href="#Redis-1" class="headerlink" title="Redis"></a>Redis</h2><h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><ol>
+<li>是什么<ol>
+<li>Redis（Remote Dictionary Server）是一个<strong>基于内存的键值存储系统</strong>，支持多种数据结构，可以用作：<ul>
+<li><strong>缓存（最常见用途）</strong></li>
+<li><strong>数据库（持久化场景）</strong></li>
+<li><strong>消息中间件（如消息队列、事件发布订阅）</strong></li>
+</ul>
+</li>
+<li>Redis 的特点回顾（简要）<ul>
+<li>内存存储，读写速度极快（微秒级响应）</li>
+<li>单线程模型（Redis 6.0 前完全单线程，之后部分模块如网络 IO 支持多线程）</li>
+<li>支持丰富的数据结构：String、Hash、List、Set、Sorted Set（ZSet）</li>
+<li>支持数据持久化（RDB、AOF）</li>
+<li>支持主从复制、哨兵、集群等高可用方案</li>
+<li>命令原子性，支持事务与 Lua 脚本</li>
+</ul>
+</li>
+</ol>
+</li>
+</ol>
+<h3 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h3><ol>
+<li><p>String（字符串）</p>
+<ol>
+<li><p>概述</p>
+<ol>
+<li><strong>最基本的数据类型</strong>，一个 key 对应一个 value。</li>
+<li>Value 可以是字符串、数字或二进制数据（如图片、序列化对象）。</li>
+<li>最大支持 <strong>512MB</strong>。</li>
+</ol>
+</li>
+<li><p>常用命令：</p>
+</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">SET key value</span><br><span class="line">GET key</span><br><span class="line">INCR key          # 数字自增，常用于计数器</span><br><span class="line">DECR</span><br><span class="line">INCRBY</span><br><span class="line">APPEND</span><br><span class="line">MSET / MGET       # 批量设置/获取</span><br><span class="line">EXPIRE key seconds  # 设置过期时间</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li><p>应用场景：</p>
+<ul>
+<li><p>缓存数据（如用户信息 JSON）</p>
+</li>
+<li><p>计数器（如文章阅读量、点赞数）</p>
+</li>
+<li><p>分布式锁（SETNX）</p>
+</li>
+</ul>
+</li>
+</ol>
+<hr>
+</li>
+<li><p>Hash（哈希表）</p>
+<ol>
+<li><p>概述</p>
+<ol>
+<li>类似于 Map 结构，<strong>一个 key 对应一个字段-值对的集合</strong>。</li>
+<li>适合存储对象，比如用户信息、商品详情等。</li>
+</ol>
+</li>
+<li><p>常用命令：</p>
+</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">HSET user:1 name &quot;Tom&quot; age 25</span><br><span class="line">HGET user:1 name</span><br><span class="line">HGETALL user:1</span><br><span class="line">HKEYS / HVALS</span><br><span class="line">HINCRBY</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li><p>优点：</p>
+<ul>
+<li><p>相比将整个对象序列化为 String，Hash 可以<strong>只修改部分字段</strong>，更高效。</p>
+</li>
+<li><p>节省内存（Redis 对小 Hash 有特殊优化）。</p>
+</li>
+</ul>
+</li>
+</ol>
+<hr>
+</li>
+<li><p>List（列表）</p>
+<ol>
+<li><p>概述</p>
+<ol>
+<li>一个 key 对应一个<strong>双向链表</strong>，支持从头部或尾部插入&#x2F;删除元素。</li>
+<li>适合实现：<strong>最新消息、消息队列、文章评论列表</strong>等。</li>
+<li>既可以当做栈来用，也可以按照队列来用</li>
+</ol>
+</li>
+<li><p>常用命令：</p>
+</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">LPUSH myList &quot;a&quot;  # 头部插入</span><br><span class="line">RPUSH myList &quot;b&quot;  # 尾部插入</span><br><span class="line">LPOP / RPOP       # 头/尾弹出</span><br><span class="line">LRANGE myList 0 -1  # 获取全部元素</span><br><span class="line">LLEN</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li><p>应用场景：</p>
+<ul>
+<li><p>消息队列（结合 LPOP&#x2F;RPOP 或 BRPOP）</p>
+</li>
+<li><p>最新 N 条记录（如最新评论、动态）</p>
+</li>
+</ul>
+</li>
+</ol>
+<hr>
+</li>
+<li><p>Set（集合）</p>
+<ol>
+<li><p>概述</p>
+<ol>
+<li>无序、<strong>唯一</strong>的字符串集合。</li>
+<li>支持交集、并集、差集等操作，适合标签、共同关注等场景。</li>
+</ol>
+</li>
+<li><p>常用命令：</p>
+</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">SADD tags &quot;redis&quot; &quot;db&quot;</span><br><span class="line">SMEMBERS tags</span><br><span class="line">SISMEMBER tags &quot;redis&quot;</span><br><span class="line">SINTER set1 set2  # 交集</span><br><span class="line">SUNION</span><br><span class="line">SDIFF</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li><p>应用场景：</p>
+<ul>
+<li><p>标签系统</p>
+</li>
+<li><p>好友共同关注</p>
+</li>
+<li><p>去重统计（结合客户端）</p>
+</li>
+</ul>
+</li>
+</ol>
+<hr>
+</li>
+<li><p>Sorted Set（ZSet，有序集合）</p>
+<ol>
+<li><p>概述</p>
+<ol>
+<li>集合的升级版，每个元素都关联一个 <strong>score（分数）</strong>，根据 score 排序。</li>
+<li>元素唯一，但 score 可重复。</li>
+</ol>
+</li>
+<li><p>常用命令：</p>
+</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ZADD leaderboard 100 &quot;Alice&quot; 200 &quot;Bob&quot;</span><br><span class="line">ZRANGE leaderboard 0 -1          # 按 score 升序获取</span><br><span class="line">ZREVRANGE leaderboard 0 -1       # 降序</span><br><span class="line">ZSCORE leaderboard &quot;Alice&quot;</span><br><span class="line">ZINCRBY leaderboard 10 &quot;Alice&quot;</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li><p>应用场景：</p>
+<ul>
+<li><p>排行榜（游戏、热搜榜）</p>
+</li>
+<li><p>优先级队列</p>
+</li>
+<li><p>延迟队列（结合 score 为时间戳）</p>
+</li>
+</ul>
+</li>
+</ol>
+</li>
+</ol>
+<h3 id="线程模型"><a href="#线程模型" class="headerlink" title="线程模型"></a>线程模型</h3><ul>
+<li><strong>Redis 6.0 之前：完全单线程</strong>（主线程处理所有客户端请求、命令执行、持久化等）</li>
+<li><strong>Redis 6.0 之后：引入多线程 I&#x2F;O（处理网络读写），但命令执行仍然是单线程</strong>目的是提高网络吞吐，缓解高并发下的网络瓶颈，但核心数据操作依旧保持原子性。</li>
+</ul>
+<blockquote>
+<p>✅ 所以，Redis 依然可以认为是<strong>单线程模型（命令执行层面）</strong>，无需考虑锁竞争，执行效率高。</p>
+</blockquote>
+<h3 id="持久机制"><a href="#持久机制" class="headerlink" title="持久机制"></a>持久机制</h3><p>Redis 默认是内存数据库，但支持将数据保存到磁盘，避免重启后数据丢失。</p>
+<ol>
+<li><p>RDB（Redis DataBase）</p>
+<ol>
+<li><p>RDB 触发方式</p>
+<ol>
+<li><p><strong>手动触发（主动保存）</strong></p>
+<ol>
+<li>命令：<code>SAVE</code>或 <code>BGSAVE``SAVE</code>：<strong>同步</strong>执行，会阻塞 Redis 主线程，不推荐生产使用</li>
+<li><code>BGSAVE</code>：<strong>异步</strong>执行，Redis 会 fork 一个子进程在后台生成 RDB 文件，<strong>主线程不受影响（推荐）</strong></li>
+</ol>
+</li>
+<li><p><strong>自动触发（通过配置规则）</strong></p>
+</li>
+</ol>
+<p>Redis 允许通过配置文件设置<strong>自动快照规则</strong>，例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">save 900 1       # 900秒内至少有1个key被修改，就触发一次 RDB</span><br><span class="line">save 300 10      # 300秒内至少10个key被修改</span><br><span class="line">save 60 10000    # 60秒内至少10000个key被修改</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>只要满足其中任意一条规则，Redis 就会在后台通过 <code>BGSAVE</code>自动保存一次 RDB 快照。</p>
+</blockquote>
+<hr>
+</li>
+<li><p>RDB 的优点</p>
+<table>
+<thead>
+<tr>
+<th align="left">优点</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">✅ <strong>恢复速度快</strong></td>
+<td align="left">RDB 是数据快照，文件小，Redis 启动时加载 RDB 比 AOF 快很多</td>
+</tr>
+<tr>
+<td align="left">✅ <strong>文件体积小</strong></td>
+<td align="left">只保存某一时刻的数据，而非所有操作命令</td>
+</tr>
+<tr>
+<td align="left">✅ <strong>适合备份与灾难恢复</strong></td>
+<td align="left">可以定期将 RDB 文件拷贝到其他服务器或云存储，用于容灾</td>
+</tr>
+</tbody></table>
+<hr>
+</li>
+<li><p>RDB 的缺点</p>
+<table>
+<thead>
+<tr>
+<th align="left">缺点</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">❌ <strong>可能丢失数据</strong></td>
+<td align="left">RDB 是<strong>定时快照</strong>，如果 Redis 在两次快照之间宕机，这段时间的数据会丢失</td>
+</tr>
+<tr>
+<td align="left">❌ <strong>fork 子进程开销</strong></td>
+<td align="left">BGSAVE 会 fork 一个子进程，如果数据量很大，fork 可能会阻塞主线程（特别是大内存实例）</td>
+</tr>
+<tr>
+<td align="left">❌ <strong>不适合实时性要求极高的场景</strong></td>
+<td align="left">不如 AOF 安全</td>
+</tr>
+</tbody></table>
+</li>
+</ol>
+</li>
+<li><p>AOF（Append Only File）</p>
+<ol>
+<li><p>AOF 工作流程</p>
+</li>
+<li><p>客户端执行一个写命令（如 SET key value）</p>
+</li>
+<li><p>Redis 不仅将数据写入内存，还会将该命令<strong>追加到 AOF 缓冲区</strong></p>
+</li>
+<li><p>根据配置的同步策略，将缓冲区内容写入磁盘的 AOF 文件</p>
+</li>
+<li><p>Redis 重启时，会<strong>重新加载并执行 AOF 文件中的命令</strong>，恢复数据</p>
+</li>
+<li><p>AOF 配置选项（同步频率）</p>
+<p>在 redis.conf 中，可以通过以下参数控制 AOF 的写入磁盘策略（即命令同步到磁盘的时机）：</p>
+<table>
+<thead>
+<tr>
+<th align="left">配置项</th>
+<th align="left">说明</th>
+<th align="left">安全性</th>
+<th align="left">性能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>appendfsync always</code></td>
+<td align="left">每个写命令都同步到磁盘</td>
+<td align="left">✅ 最安全，几乎不丢数据</td>
+<td align="left">❌ 性能最差</td>
+</tr>
+<tr>
+<td align="left"><code>appendfsync everysec</code>（默认）</td>
+<td align="left">每秒同步一次</td>
+<td align="left">⚠️ 最多丢失 1 秒的数据</td>
+<td align="left">✅ 性能较好，推荐</td>
+</tr>
+<tr>
+<td align="left"><code>appendfsync no</code></td>
+<td align="left">由操作系统决定何时同步</td>
+<td align="left">❌ 可能丢失较多数据</td>
+<td align="left">✅ 性能最好</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>✅ <strong>生产环境推荐使用：appendfsync everysec（折中方案，安全且性能较好）</strong></p>
+</blockquote>
+</li>
+<li><p>AOF 的优点</p>
+<table>
+<thead>
+<tr>
+<th align="left">优点</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">✅ <strong>数据安全性更高</strong></td>
+<td align="left">记录了所有写操作，最多只丢失 1 秒的数据（取决于配置）</td>
+</tr>
+<tr>
+<td align="left">✅ <strong>可修复</strong></td>
+<td align="left">AOF 文件损坏时，Redis 提供 <code>redis-check-aof</code>工具可以尝试修复</td>
+</tr>
+<tr>
+<td align="left">✅ <strong>更适合数据重要性高的场景</strong></td>
+<td align="left">比 RDB 更可靠</td>
+</tr>
+</tbody></table>
+</li>
+<li><p>AOF 的缺点</p>
+<table>
+<thead>
+<tr>
+<th align="left">缺点</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">❌ <strong>文件体积大</strong></td>
+<td align="left">记录了所有写命令，尤其是数据量大或频繁更新时，AOF 文件会膨胀</td>
+</tr>
+<tr>
+<td align="left">❌ <strong>恢复速度慢</strong></td>
+<td align="left">启动时要<strong>重新执行所有命令</strong>，比加载 RDB 慢</td>
+</tr>
+<tr>
+<td align="left">❌ <strong>写放大</strong></td>
+<td align="left">同一个数据多次修改会产生多条命令</td>
+</tr>
+</tbody></table>
+<hr>
+</li>
+<li><p>AOF 重写（AOF Rewrite）</p>
+<p>随着时间推移，AOF 文件会越来越大。为了解决这个问题，Redis 提供了 <strong>AOF 重写机制</strong>：</p>
+<ul>
+<li><p><strong>作用：</strong> 对 AOF 文件进行“瘦身”，去掉冗余命令，用<strong>最终的数据状态</strong>重写一个新的、更小的 AOF 文件</p>
+</li>
+<li><p><strong>命令：</strong> <code>BGREWRITEAOF</code>（后台异步执行）</p>
+</li>
+<li><p><strong>触发方式：</strong> 可配置自动触发策略，如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">auto-aof-rewrite-percentage 100  # 当前 AOF 文件比上次重写后增长了 100%</span><br><span class="line">auto-aof-rewrite-min-size 64mb   # AOF 文件至少达到 64MB 才触发</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ol>
+</li>
+</ol>
+<h3 id="高可用与扩展（集群策略）"><a href="#高可用与扩展（集群策略）" class="headerlink" title="高可用与扩展（集群策略）"></a>高可用与扩展（集群策略）</h3><ol>
+<li><p><strong>主从复制（Master-Slave Replication）</strong></p>
+<ol>
+<li><p>核心思想：</p>
+<ol>
+<li>允许一个 <strong>Master（主节点）</strong> 可以有多个 <strong>Slave（从节点）</strong>，<strong>从节点会异步复制主节点上的数据</strong>，实现数据的<strong>备份、读写分离、负载均衡</strong>。</li>
+</ol>
+</li>
+<li><p>架构与原理</p>
+<ol>
+<li><strong>Master</strong>：负责写操作（也可读），数据变更后<strong>异步同步</strong>给 Slave。</li>
+<li><strong>Slave</strong>：只读（也可配置为可写，但不推荐），从 Master 拉取数据，保持同步。</li>
+</ol>
+</li>
+<li><p>数据同步方式：</p>
+<ul>
+<li><p><strong>全量同步（初次同步）</strong>：Slave 第一次连接 Master 时，Master 会生成 RDB 快照并发送给 Slave，然后同步增量命令。</p>
+</li>
+<li><p><strong>增量同步</strong>：后续 Master 的写操作会以命令的方式发送给 Slave，保持数据一致。</p>
+</li>
+</ul>
+</li>
+<li><p>特点与作用</p>
+</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>特点</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>✅ 读写分离</td>
+<td>Master 写，Slave 读，分担读压力</td>
+</tr>
+<tr>
+<td>✅ 数据备份</td>
+<td>Slave 是 Master 的数据副本，可用于容灾</td>
+</tr>
+<tr>
+<td>❌ 无自动故障转移</td>
+<td>如果 Master 宕机，需要手动切换 Slave 为 Master</td>
+</tr>
+<tr>
+<td>❌ 无自动负载均衡</td>
+<td>需要客户端或代理层实现读请求分发</td>
+</tr>
+</tbody></table>
+<ol start="5">
+<li><p>优点</p>
+<ol>
+<li><p>简单易用，配置方便</p>
+</li>
+<li><p>数据冗余，提高可用性</p>
+</li>
+<li><p>支持读扩展（多个 Slave 分担读负载）</p>
+</li>
+</ol>
+</li>
+<li><p>缺点</p>
+<ul>
+<li><p><strong>不具备高可用性</strong>：Master 宕机后，整个集群不可写，需人工干预</p>
+</li>
+<li><p><strong>数据一致性是最终一致</strong>（异步复制，Slave 数据可能有延迟）</p>
+</li>
+<li><p><strong>无自动 Failover（故障切换）能力</strong></p>
+</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><p><strong>哨兵模式（Sentinel）</strong></p>
+<ol>
+<li><p>核心思想：</p>
+<ol>
+<li>在 <strong>主从复制的基础上，引入 Sentinel（哨兵）进程</strong>，用于 监控 Redis 主从节点的健康状态，并在 <strong>Master 宕机时自动进行故障转移（Failover），选举新的 Master</strong>，实现高可用性。</li>
+</ol>
+</li>
+<li><p>架构组成</p>
+<ol>
+<li><strong>Master</strong>：主节点，负责写操作</li>
+<li><strong>Slave</strong>：从节点，复制 Master 数据</li>
+<li><strong>Sentinel（哨兵）</strong>：独立的 Redis 进程（或线程），<strong>不存储数据</strong>，用于监控 + 故障转移</li>
+</ol>
+</li>
+</ol>
+<blockquote>
+<p>通常部署 <strong>至少 3 个 Sentinel 节点（避免脑裂）</strong>，它们共同监控 Redis 节点并协作决策。</p>
+</blockquote>
+<ol start="3">
+<li>Sentinel 做了什么？</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>功能</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>✅ 监控</td>
+<td>持续检查 Master 和 Slave 是否正常运行</td>
+</tr>
+<tr>
+<td>✅ 自动故障转移</td>
+<td>当 Master 宕机，Sentinel 会<strong>选举出一个 Slave 作为新 Master</strong>，并通知其他 Slave 复制新 Master</td>
+</tr>
+<tr>
+<td>✅ 通知</td>
+<td>通过 API 或消息告知客户端 Master 发生了变更</td>
+</tr>
+<tr>
+<td>✅ 配置提供者</td>
+<td>客户端可以从 Sentinel 获取最新的 Master 地址</td>
+</tr>
+</tbody></table>
+</li>
+</ol>
+<hr>
+<ol start="4">
+<li>优点：</li>
+</ol>
+<pre><code>  - **自动故障转移**（High Availability）
+
+  - **自动发现与通知**（客户端可感知新 Master）
+
+  - 仍然支持 **读写分离 &amp; 读扩展**
+</code></pre>
+<ol start="5">
+<li><p>缺点：</p>
+<ul>
+<li><p>不支持自动扩容 &#x2F; 数据分片：数据仍然全部存在一个 Master 上，无法解决大数据量存储问题</p>
+</li>
+<li><p>Sentinel 本身不存储数据，只是协调者</p>
+</li>
+<li><p>客户端需要支持 Sentinel 感知机制，或使用支持 Sentinel 的 Redis 客户端 SDK</p>
+</li>
+</ul>
+</li>
+<li><p><strong>集群模式（Redis Cluster）</strong></p>
+<ol>
+<li>核心思想：<ol>
+<li>Redis 官方推出的<strong>分布式集群解决方案</strong>，支持 <strong>数据自动分片（Sharding）、高可用、多主多从、横向扩展</strong>，是生产环境 <strong>大规模数据 + 高并发 + 高可用</strong> 场景下的首选架构。</li>
+</ol>
+</li>
+<li>核心特性</li>
+</ol>
+</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>特性</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>✅ 数据分片（Sharding）</td>
+<td>数据按哈希槽（16384 个 slot）分片，分散存储在多个主节点上</td>
+</tr>
+<tr>
+<td>✅ 多主多从</td>
+<td>每个分片是一个 <strong>主从结构</strong>，主节点负责写，从节点负责备份与故障切换</td>
+</tr>
+<tr>
+<td>✅ 高可用</td>
+<td>如果某个主节点宕机，其从节点会被 <strong>自动提升为主节点</strong></td>
+</tr>
+<tr>
+<td>✅ 客户端直连</td>
+<td>客户端可以直接连接集群节点，支持智能路由</td>
+</tr>
+<tr>
+<td>✅ 横向扩展</td>
+<td>可通过增加节点来扩展存储容量与并发能力</td>
+</tr>
+</tbody></table>
+<ol start="3">
+<li><p>数据分片原理（16384 个 Slot）</p>
+<ul>
+<li><p>Redis Cluster 将所有的数据分成 <strong>16384 个哈希槽（hash slot）</strong></p>
+</li>
+<li><p>每个 <strong>Key 通过 CRC16(key) % 16384 计算出所属的 Slot</strong></p>
+</li>
+<li><p>每个 <strong>主节点负责一部分 Slot（比如节点 A 负责 0<del>5000，节点 B 负责 5001</del>10000…）</strong></p>
+</li>
+<li><p>客户端访问时，Redis 会告诉客户端应该去哪个节点操作</p>
+</li>
+</ul>
+</li>
+<li><p>高可用实现</p>
+<ul>
+<li><p>每个主节点可以有 <strong>1 个或多个从节点</strong></p>
+</li>
+<li><p>如果某个主节点宕机，其对应的 <strong>从节点会通过选举成为新的主节点</strong>（类似哨兵的故障转移，但是集群内置）</p>
+</li>
+<li><p>如果某个节点完全宕机且无从节点，则对应的 Slot 不可用</p>
+</li>
+</ul>
+</li>
+<li><p>优点</p>
+<ol>
+<li>支持海量数据存储（通过分片）</li>
+<li>支持高并发（多节点共同承担）</li>
+<li>自动故障转移（内置，无需 Sentinel）</li>
+<li>横向可扩展（可动态增加节点）</li>
+<li>官方原生支持，无需第三方组件</li>
+</ol>
+</li>
+<li><p>缺点</p>
+<ol>
+<li>架构复杂，部署和运维成本较高</li>
+<li>不支持多 Key 操作（除非这些 Key 在同一个 Slot，可使用 Hash Tag</li>
+<li>事务操作受限（跨节点事务不支持）</li>
+<li>需要客户端支持 Cluster 协议（或使用代理）</li>
+</ol>
+</li>
+</ol>
+<p>三种集群策略 对比总结</p>
+<table>
+<thead>
+<tr>
+<th>对比维度</th>
+<th>主从复制</th>
+<th>哨兵模式</th>
+<th>Redis Cluster（集群）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>数据复制</strong></td>
+<td>✅ Master → Slave</td>
+<td>✅ Master → Slave</td>
+<td>✅ 每个主节点有从节点，支持复制</td>
+</tr>
+<tr>
+<td><strong>读写分离</strong></td>
+<td>✅ 支持</td>
+<td>✅ 支持</td>
+<td>✅ 支持（主写从读）</td>
+</tr>
+<tr>
+<td><strong>高可用（自动 Failover）</strong></td>
+<td>❌ 不支持</td>
+<td>✅ 支持（Sentinel）</td>
+<td>✅ 支持（内置）</td>
+</tr>
+<tr>
+<td><strong>数据分片 &#x2F; 扩展性</strong></td>
+<td>❌ 不支持</td>
+<td>❌ 不支持</td>
+<td>✅ 支持（16384 slots，多主多从）</td>
+</tr>
+<tr>
+<td><strong>数据存储能力</strong></td>
+<td>❌ 单机限制</td>
+<td>❌ 单机限制</td>
+<td>✅ 海量数据，可扩展</td>
+</tr>
+<tr>
+<td><strong>复杂度</strong></td>
+<td>低</td>
+<td>中等</td>
+<td>高（需理解分片、路由等）</td>
+</tr>
+<tr>
+<td><strong>适用场景</strong></td>
+<td>读多写少、简单备份</td>
+<td>中小应用、要求高可用</td>
+<td>大数据、高并发、生产级集群</td>
+</tr>
+</tbody></table>
+<hr>
+<h3 id="事务"><a href="#事务" class="headerlink" title="事务"></a>事务</h3><ol>
+<li><p>事务（Transaction）</p>
+<ol>
+<li><p>使用 <code>MULTI</code>、<code>EXEC</code>、<code>DISCARD</code>、<code>WATCH</code>实现。</p>
+<ol>
+<li>将多个命令打包，按顺序执行，但<strong>不保证原子性（中间可能被其他客户端打断）</strong></li>
+<li>WATCH 可以实现乐观锁。</li>
+</ol>
+</li>
+<li><p>实现原理</p>
+<ol>
+<li><p>Redis 的事务提供了一种将多个命令打包，然后一次性、按顺序执行的机制。它的实现主要依赖三个核心命令：<code>MULTI</code>、<code>EXEC</code> 和 <code>DISCARD</code>。</p>
+<ol>
+<li><p>启动事务：<code>MULTI</code></p>
+<ol>
+<li>当客户端发送 <code>MULTI</code> 命令时，Redis 会将该客户端的状态从<strong>非事务模式</strong>切换到<strong>事务模式</strong>。</li>
+<li>在此之后，客户端发送的任何命令（除了 <code>EXEC</code>、<code>DISCARD</code>、<code>WATCH</code> 等少数几个命令）都不会立即执行。</li>
+<li>相反，这些命令会被放入一个<strong>命令队列</strong>中，等待后续执行。</li>
+<li>Redis 只是简单地回复 <code>QUEUED</code>，表示命令已成功入队。</li>
+</ol>
+</li>
+<li><p>执行事务：<code>EXEC</code></p>
+<ol>
+<li>当客户端发送 <code>EXEC</code> 命令时，Redis 事务正式开始执行。</li>
+<li>Redis 会将命令队列中的所有命令<strong>按顺序、原子性地一次性执行完毕</strong>。</li>
+<li>执行完后，Redis 会将每个命令的执行结果按顺序打包成一个列表（Array）返回给客户端。</li>
+<li>客户端退出事务模式。</li>
+</ol>
+</li>
+<li><p>取消事务：<code>DISCARD</code></p>
+<ol>
+<li>如果客户端在 <code>MULTI</code> 之后，但在 <code>EXEC</code> 之前发送 <code>DISCARD</code> 命令，Redis 会清空命令队列。</li>
+<li>客户端退出事务模式，所有已入队的命令都不会被执行。</li>
+</ol>
+</li>
+<li><p>监控键值：<code>WATCH</code> </p>
+<ol>
+<li>命令用于监视（Watch）一个或多个键。它的核心机制可以概括为一句话：</li>
+<li>如果在 <code>WATCH</code> 之后，到 <code>EXEC</code> 执行之前，任何被监视的键发生了修改，那么整个事务将被取消（EXEC 返回空）。</li>
+<li>当 <code>EXEC</code> 失败（返回空响应）时，客户端程序就知道事务执行失败了，因为它依赖的底层数据已经被修改，必须：<ol>
+<li>清除监视： 自动或手动（通过 <code>UNWATCH</code> 命令）清除当前的监视状态。</li>
+<li>重试： 从第 1 步重新开始整个操作流程（重新 <code>WATCH</code>，重新读取数据，重新计算，重新 <code>EXEC</code>）。</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+<li><p>错误处理</p>
+<ol>
+<li>入队时发现的错误（Syntax Error）<ul>
+<li>如果在 <code>MULTI</code> 和 <code>EXEC</code> 之间，客户端发送了一个<strong>格式错误</strong>（如拼写错误、参数数量错误等）的命令，Redis 会在入队时就发现这个错误。</li>
+<li>在这种情况下，Redis 会拒绝执行整个事务队列，当执行 <code>EXEC</code> 时，<strong>所有</strong>命令都不会被执行。</li>
+</ul>
+</li>
+<li>执行时发现的错误（Runtime Error）***<ul>
+<li>如果在 <code>EXEC</code> 执行过程中，某个命令因为<strong>操作了错误的数据类型</strong>等原因而执行失败（Runtime Error），<strong>Redis 不会回滚（Rollback）</strong> 已经执行成功的命令。</li>
+<li>事务中其他<strong>执行成功的命令仍然会生效</strong>，只有失败的命令返回错误信息。</li>
+<li><strong>这是 Redis 事务与关系型数据库事务最大的区别之一。</strong> Redis 强调的是简单和高性能，它不会为了支持回滚而引入额外的复杂性。</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><p>并发控制</p>
+<ol>
+<li>为了解决事务过程中数据被其他客户端修改的问题，Redis 引入了 <code>WATCH</code> 命令，实现了<strong>乐观锁（Optimistic Locking）</strong>：<ol>
+<li><strong><code>WATCH key [key ...]</code></strong>: 客户端在 <code>MULTI</code> 之前使用 <code>WATCH</code> 监视一个或多个键。</li>
+<li><strong>执行事务</strong>: 客户端执行 <code>MULTI</code>，然后发送命令入队。</li>
+<li><strong>检查</strong>: 当客户端执行 <code>EXEC</code> 时，Redis 会检查所有被 <code>WATCH</code> 监视的键。</li>
+<li><strong>失败</strong>: 如果在 <code>WATCH</code> 之后到 <code>EXEC</code> 之前，<strong>任何一个</strong>被监视的键被其他客户端修改了，那么整个事务将被<strong>中断和取消</strong>，<code>EXEC</code> 命令会返回一个空结果（Null Reply）。</li>
+<li><strong>重试</strong>: 客户端需要重新 <code>WATCH</code> 键，并重新执行整个事务流程。</li>
+</ol>
+</li>
+</ol>
+</li>
+<li><p>ACID</p>
+<ol>
+<li><p>原子性如何实现？Redis没有回滚机制，是否破坏了原子性？</p>
+<ol>
+<li>我们说原子性是在事物进行过程中不会进行CPU调度，导致事务被打断</li>
+<li>在Redis事务中，如果遇到运行时错误，Redis仍然会继续执行后面的命令，那么事务并没有被打断，仍然可以认为保证了原子性</li>
+<li>虽说不满足传统意义的原子性，但是确实保证了事务不会被打断。</li>
+<li>并且运行时错误多为编程错误，可以避免。</li>
+</ol>
+</li>
+<li><p>一致性如何实现？</p>
+<ol>
+<li><strong>内部一致性：</strong> Redis 保证其内部数据结构的操作是正确的，并且其单线程模型确保了数据结构本身不会出现损坏。</li>
+<li><strong>事务隔离性：</strong> <code>I</code> 的保证间接支撑了 <code>C</code>，因为事务在执行过程中不会被其他客户端操作干扰，确保事务完成时，系统从一个有效状态转移到另一个有效状态。</li>
+</ol>
+</li>
+<li><p>隔离性如何实现？</p>
+<ol>
+<li>Redis 对隔离性的保证是<strong>非常强大</strong>的，因为它基于单线程模型。</li>
+<li>保证方式： Redis 使用 <strong>单线程</strong> 模型处理所有客户端请求（除了后台的持久化操作）。</li>
+<li>结果： <code>MULTI</code>&#x2F;<code>EXEC</code> 事务在执行过程中，不会被其他客户端的命令打断。事务队列中的所有命令都会被原子性地连续执行。</li>
+<li>总结： <strong>Redis 实现了最高级别的事务隔离性，即串行化（Serializability）——在事务执行期间，其他操作完全隔离</strong>。</li>
+</ol>
+</li>
+<li><p>持久性如何实现？</p>
+<ol>
+<li><p>Redis 提供了多种机制来实现持久性，但需要用户根据需求进行配置，<strong>默认情况下持久性是有风险的</strong>。</p>
+</li>
+<li><p>Redis 主要通过两种方式实现持久性：</p>
+<ol>
+<li><strong>AOF (Append Only File) 模式：</strong><ul>
+<li>将所有写命令以日志形式追加到文件中。</li>
+<li>如果配置了 <code>always</code> 模式（每条命令都同步到磁盘），则可以实现接近于 RDBMS 的持久性。</li>
+<li>但为了性能，通常配置为 <code>everysec</code>（每秒同步一次），这意味着最近一秒内的数据可能会丢失。</li>
+</ul>
+</li>
+<li><strong>RDB (Redis Database) 快照模式：</strong><ul>
+<li>定期将内存中的数据生成一个二进制快照文件。</li>
+<li>由于是<strong>定期</strong>快照，最近一次快照之后的所有数据都可能在系统崩溃时丢失。</li>
+</ul>
+</li>
+</ol>
+<ul>
+<li><strong>总结：</strong> Redis 的持久性是<strong>可配置的</strong>。只有在启用 AOF 并设置为 <code>always</code> 同步时，才能最大限度地保证 Durability，但这样做会牺牲写入性能。</li>
+</ul>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<h3 id="Lua-脚本"><a href="#Lua-脚本" class="headerlink" title="Lua 脚本"></a>Lua 脚本</h3><ol>
+<li>是什么<ol>
+<li><strong>Lua</strong> 是一种轻量级、高效、可嵌入的脚本语言，可作为编程语言的扩展语言，被广泛的运用到Redis脚本中</li>
+</ol>
+</li>
+<li>在Redis中的应用<ol>
+<li>原子性操作<ul>
+<li>Redis 执行 单个命令是原子性的，但多个命令组合在一起 默认不是原子性 的（中间可能被其他客户端的命令插入）。</li>
+<li>把多个命令封装进一个 Lua 脚本，Redis 会<strong>一次性、按顺序执行脚本里的所有命令，不会被其他操作打断</strong>，保证原子性。</li>
+</ul>
+</li>
+<li>减少网络开销<ul>
+<li>如果你要执行多个 Redis 命令，通常需要多次网络往返。</li>
+<li>使用 Lua 脚本，可以把多个命令一次性发送到 Redis 服务端执行，<strong>只需一次网络通信</strong>，提高效率。</li>
+</ul>
+</li>
+<li>复杂业务逻辑<ul>
+<li>有些业务逻辑比较复杂，比如“先判断再修改”、“循环操作”、“带条件的多键操作”等，用 Lua 脚本可以在服务端高效完成。</li>
+</ul>
+</li>
+<li>实现分布式锁、计数器、限流等高级功能<ul>
+<li>像 Redis 分布式锁的正确释放（判断 value 一致再 DEL）</li>
+<li>限流算法（如令牌桶、漏桶）</li>
+<li>排行榜加分、扣分逻辑都可以用 Lua 脚本优雅地实现。</li>
+</ul>
+</li>
+</ol>
+</li>
+</ol>
+<h3 id="过期策略与内存淘汰机制"><a href="#过期策略与内存淘汰机制" class="headerlink" title="过期策略与内存淘汰机制"></a>过期策略与内存淘汰机制</h3><ol>
+<li>过期策略<ol>
+<li><p>可以给 Key 设置过期时间：<code>EXPIRE key seconds</code></p>
+</li>
+<li><p>Redis 采用以下两种方式清理过期 Key：</p>
+<ol>
+<li><strong>定期删除</strong>：每隔一段时间随机抽取一些 key 检查是否过期</li>
+<li><strong>惰性删除</strong>：当访问某个 key 时，检查是否过期，如果过期则删除</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<blockquote>
+<p>⚠️ 过期不会立即释放内存，而是惰性或定期清理。</p>
+</blockquote>
+<ol start="2">
+<li>内存淘汰机制（maxmemory-policy）</li>
+</ol>
+<p>当 Redis 内存达到上限时，根据策略删除部分 key，常见策略包括：</p>
+<ul>
+<li>noeviction（默认）：不删除，写入报错</li>
+<li>allkeys-lru：从所有 key 中淘汰最近最少使用的</li>
+<li>volatile-lru：只从设置了过期时间的 key 中淘汰</li>
+<li>allkeys-random &#x2F; volatile-random：随机淘汰</li>
+<li>allkeys-ttl：优先淘汰快过期的</li>
+</ul>
+<blockquote>
+<p>生产环境推荐使用：allkeys-lru 或 volatile-lru</p>
+</blockquote>
+<h3 id="Redis实现分布式锁"><a href="#Redis实现分布式锁" class="headerlink" title="Redis实现分布式锁"></a>Redis实现分布式锁</h3><ol>
+<li><p>概述</p>
+<ol>
+<li>在分布式系统中，多个进程或服务（可能运行在不同的服务器上）可能会同时尝试访问共享资源（如数据库、文件、缓存等），为了保证数据一致性，我们需要一种跨进程&#x2F;服务的互斥机制，这就是 分布式锁（Distributed Lock）。</li>
+<li>在分布式系统中，传统的线程锁（如 Java 的 synchronized、ReentrantLock）<strong>只能在单个 JVM 内起作用</strong>，无法跨进程、跨服务器工作。而 <strong>Redis 是一个高性能的、支持网络访问的、内存数据库，天生适合用来实现跨服务的锁机制。</strong></li>
+<li>注意是用Redis实现一个分布式锁，而不是Redis内部机制（毕竟Redis是单线程的，不用考虑分布式锁）</li>
+</ol>
+</li>
+<li><p>工作原理</p>
+<ol>
+<li><p>使用 Redis 的 <code>SET key value NX PX timeout</code>命令，来实现：</p>
+<ul>
+<li><strong>互斥性（Mutual Exclusion）</strong>：同一时刻只有一个客户端能成功设置锁</li>
+<li><strong>避免死锁</strong>：锁必须要有过期时间，防止客户端崩溃后锁永远不释放</li>
+<li><strong>锁的释放必须是原子的且只能由加锁者释放</strong>：通过 value（唯一标识，如 UUID）来判断，避免误删别人的锁</li>
+</ul>
+</li>
+<li><p>释放锁（<strong>必须验证锁是自己的！！</strong>）</p>
+<ol>
+<li>不能直接用 <code>DEL lockKey</code>，因为：<ol>
+<li>如果 A 加了锁，但锁过期了，B 获取到了锁</li>
+<li>此时 A 的业务还没执行完，但锁已经失效，A 还去执行 <code>DEL</code>，就会把 B 的锁删掉 ❌</li>
+</ol>
+</li>
+<li>正确做法：使用 Lua 脚本保证原子性，校验 value 一致才删除<ol>
+<li>Lua 脚本如下：</li>
+</ol>
+</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">if redis.call(&quot;get&quot;, KEYS[1]) == ARGV[1] then</span><br><span class="line">    return redis.call(&quot;del&quot;, KEYS[1])</span><br><span class="line">else</span><br><span class="line">    return 0</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>KEYS[1]</code>是锁的 key，比如 <code>order_lock_123</code></li>
+<li><code>ARGV[1]</code>是加锁时设置的唯一标识（requestId &#x2F; UUID）</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><p>实现方式</p>
+<ol>
+<li><p>命令格式：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SET lock_key unique_value NX PX 30000</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>参数解释：</p>
+<table>
+<thead>
+<tr>
+<th align="left">参数</th>
+<th align="left">含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>lock_key</code></td>
+<td align="left">锁的名称，比如 <code>order_lock_123</code></td>
+</tr>
+<tr>
+<td align="left"><code>unique_value</code></td>
+<td align="left">唯一标识，通常是 UUID 或 客户端生成的随机字符串，用于标识锁的持有者</td>
+</tr>
+<tr>
+<td align="left"><code>NX</code></td>
+<td align="left">仅当 key 不存在时才设置成功（保证互斥）</td>
+</tr>
+<tr>
+<td align="left"><code>PX 30000</code></td>
+<td align="left">设置锁的过期时间，单位毫秒（这里是 30 秒），防止死锁</td>
+</tr>
+</tbody></table>
+</li>
+</ol>
+</li>
+</ol>
+<h3 id="常见问题与优化建议"><a href="#常见问题与优化建议" class="headerlink" title="常见问题与优化建议"></a>常见问题与优化建议</h3><table>
+<thead>
+<tr>
+<th align="left">问题</th>
+<th align="left">本质</th>
+<th align="left">原因</th>
+<th align="left">解决方案关键词</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>缓存穿透</strong></td>
+<td align="left">查询了不存在的数据，每次都访问 DB</td>
+<td align="left">恶意&#x2F;错误查询、缓存没有拦截</td>
+<td align="left">布隆过滤器、缓存空对象</td>
+</tr>
+<tr>
+<td align="left"><strong>缓存击穿</strong></td>
+<td align="left">热点 key 突然失效，大量请求直达 DB</td>
+<td align="left">单个热点 key 过期，高并发访问</td>
+<td align="left">永不过期（逻辑过期）、互斥锁</td>
+</tr>
+<tr>
+<td align="left"><strong>缓存雪崩</strong></td>
+<td align="left">大量 key 同时失效 &#x2F; Redis 宕机，DB 崩溃</td>
+<td align="left">过期时间集中、Redis 故障</td>
+<td align="left">随机过期、多级缓存、高可用、熔断</td>
+</tr>
+</tbody></table>
+<ol>
+<li><p>缓存穿透</p>
+<ol>
+<li><p>查询一个<strong>不存在的数据</strong>，导致每次都访问数据库。</p>
+</li>
+<li><p>解决方案：</p>
+<ol>
+<li><p>布隆过滤器</p>
+<ol>
+<li><p>布隆过滤器是一种空间效率极高、用于判断某个元素是否可能存在于集合中的数据结构。</p>
+<ul>
+<li>在缓存层或应用启动时，将所有合法的数据 key 提前加载到布隆过滤器中</li>
+<li>当用户查询某个 key 时，先经过布隆过滤器判断：这个 key 是否可能存在如果布隆过滤器判断 “不存在” → 直接返回，不去查缓存和数据库如果判断 “可能存在” → 再去查缓存&#x2F;数据库</li>
+</ul>
+</li>
+<li><p>优点：</p>
+<ul>
+<li><p>对于大量不存在的 key 请求，在第一层就拦截掉</p>
+</li>
+<li><p>占用内存极小，效率高</p>
+</li>
+</ul>
+</li>
+<li><p>适用场景：</p>
+<ul>
+<li><p>适合ID类查询、提前已知所有合法 key 的业务（如商品 ID、用户 ID）</p>
+</li>
+<li><p>常用于防止恶意或错误查询穿透到数据库</p>
+</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><p>缓存空对象</p>
+<ol>
+<li>即使数据库查询结果为空（比如 ID 为 999 的用户不存在），也把这个 <strong>空结果进行缓存</strong>，并设置一个较短的过期时间（如 30~60 秒）。</li>
+<li>下次同样查询时，缓存中能命中这个“空值”，就不再查数据库。</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+<li><p>缓存击穿</p>
+<ol>
+<li><p>某个<strong>热点 key 突然失效</strong>，大量请求直接打到数据库。</p>
+</li>
+<li><p>解决方案：</p>
+<ol>
+<li><p>设置热点 key 永不过期（逻辑过期）</p>
+<ol>
+<li><p>对于特别热点的 key，不设置真正的过期时间（或者设置一个非常长的时间）</p>
+</li>
+<li><p>但数据本身可以设置一个 “逻辑过期时间”（比如在 value 中保存一个过期时间戳）</p>
+</li>
+<li><p>后台启动一个 定时任务或异步线程，在数据即将过期时，异步更新缓存</p>
+</li>
+<li><p><strong>优点：</strong> 避免大量请求同时击穿缓存</p>
+</li>
+<li><p><strong>缺点：</strong> 数据更新可能有一定延迟，需要维护逻辑过期时间</p>
+</li>
+</ol>
+</li>
+<li><p>使用互斥锁（Mutex Lock） &#x2F; 分布式锁重建缓存</p>
+<ol>
+<li><p>当缓存未命中时，不是所有请求都去查数据库，而是：</p>
+<ol>
+<li>第一个请求去查库，并重建缓存，同时对其他请求加锁（互斥）</li>
+<li>其它请求发现锁存在，就 等待或短暂休眠后重试，或者直接返回旧数据 &#x2F; 默认值</li>
+<li>锁释放后，其它请求再尝试从缓存获取</li>
+</ol>
+</li>
+<li><p>实现方式：</p>
+<ul>
+<li><p>使用 Redis 的 <code>SETNX</code>或 <code>RedLock</code>等实现分布式锁</p>
+</li>
+<li><p>或者使用本地锁（单机情况下）</p>
+</li>
+</ul>
+</li>
+<li><p>关键点： 只让 一个请求去查库并重建缓存，其他请求等待或重试</p>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+<li><p>缓存雪崩</p>
+<ol>
+<li><p>大量 key <strong>在同一时间过期</strong>，导致请求全部压到数据库。</p>
+</li>
+<li><p>解决方案：</p>
+<ol>
+<li><p>设置不同的过期时间（随机过期）</p>
+<ul>
+<li><p>为每个缓存 key 的过期时间添加一个 随机值，比如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">基础过期时间：3600 秒（1小时）</span><br><span class="line">随机值：± 300 秒（5分钟）</span><br><span class="line">=&gt; 最终过期时间在 3300 ~ 3900 秒之间</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>避免大量 key 同时失效，错开缓存刷新时间</p>
+</li>
+</ul>
+</li>
+<li><p>使用多级缓存</p>
+<ul>
+<li><p>不止依赖 Redis，还可以引入本地缓存（如 Caffeine、Guava Cache）作为一级缓存</p>
+</li>
+<li><p>Redis 作为二级缓存</p>
+</li>
+<li><p>即使 Redis 缓存失效，本地缓存还能挡一波请求</p>
+<p> 优点： 多层防护，即使某一层失效，也有兜底</p>
+</li>
+</ul>
+</li>
+<li><p>Redis 高可用（主从 + 哨兵 &#x2F; 集群）</p>
+<ul>
+<li>避免因为 Redis 宕机 导致所有缓存不可用</li>
+<li>通过 Redis Sentinel 或 Cluster 提高 Redis 自身的可用性</li>
+</ul>
+</li>
+<li><p>熔断降级 &amp; 请求限流</p>
+<ul>
+<li>当数据库压力过大时，可使用 熔断机制（如 Hystrix、Sentinel、Resilience4j）</li>
+<li>或对请求进行 限流（如令牌桶、漏桶算法），保护数据库</li>
+</ul>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+<li><p>性能优化建议</p>
+<ul>
+<li><p>避免大 Key（如大 Hash、大 List）、热 Key</p>
+</li>
+<li><p>合理使用 Pipeline 批量操作，减少网络往返</p>
+</li>
+<li><p>根据业务选择合适的数据结构</p>
+</li>
+<li><p>监控慢查询、内存使用、命中率等指标</p>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="订阅与发布"><a href="#订阅与发布" class="headerlink" title="订阅与发布"></a>订阅与发布</h3><ol>
+<li><p>是什么</p>
+<ol>
+<li>Redis 的 <strong>Pub&#x2F;Sub（发布&#x2F;订阅）</strong> 是一种<strong>消息通信模式</strong>，它允许：<ul>
+<li><strong>发送者（Publisher）</strong> 向 <strong>指定的频道（Channel）发送消息</strong>；</li>
+<li><strong>接收者（Subscriber）</strong> 可以<strong>订阅一个或多个频道</strong>，从而<strong>接收发送到这些频道的消息</strong>；</li>
+</ul>
+</li>
+<li>关键点：<ul>
+<li>发布者和订阅者之间<strong>没有直接的连接或耦合</strong>；</li>
+<li>消息传递是<strong>实时的、广播式的</strong>；</li>
+<li>Redis Pub&#x2F;Sub 是<strong>基于内存的、即发即弃（fire-and-forget）的消息系统</strong>，<strong>不提供消息持久化</strong>。</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><p>工作原理</p>
+<ol>
+<li><strong>订阅者（Subscriber）</strong> 通过命令订阅一个或多个频道；</li>
+<li><strong>发布者（Publisher）</strong> 向某个频道发送消息；</li>
+<li><strong>Redis 服务器</strong> 将该消息<strong>实时推送给所有订阅了该频道的订阅者</strong>；</li>
+<li>如果某个客户端<strong>没有订阅该频道，则不会收到任何消息</strong>。</li>
+</ol>
+</li>
+<li><p>命令</p>
+<ol>
+<li><p>订阅频道（Subscribe）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SUBSCRIBE channel1 [channel2 ...]</span><br></pre></td></tr></table></figure>
+
+<p>示例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SUBSCRIBE news sports</span><br></pre></td></tr></table></figure>
+
+<p>订阅者会进入监听模式，等待消息。此时 Redis CLI 会阻塞，等待发布消息。</p>
+</li>
+<li><p>发布消息（Publish）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PUBLISH channel message</span><br></pre></td></tr></table></figure>
+
+<p>示例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PUBLISH news &quot;Hello, this is a news update!&quot;</span><br></pre></td></tr></table></figure>
+
+<p>这条消息会被推送给所有订阅了 <code>news</code>频道的客户端。</p>
+</li>
+<li><p>取消订阅（Unsubscribe）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">UNSUBSCRIBE [channel1 channel2 ...]</span><br></pre></td></tr></table></figure>
+
+<p>如果不指定频道，则取消所有订阅。</p>
+</li>
+<li><p>查看活跃的频道（可选，用于监控）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PUBSUB CHANNELS [pattern]</span><br></pre></td></tr></table></figure>
+
+<p>示例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PUBSUB CHANNELS news *</span><br></pre></td></tr></table></figure>
+
+<p>可以查看当前有哪些频道正被订阅（支持通配符）。</p>
+</li>
+</ol>
+</li>
+</ol>
+<h2 id="docker实战"><a href="#docker实战" class="headerlink" title="docker实战"></a>docker实战</h2><h3 id="安装docker"><a href="#安装docker" class="headerlink" title="安装docker"></a>安装docker</h3><ol>
+<li><p>卸载旧版本：sudo apt-get remove docker docker-engine docker.io containerd runc</p>
+</li>
+<li><p>安装依赖：</p>
+<ol>
+<li><code>sudo apt-get update sudo apt-get install -y ca-certificates curl gnupg lsb-release</code></li>
+</ol>
+</li>
+<li><p>添加 Docker 官方 GPG key</p>
+<ol>
+<li><pre><code>sudo mkdir -p /etc/apt/keyrings
+
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg \
+  | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">4. 设置软件源</span><br><span class="line"></span><br><span class="line">   1. ```</span><br><span class="line">      echo \</span><br><span class="line">        &quot;deb [arch=$(dpkg --print-architecture) \</span><br><span class="line">        signed-by=/etc/apt/keyrings/docker.gpg] \</span><br><span class="line">        https://mirrors.aliyun.com/docker-ce/linux/ubuntu \</span><br><span class="line">        $(lsb_release -cs) stable&quot; \</span><br><span class="line">        | sudo tee /etc/apt/sources.list.d/docker.list &gt; /dev/null</span><br><span class="line">      </span><br></pre></td></tr></table></figure>
+</code></pre>
+</li>
+</ol>
+</li>
+<li><p>安装docker：</p>
+<ol>
+<li><code>sudo apt-get update sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin</code></li>
+</ol>
+</li>
+<li><p>配置加速</p>
+<ol>
+<li><pre><code>sudo mkdir -p /etc/docker
+sudo nano /etc/docker/daemon.json
+
+写入以下内容：
+{
+  &quot;registry-mirrors&quot;: [
+    &quot;https://registry.docker-cn.com&quot;,
+    &quot;https://docker.m.daocloud.io&quot;,
+    &quot;https://mirror.ccs.tencentyun.com&quot;,
+    &quot;https://hub-mirror.c.163.com&quot;
+  ]
+}
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">### 容器</span><br><span class="line"></span><br><span class="line">1. 如何进入docker容器内部修改内容：`docker exec -it &lt;id&gt; bash  # 进入正在运行的容器 `</span><br><span class="line">2. 挂载：进入容器修改页面太麻烦，我们把它挂在到服务器的目录中。修改服务器目录就能够修改容器中的内容。注意是index.html文件</span><br><span class="line"></span><br><span class="line">### 如何把java上传到服务器</span><br><span class="line"></span><br><span class="line">1. 把写好的代码用maven打包为.jar，在target目录下</span><br><span class="line">2. 编写Dockerfile。一定会有FROM指明需要从DockerHub上下载的java镜像和作者</span><br><span class="line">3. 上传到服务器，建好工作目录。</span><br><span class="line">4. docker build, docker run</span><br><span class="line"></span><br><span class="line">## k8s实战</span><br><span class="line"></span><br><span class="line">### 创建集群</span><br><span class="line"></span><br><span class="line">1. 预备环境</span><br><span class="line">   1. 需要多台服务器，分为控制服务器master和服务节点nide</span><br><span class="line">   2. 创建以后把他们放在一个VPC中</span><br><span class="line">   3. 每台都要安装docker</span><br><span class="line">   4. 改主机名</span><br><span class="line">   5. 确保组内互信</span><br><span class="line">   6. 确保永久禁止交换分区（free -m 的结果中 Swap 一项全是 0）</span><br><span class="line">   7. 允许流量桥接（iptables）</span><br><span class="line">   8. 下载所需依赖</span><br><span class="line">2. 下载“三大件”</span><br><span class="line">   1. kubelet</span><br><span class="line">   2. kubeadm</span><br><span class="line">   3. kubectl</span><br><span class="line"></span><br><span class="line">### 引导启动集群</span><br><span class="line"></span><br><span class="line">1. 启动kubelet。注意，kubelet此时会反复重启，属正常现象</span><br><span class="line"></span><br><span class="line">2. 设置域名映射</span><br><span class="line"></span><br><span class="line">3. 启用CRI</span><br><span class="line"></span><br><span class="line">   1. ```</span><br><span class="line">      检查 containerd 是否安装并运行</span><br><span class="line">      systemctl status containerd</span><br><span class="line">      </span><br><span class="line">      </span><br><span class="line">      如果没安装：</span><br><span class="line">      </span><br><span class="line">      apt-get update &amp;&amp; apt-get install -y containerd</span><br><span class="line">      </span><br><span class="line">      2. 生成并修改配置文件</span><br><span class="line">      </span><br><span class="line">      生成默认配置：</span><br><span class="line">      </span><br><span class="line">      containerd config default &gt; /etc/containerd/config.toml</span><br><span class="line">      </span><br><span class="line">      </span><br><span class="line">      修改关键配置：</span><br><span class="line">      </span><br><span class="line">      CRI 插件必须启用：确认 [plugins.&quot;io.containerd.grpc.v1.cri&quot;] 没被注释掉。</span><br><span class="line">      </span><br><span class="line">      sandbox 镜像（pause 镜像）要改成国内可拉取的地址，例如：</span><br><span class="line">      </span><br><span class="line">      [plugins.&quot;io.containerd.grpc.v1.cri&quot;]</span><br><span class="line">        sandbox_image = &quot;registry.aliyuncs.com/google_containers/pause:3.9&quot;</span><br><span class="line">      </span><br><span class="line">      3. 重启 containerd</span><br><span class="line">      systemctl daemon-reexec</span><br><span class="line">      systemctl restart containerd</span><br><span class="line">      </span><br><span class="line">      4. 验证 CRI socket 是否可用</span><br><span class="line">      crictl info</span><br><span class="line">      </span><br><span class="line">      </span><br><span class="line">      能输出 JSON 就说明 OK（如果 crictl 没装，可以 apt-get install -y cri-tools）。</span><br><span class="line">      </span><br><span class="line">      5. 重新加入集群</span><br><span class="line">      </span><br><span class="line">      在 node 上重新执行 master 给的 join 命令：</span><br><span class="line">      </span><br><span class="line">      kubeadm join 172.23.159.16:6443 --token txnlw2.j83802umcetcr3mo \</span><br><span class="line">        --discovery-token-ca-cert-hash sha256:46251037d5a972db8d96635b4c1244c00c9d17f6e90963a2e6da5d42106724ab</span><br><span class="line">      </span><br></pre></td></tr></table></figure>
+</code></pre>
+</li>
+<li><p>改完的&#x2F;etc&#x2F;container&#x2F;conf.toml</p>
+<ol>
+<li><pre><code class="language-bash">disabled_plugins = []
+imports = []
+oom_score = 0
+plugin_dir = &quot;&quot;
+required_plugins = []
+root = &quot;/var/lib/containerd&quot;
+state = &quot;/run/containerd&quot;
+temp = &quot;&quot;
+version = 2
+
+[cgroup]
+  path = &quot;&quot;
+
+[debug]
+  address = &quot;&quot;
+  format = &quot;&quot;
+  gid = 0
+  level = &quot;&quot;
+  uid = 0
+
+[grpc]
+  address = &quot;/run/containerd/containerd.sock&quot;
+  gid = 0
+  max_recv_message_size = 16777216
+  max_send_message_size = 16777216
+  tcp_address = &quot;&quot;
+  tcp_tls_ca = &quot;&quot;
+  tcp_tls_cert = &quot;&quot;
+  tcp_tls_key = &quot;&quot;
+  uid = 0
+
+[metrics]
+  address = &quot;&quot;
+  grpc_histogram = false
+
+[plugins]
+
+  [plugins.&quot;io.containerd.gc.v1.scheduler&quot;]
+    deletion_threshold = 0
+    mutation_threshold = 100
+    pause_threshold = 0.02
+    schedule_delay = &quot;0s&quot;
+    startup_delay = &quot;100ms&quot;
+
+  [plugins.&quot;io.containerd.grpc.v1.cri&quot;]
+    cdi_spec_dirs = [&quot;/etc/cdi&quot;, &quot;/var/run/cdi&quot;]
+    device_ownership_from_security_context = false
+    disable_apparmor = false
+    disable_cgroup = false
+    disable_hugetlb_controller = true
+    disable_proc_mount = false
+    disable_tcp_service = true
+    drain_exec_sync_io_timeout = &quot;0s&quot;
+    enable_cdi = false
+    enable_selinux = false
+    enable_tls_streaming = false
+    enable_unprivileged_icmp = false
+    enable_unprivileged_ports = false
+    ignore_deprecation_warnings = []
+    ignore_image_defined_volumes = false
+    image_pull_progress_timeout = &quot;5m0s&quot;
+    image_pull_with_sync_fs = false
+    max_concurrent_downloads = 3
+    max_container_log_line_size = 16384
+    netns_mounts_under_state_dir = false
+    restrict_oom_score_adj = false
+    sandbox_image = &quot;registry.aliyuncs.com/google_containers/pause:3.9&quot;
+    selinux_category_range = 1024
+    stats_collect_period = 10
+    stream_idle_timeout = &quot;4h0m0s&quot;
+    stream_server_address = &quot;127.0.0.1&quot;
+    stream_server_port = &quot;0&quot;
+    systemd_cgroup = false
+    tolerate_missing_hugetlb_controller = true
+    unset_seccomp_profile = &quot;&quot;
+
+    [plugins.&quot;io.containerd.grpc.v1.cri&quot;.cni]
+      bin_dir = &quot;/opt/cni/bin&quot;
+      conf_dir = &quot;/etc/cni/net.d&quot;
+      conf_template = &quot;&quot;
+      ip_pref = &quot;&quot;
+      max_conf_num = 1
+      setup_serially = false
+
+    [plugins.&quot;io.containerd.grpc.v1.cri&quot;.containerd]
+      default_runtime_name = &quot;runc&quot;
+      disable_snapshot_annotations = true
+      discard_unpacked_layers = false
+      ignore_blockio_not_enabled_errors = false
+      ignore_rdt_not_enabled_errors = false
+      no_pivot = false
+      snapshotter = &quot;overlayfs&quot;
+
+      [plugins.&quot;io.containerd.grpc.v1.cri&quot;.containerd.default_runtime]
+        base_runtime_spec = &quot;&quot;
+        cni_conf_dir = &quot;&quot;
+        cni_max_conf_num = 0
+        container_annotations = []
+        pod_annotations = []
+        privileged_without_host_devices = false
+        privileged_without_host_devices_all_devices_allowed = false
+        runtime_engine = &quot;&quot;
+        runtime_path = &quot;&quot;
+        runtime_root = &quot;&quot;
+        runtime_type = &quot;&quot;
+        sandbox_mode = &quot;&quot;
+        snapshotter = &quot;&quot;
+
+        [plugins.&quot;io.containerd.grpc.v1.cri&quot;.containerd.default_runtime.options]
+
+      [plugins.&quot;io.containerd.grpc.v1.cri&quot;.containerd.runtimes]
+
+        [plugins.&quot;io.containerd.grpc.v1.cri&quot;.containerd.runtimes.runc]
+          base_runtime_spec = &quot;&quot;
+          cni_conf_dir = &quot;&quot;
+          cni_max_conf_num = 0
+          container_annotations = []
+          pod_annotations = []
+          privileged_without_host_devices = false
+          privileged_without_host_devices_all_devices_allowed = false
+          runtime_engine = &quot;&quot;
+          runtime_path = &quot;&quot;
+          runtime_root = &quot;&quot;
+          runtime_type = &quot;io.containerd.runc.v2&quot;
+          sandbox_mode = &quot;podsandbox&quot;
+          snapshotter = &quot;&quot;
+
+          [plugins.&quot;io.containerd.grpc.v1.cri&quot;.containerd.runtimes.runc.options]
+            BinaryName = &quot;&quot;
+            CriuImagePath = &quot;&quot;
+            CriuPath = &quot;&quot;
+            CriuWorkPath = &quot;&quot;
+            IoGid = 0
+            IoUid = 0
+            NoNewKeyring = false
+            NoPivotRoot = false
+            Root = &quot;&quot;
+            ShimCgroup = &quot;&quot;
+            SystemdCgroup = true
+
+      [plugins.&quot;io.containerd.grpc.v1.cri&quot;.containerd.untrusted_workload_runtime]
+        base_runtime_spec = &quot;&quot;
+        cni_conf_dir = &quot;&quot;
+        cni_max_conf_num = 0
+        container_annotations = []
+        pod_annotations = []
+        privileged_without_host_devices = false
+        privileged_without_host_devices_all_devices_allowed = false
+        runtime_engine = &quot;&quot;
+        runtime_path = &quot;&quot;
+        runtime_root = &quot;&quot;
+        runtime_type = &quot;&quot;
+        sandbox_mode = &quot;&quot;
+        snapshotter = &quot;&quot;
+
+        [plugins.&quot;io.containerd.grpc.v1.cri&quot;.containerd.untrusted_workload_runtime.options]
+
+    [plugins.&quot;io.containerd.grpc.v1.cri&quot;.image_decryption]
+      key_model = &quot;node&quot;
+
+    [plugins.&quot;io.containerd.grpc.v1.cri&quot;.registry]
+      config_path = &quot;&quot;
+
+      [plugins.&quot;io.containerd.grpc.v1.cri&quot;.registry.auths]
+
+      [plugins.&quot;io.containerd.grpc.v1.cri&quot;.registry.configs]
+
+      [plugins.&quot;io.containerd.grpc.v1.cri&quot;.registry.headers]
+
+      [plugins.&quot;io.containerd.grpc.v1.cri&quot;.registry.mirrors]  
+
+    [plugins.&quot;io.containerd.grpc.v1.cri&quot;.x509_key_pair_streaming]
+      tls_cert_file = &quot;&quot;
+      tls_key_file = &quot;&quot;
+
+  [plugins.&quot;io.containerd.internal.v1.opt&quot;]
+    path = &quot;/opt/containerd&quot;
+
+  [plugins.&quot;io.containerd.internal.v1.restart&quot;]
+    interval = &quot;10s&quot;
+
+  [plugins.&quot;io.containerd.internal.v1.tracing&quot;]
+
+  [plugins.&quot;io.containerd.metadata.v1.bolt&quot;]
+    content_sharing_policy = &quot;shared&quot;
+
+  [plugins.&quot;io.containerd.monitor.v1.cgroups&quot;]
+    no_prometheus = false
+
+  [plugins.&quot;io.containerd.nri.v1.nri&quot;]
+    disable = true
+    disable_connections = false
+    plugin_config_path = &quot;/etc/nri/conf.d&quot;
+    plugin_path = &quot;/opt/nri/plugins&quot;
+    plugin_registration_timeout = &quot;5s&quot;
+    plugin_request_timeout = &quot;2s&quot;
+    socket_path = &quot;/var/run/nri/nri.sock&quot;
+
+  [plugins.&quot;io.containerd.runtime.v1.linux&quot;]
+    no_shim = false
+    runtime = &quot;runc&quot;
+    runtime_root = &quot;&quot;
+    shim = &quot;containerd-shim&quot;
+    shim_debug = false
+
+  [plugins.&quot;io.containerd.runtime.v2.task&quot;]
+    platforms = [&quot;linux/amd64&quot;]
+    sched_core = false
+
+  [plugins.&quot;io.containerd.service.v1.diff-service&quot;]
+    default = [&quot;walking&quot;]
+    sync_fs = false
+
+  [plugins.&quot;io.containerd.service.v1.tasks-service&quot;]
+    blockio_config_file = &quot;&quot;
+    rdt_config_file = &quot;&quot;
+
+  [plugins.&quot;io.containerd.snapshotter.v1.aufs&quot;]
+    root_path = &quot;&quot;
+
+  [plugins.&quot;io.containerd.snapshotter.v1.blockfile&quot;]
+    fs_type = &quot;&quot;
+    mount_options = []
+    root_path = &quot;&quot;
+    scratch_file = &quot;&quot;
+
+  [plugins.&quot;io.containerd.snapshotter.v1.btrfs&quot;]
+    root_path = &quot;&quot;
+
+  [plugins.&quot;io.containerd.snapshotter.v1.devmapper&quot;]
+    async_remove = false
+    base_image_size = &quot;&quot;
+    discard_blocks = false
+    fs_options = &quot;&quot;
+    fs_type = &quot;&quot;
+    pool_name = &quot;&quot;
+    root_path = &quot;&quot;
+
+  [plugins.&quot;io.containerd.snapshotter.v1.native&quot;]
+    root_path = &quot;&quot;
+
+  [plugins.&quot;io.containerd.snapshotter.v1.overlayfs&quot;]
+    mount_options = []
+    root_path = &quot;&quot;
+    sync_remove = false
+    upperdir_label = false
+
+  [plugins.&quot;io.containerd.snapshotter.v1.zfs&quot;]
+    root_path = &quot;&quot;
+
+  [plugins.&quot;io.containerd.tracing.processor.v1.otlp&quot;]
+
+  [plugins.&quot;io.containerd.transfer.v1.local&quot;]
+    config_path = &quot;&quot;
+    max_concurrent_downloads = 3
+    max_concurrent_uploaded_layers = 3
+
+    [[plugins.&quot;io.containerd.transfer.v1.local&quot;.unpack_config]]
+      differ = &quot;&quot;
+      platform = &quot;linux/amd64&quot;
+      snapshotter = &quot;overlayfs&quot;
+
+[proxy_plugins]
+
+[stream_processors]
+
+  [stream_processors.&quot;io.containerd.ocicrypt.decoder.v1.tar&quot;]
+    accepts = [&quot;application/vnd.oci.image.layer.v1.tar+encrypted&quot;]
+    args = [&quot;--decryption-keys-path&quot;, &quot;/etc/containerd/ocicrypt/keys&quot;]
+    env = [&quot;OCICRYPT_KEYPROVIDER_CONFIG=/etc/containerd/ocicrypt/ocicrypt_keyprovider.conf&quot;]
+    path = &quot;ctd-decoder&quot;
+    returns = &quot;application/vnd.oci.image.layer.v1.tar&quot;
+
+  [stream_processors.&quot;io.containerd.ocicrypt.decoder.v1.tar.gzip&quot;]
+    accepts = [&quot;application/vnd.oci.image.layer.v1.tar+gzip+encrypted&quot;]
+    args = [&quot;--decryption-keys-path&quot;, &quot;/etc/containerd/ocicrypt/keys&quot;]
+    env = [&quot;OCICRYPT_KEYPROVIDER_CONFIG=/etc/containerd/ocicrypt/ocicrypt_keyprovider.conf&quot;]
+    path = &quot;ctd-decoder&quot;
+    returns = &quot;application/vnd.oci.image.layer.v1.tar+gzip&quot;
+
+[timeouts]
+  &quot;io.containerd.timeout.bolt.open&quot; = &quot;0s&quot;
+  &quot;io.containerd.timeout.metrics.shimstats&quot; = &quot;2s&quot;
+  &quot;io.containerd.timeout.shim.cleanup&quot; = &quot;5s&quot;
+  &quot;io.containerd.timeout.shim.load&quot; = &quot;5s&quot;
+  &quot;io.containerd.timeout.shim.shutdown&quot; = &quot;3s&quot;
+  &quot;io.containerd.timeout.task.state&quot; = &quot;2s&quot;
+
+[ttrpc]
+  address = &quot;&quot;
+  gid = 0
+  uid = 0
+root@k8s-master:~# vim /etc/containerd/config.toml
+root@k8s-master:~# cat /etc/containerd/config.toml
+disabled_plugins = []
+imports = []
+oom_score = 0
+plugin_dir = &quot;&quot;
+required_plugins = []
+root = &quot;/var/lib/containerd&quot;
+state = &quot;/run/containerd&quot;
+temp = &quot;&quot;
+version = 2
+
+[cgroup]
+  path = &quot;&quot;
+
+[debug]
+  address = &quot;&quot;
+  format = &quot;&quot;
+  gid = 0
+  level = &quot;&quot;
+  uid = 0
+
+[grpc]
+  address = &quot;/run/containerd/containerd.sock&quot;
+  gid = 0
+  max_recv_message_size = 16777216
+  max_send_message_size = 16777216
+  tcp_address = &quot;&quot;
+  tcp_tls_ca = &quot;&quot;
+  tcp_tls_cert = &quot;&quot;
+  tcp_tls_key = &quot;&quot;
+  uid = 0
+
+[metrics]
+  address = &quot;&quot;
+  grpc_histogram = false
+
+[plugins]
+
+  [plugins.&quot;io.containerd.gc.v1.scheduler&quot;]
+    deletion_threshold = 0
+    mutation_threshold = 100
+    pause_threshold = 0.02
+    schedule_delay = &quot;0s&quot;
+    startup_delay = &quot;100ms&quot;
+
+  [plugins.&quot;io.containerd.grpc.v1.cri&quot;]
+    cdi_spec_dirs = [&quot;/etc/cdi&quot;, &quot;/var/run/cdi&quot;]
+    device_ownership_from_security_context = false
+    disable_apparmor = false
+    disable_cgroup = false
+    disable_hugetlb_controller = true
+    disable_proc_mount = false
+    disable_tcp_service = true
+    drain_exec_sync_io_timeout = &quot;0s&quot;
+    enable_cdi = false
+    enable_selinux = false
+    enable_tls_streaming = false
+    enable_unprivileged_icmp = false
+    enable_unprivileged_ports = false
+    ignore_deprecation_warnings = []
+    ignore_image_defined_volumes = false
+    image_pull_progress_timeout = &quot;5m0s&quot;
+    image_pull_with_sync_fs = false
+    max_concurrent_downloads = 3
+    max_container_log_line_size = 16384
+    netns_mounts_under_state_dir = false
+    restrict_oom_score_adj = false
+    sandbox_image = &quot;registry.aliyuncs.com/google_containers/pause:3.9&quot;
+    selinux_category_range = 1024
+    stats_collect_period = 10
+    stream_idle_timeout = &quot;4h0m0s&quot;
+    stream_server_address = &quot;127.0.0.1&quot;
+    stream_server_port = &quot;0&quot;
+    systemd_cgroup = false
+    tolerate_missing_hugetlb_controller = true
+    unset_seccomp_profile = &quot;&quot;
+
+    [plugins.&quot;io.containerd.grpc.v1.cri&quot;.cni]
+      bin_dir = &quot;/opt/cni/bin&quot;
+      conf_dir = &quot;/etc/cni/net.d&quot;
+      conf_template = &quot;&quot;
+      ip_pref = &quot;&quot;
+      max_conf_num = 1
+      setup_serially = false
+
+    [plugins.&quot;io.containerd.grpc.v1.cri&quot;.containerd]
+      default_runtime_name = &quot;runc&quot;
+      disable_snapshot_annotations = true
+      discard_unpacked_layers = false
+      ignore_blockio_not_enabled_errors = false
+      ignore_rdt_not_enabled_errors = false
+      no_pivot = false
+      snapshotter = &quot;overlayfs&quot;
+
+      [plugins.&quot;io.containerd.grpc.v1.cri&quot;.containerd.default_runtime]
+        base_runtime_spec = &quot;&quot;
+        cni_conf_dir = &quot;&quot;
+        cni_max_conf_num = 0
+        container_annotations = []
+        pod_annotations = []
+        privileged_without_host_devices = false
+        privileged_without_host_devices_all_devices_allowed = false
+        runtime_engine = &quot;&quot;
+        runtime_path = &quot;&quot;
+        runtime_root = &quot;&quot;
+        runtime_type = &quot;&quot;
+        sandbox_mode = &quot;&quot;
+        snapshotter = &quot;&quot;
+
+        [plugins.&quot;io.containerd.grpc.v1.cri&quot;.containerd.default_runtime.options]
+
+      [plugins.&quot;io.containerd.grpc.v1.cri&quot;.containerd.runtimes]
+
+        [plugins.&quot;io.containerd.grpc.v1.cri&quot;.containerd.runtimes.runc]
+          base_runtime_spec = &quot;&quot;
+          cni_conf_dir = &quot;&quot;
+          cni_max_conf_num = 0
+          container_annotations = []
+          pod_annotations = []
+          privileged_without_host_devices = false
+          privileged_without_host_devices_all_devices_allowed = false
+          runtime_engine = &quot;&quot;
+          runtime_path = &quot;&quot;
+          runtime_root = &quot;&quot;
+          runtime_type = &quot;io.containerd.runc.v2&quot;
+          sandbox_mode = &quot;podsandbox&quot;
+          snapshotter = &quot;&quot;
+
+          [plugins.&quot;io.containerd.grpc.v1.cri&quot;.containerd.runtimes.runc.options]
+            BinaryName = &quot;&quot;
+            CriuImagePath = &quot;&quot;
+            CriuPath = &quot;&quot;
+            CriuWorkPath = &quot;&quot;
+            IoGid = 0
+            IoUid = 0
+            NoNewKeyring = false
+            NoPivotRoot = false
+            Root = &quot;&quot;
+            ShimCgroup = &quot;&quot;
+            SystemdCgroup = true
+
+      [plugins.&quot;io.containerd.grpc.v1.cri&quot;.containerd.untrusted_workload_runtime]
+        base_runtime_spec = &quot;&quot;
+        cni_conf_dir = &quot;&quot;
+        cni_max_conf_num = 0
+        container_annotations = []
+        pod_annotations = []
+        privileged_without_host_devices = false
+        privileged_without_host_devices_all_devices_allowed = false
+        runtime_engine = &quot;&quot;
+        runtime_path = &quot;&quot;
+        runtime_root = &quot;&quot;
+        runtime_type = &quot;&quot;
+        sandbox_mode = &quot;&quot;
+        snapshotter = &quot;&quot;
+
+        [plugins.&quot;io.containerd.grpc.v1.cri&quot;.containerd.untrusted_workload_runtime.options]
+
+    [plugins.&quot;io.containerd.grpc.v1.cri&quot;.image_decryption]
+      key_model = &quot;node&quot;
+
+    [plugins.&quot;io.containerd.grpc.v1.cri&quot;.registry]
+      config_path = &quot;&quot;
+
+      [plugins.&quot;io.containerd.grpc.v1.cri&quot;.registry.auths]
+
+      [plugins.&quot;io.containerd.grpc.v1.cri&quot;.registry.configs]
+
+      [plugins.&quot;io.containerd.grpc.v1.cri&quot;.registry.headers]
+
+      [plugins.&quot;io.containerd.grpc.v1.cri&quot;.registry.mirrors]
+
+    [plugins.&quot;io.containerd.grpc.v1.cri&quot;.x509_key_pair_streaming]
+      tls_cert_file = &quot;&quot;
+      tls_key_file = &quot;&quot;
+
+  [plugins.&quot;io.containerd.internal.v1.opt&quot;]
+    path = &quot;/opt/containerd&quot;
+
+  [plugins.&quot;io.containerd.internal.v1.restart&quot;]
+    interval = &quot;10s&quot;
+
+  [plugins.&quot;io.containerd.internal.v1.tracing&quot;]
+
+  [plugins.&quot;io.containerd.metadata.v1.bolt&quot;]
+    content_sharing_policy = &quot;shared&quot;
+
+  [plugins.&quot;io.containerd.monitor.v1.cgroups&quot;]
+    no_prometheus = false
+
+  [plugins.&quot;io.containerd.nri.v1.nri&quot;]
+    disable = true
+    disable_connections = false
+    plugin_config_path = &quot;/etc/nri/conf.d&quot;
+    plugin_path = &quot;/opt/nri/plugins&quot;
+    plugin_registration_timeout = &quot;5s&quot;
+    plugin_request_timeout = &quot;2s&quot;
+    socket_path = &quot;/var/run/nri/nri.sock&quot;
+
+  [plugins.&quot;io.containerd.runtime.v1.linux&quot;]
+    no_shim = false
+    runtime = &quot;runc&quot;
+    runtime_root = &quot;&quot;
+    shim = &quot;containerd-shim&quot;
+    shim_debug = false
+
+  [plugins.&quot;io.containerd.runtime.v2.task&quot;]
+    platforms = [&quot;linux/amd64&quot;]
+    sched_core = false
+
+  [plugins.&quot;io.containerd.service.v1.diff-service&quot;]
+    default = [&quot;walking&quot;]
+    sync_fs = false
+
+  [plugins.&quot;io.containerd.service.v1.tasks-service&quot;]
+    blockio_config_file = &quot;&quot;
+    rdt_config_file = &quot;&quot;
+
+  [plugins.&quot;io.containerd.snapshotter.v1.aufs&quot;]
+    root_path = &quot;&quot;
+
+  [plugins.&quot;io.containerd.snapshotter.v1.blockfile&quot;]
+    fs_type = &quot;&quot;
+    mount_options = []
+    root_path = &quot;&quot;
+    scratch_file = &quot;&quot;
+
+  [plugins.&quot;io.containerd.snapshotter.v1.btrfs&quot;]
+    root_path = &quot;&quot;
+
+  [plugins.&quot;io.containerd.snapshotter.v1.devmapper&quot;]
+    async_remove = false
+    base_image_size = &quot;&quot;
+    discard_blocks = false
+    fs_options = &quot;&quot;
+    fs_type = &quot;&quot;
+    pool_name = &quot;&quot;
+    root_path = &quot;&quot;
+
+  [plugins.&quot;io.containerd.snapshotter.v1.native&quot;]
+    root_path = &quot;&quot;
+
+  [plugins.&quot;io.containerd.snapshotter.v1.overlayfs&quot;]
+    mount_options = []
+    root_path = &quot;&quot;
+    sync_remove = false
+    upperdir_label = false
+
+  [plugins.&quot;io.containerd.snapshotter.v1.zfs&quot;]
+    root_path = &quot;&quot;
+
+  [plugins.&quot;io.containerd.tracing.processor.v1.otlp&quot;]
+
+  [plugins.&quot;io.containerd.transfer.v1.local&quot;]
+    config_path = &quot;&quot;
+    max_concurrent_downloads = 3
+    max_concurrent_uploaded_layers = 3
+
+    [[plugins.&quot;io.containerd.transfer.v1.local&quot;.unpack_config]]
+      differ = &quot;&quot;
+      platform = &quot;linux/amd64&quot;
+      snapshotter = &quot;overlayfs&quot;
+
+[proxy_plugins]
+
+[stream_processors]
+
+  [stream_processors.&quot;io.containerd.ocicrypt.decoder.v1.tar&quot;]
+    accepts = [&quot;application/vnd.oci.image.layer.v1.tar+encrypted&quot;]
+    args = [&quot;--decryption-keys-path&quot;, &quot;/etc/containerd/ocicrypt/keys&quot;]
+    env = [&quot;OCICRYPT_KEYPROVIDER_CONFIG=/etc/containerd/ocicrypt/ocicrypt_keyprovider.conf&quot;]
+    path = &quot;ctd-decoder&quot;
+    returns = &quot;application/vnd.oci.image.layer.v1.tar&quot;
+
+  [stream_processors.&quot;io.containerd.ocicrypt.decoder.v1.tar.gzip&quot;]
+    accepts = [&quot;application/vnd.oci.image.layer.v1.tar+gzip+encrypted&quot;]
+    args = [&quot;--decryption-keys-path&quot;, &quot;/etc/containerd/ocicrypt/keys&quot;]
+    env = [&quot;OCICRYPT_KEYPROVIDER_CONFIG=/etc/containerd/ocicrypt/ocicrypt_keyprovider.conf&quot;]
+    path = &quot;ctd-decoder&quot;
+    returns = &quot;application/vnd.oci.image.layer.v1.tar+gzip&quot;
+
+[timeouts]
+  &quot;io.containerd.timeout.bolt.open&quot; = &quot;0s&quot;
+  &quot;io.containerd.timeout.metrics.shimstats&quot; = &quot;2s&quot;
+  &quot;io.containerd.timeout.shim.cleanup&quot; = &quot;5s&quot;
+  &quot;io.containerd.timeout.shim.load&quot; = &quot;5s&quot;
+  &quot;io.containerd.timeout.shim.shutdown&quot; = &quot;3s&quot;
+  &quot;io.containerd.timeout.task.state&quot; = &quot;2s&quot;
+
+[ttrpc]
+  address = &quot;&quot;
+  gid = 0
+  uid = 0
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">3. 配置crictl使用containerd</span><br><span class="line"></span><br><span class="line">   1. ```</span><br><span class="line">      sudo tee /etc/crictl.yaml &lt;&lt;EOF</span><br><span class="line">      runtime-endpoint: unix:///run/containerd/containerd.sock</span><br><span class="line">      image-endpoint: unix:///run/containerd/containerd.sock</span><br><span class="line">      timeout: 10</span><br><span class="line">      debug: false</span><br><span class="line">      EOF</span><br><span class="line">      </span><br></pre></td></tr></table></figure>
+</code></pre>
+</li>
+<li></li>
+</ol>
+</li>
+</ol>
+</li>
+<li><p>初始化master</p>
+<ol>
+<li><pre><code>sudo kubeadm init \
+  --apiserver-advertise-address=172.23.159.13 \
+  --apiserver-cert-extra-sans=120.55.74.89,k8s-master \
+  --image-repository registry.aliyuncs.com/google_containers \
+  --kubernetes-version $(kubeadm version -o short) \
+  --pod-network-cidr=10.244.0.0/16
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">2. 结果:</span><br><span class="line"></span><br><span class="line">3. ```</span><br><span class="line">   Your Kubernetes control-plane has initialized successfully!</span><br><span class="line">   </span><br><span class="line">   To start using your cluster, you need to run the following as a regular user:</span><br><span class="line">   </span><br><span class="line">     mkdir -p $HOME/.kube</span><br><span class="line">     sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config</span><br><span class="line">     sudo chown $(id -u):$(id -g) $HOME/.kube/config</span><br><span class="line">   </span><br><span class="line">   Alternatively, if you are the root user, you can run:</span><br><span class="line">   </span><br><span class="line">     export KUBECONFIG=/etc/kubernetes/admin.conf</span><br><span class="line">   </span><br><span class="line">   You should now deploy a pod network to the cluster.</span><br><span class="line">   Run &quot;kubectl apply -f [podnetwork].yaml&quot; with one of the options listed at:</span><br><span class="line">     https://kubernetes.io/docs/concepts/cluster-administration/addons/</span><br><span class="line">   </span><br><span class="line">   Then you can join any number of worker nodes by running the following on each as root:</span><br><span class="line">   </span><br><span class="line">   kubeadm join 172.23.159.16:6443 --token 3hhxla.q0vggulqf855w9qj \</span><br><span class="line">           --discovery-token-ca-cert-hash sha256:46251037d5a972db8d96635b4c1244c00c9d17f6e90963a2e6da5d42106724ab </span><br></pre></td></tr></table></figure>
+</code></pre>
+</li>
+</ol>
+</li>
+<li><p>配置kubectl</p>
+</li>
+<li><p>安装网络插件</p>
+<ol>
+<li><p>calico</p>
+<ol>
+<li><pre><code>Calico 镜像拉取失败（国内环境）解决步骤
+1. 部署 Calico（官方 YAML）
+kubectl apply -f https://raw.githubusercontent.com/projectcalico/calico/v3.27.3/manifests/calico.yaml
+
+2. 替换镜像源（解决国内拉取失败问题）
+
+👉 把 docker.io 换成 DaoCloud 镜像加速地址：
+
+# 替换 calico-node DaemonSet 主容器和 cni 容器
+kubectl -n kube-system set image daemonset/calico-node \
+  calico-node=quay.m.daocloud.io/calico/node:v3.27.3 \
+  install-cni=quay.m.daocloud.io/calico/cni:v3.27.3 \
+  upgrade-ipam=quay.m.daocloud.io/calico/cni:v3.27.3
+
+3. 额外修复 init 容器 mount-bpffs
+kubectl -n kube-system set image daemonset/calico-node \
+  mount-bpffs=quay.m.daocloud.io/calico/node:v3.27.3
+
+4. 替换 calico-kube-controllers 镜像
+kubectl -n kube-system set image deployment/calico-kube-controllers \
+  calico-kube-controllers=quay.m.daocloud.io/calico/kube-controllers:v3.27.3
+
+5. 删除旧的 Pod，让 DaemonSet/Deployment 重建
+kubectl delete pod -n kube-system -l k8s-app=calico-node
+kubectl delete pod -n kube-system -l k8s-app=calico-kube-controllers
+
+6. 验证状态
+kubectl get pods -n kube-system
+
+
+期望结果：
+
+calico-node → Running
+
+calico-kube-controllers → Running
+
+其他系统组件 → Running
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">      2. </span><br><span class="line"></span><br><span class="line">7. 导入nodes</span><br><span class="line"></span><br><span class="line">   1. 让master生成加入命令：`kubeadm token create --print-join-command`</span><br><span class="line">   2. 把上面的命令运行到nodes上</span><br><span class="line"></span><br><span class="line">8. （可选）可视化组件dashboard</span><br><span class="line"></span><br><span class="line">   1. 安装：`kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.7.0/aio/deploy/recommended.yaml`</span><br><span class="line"></span><br><span class="line">   2. 改镜像</span><br><span class="line"></span><br><span class="line">      1. ```</span><br><span class="line">         # Dashboard</span><br><span class="line">         kubectl -n kubernetes-dashboard set image deploy/kubernetes-dashboard \</span><br><span class="line">           kubernetes-dashboard=registry.cn-hangzhou.aliyuncs.com/google_containers/dashboard:v2.7.0</span><br><span class="line">         </span><br><span class="line">         # Metrics Scraper</span><br><span class="line">         kubectl -n kubernetes-dashboard set image deploy/dashboard-metrics-scraper \</span><br><span class="line">           dashboard-metrics-scraper=registry.cn-hangzhou.aliyuncs.com/google_containers/metrics-scraper:v1.0.8</span><br><span class="line">         </span><br></pre></td></tr></table></figure>
+</code></pre>
+</li>
+</ol>
+</li>
+<li><p>改设置：</p>
+<ol>
+<li><code>kubectl edit svc kubernetes-dashboard -n kubernetes-dashboard</code>把里面的type: ClassIp 改为NodePort</li>
+<li><code>kubectl get svc -A | grep kubernetes-dashboard</code>得到控制台端口，在安全组中开放之</li>
+<li>就可以通过浏览器，任意集群服务公网加端口，访问控制。<a target="_blank" rel="noopener" href="https://115.29.194.182:32100/">https://115.29.194.182:32100</a></li>
+</ol>
+</li>
+<li><p>生成token</p>
+<ol>
+<li><p>创建角色</p>
+<ol>
+<li><pre><code class="language-bash"># 创建一个 ServiceAccount
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: admin-user
+  namespace: kubernetes-dashboard
+---
+# 将 ServiceAccount 绑定到 cluster-admin 角色
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: admin-user
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cluster-admin
+subjects:
+- kind: ServiceAccount
+  name: admin-user
+  namespace: kubernetes-dashboard
+---
+# 为 ServiceAccount 创建一个 Secret（长期有效的 token）
+apiVersion: v1
+kind: Secret
+metadata:
+  name: admin-user-token
+  namespace: kubernetes-dashboard
+  annotations:
+    kubernetes.io/service-account.name: &quot;admin-user&quot;
+type: kubernetes.io/service-account-token
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">      2. 应用配置</span><br><span class="line"></span><br><span class="line">      3. 获取token: `kubectl -n kubernetes-dashboard describe secret admin-user-token`长期有效</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#### token</span><br><span class="line"></span><br><span class="line">1. ```</span><br><span class="line">   eyJhbGciOiJSUzI1NiIsImtpZCI6IjRwMG9ycHJOTkNUbXFiQ0VtaHZFcWN4Z1c5SE5FSndoeXczblhqOGE3V1UifQ.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJrdWJlcm5ldGVzLWRhc2hib2FyZCIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VjcmV0Lm5hbWUiOiJhZG1pbi11c2VyLXRva2VuIiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZXJ2aWNlLWFjY291bnQubmFtZSI6ImFkbWluLXVzZXIiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC51aWQiOiJhMGJhYzk4Ny1iZmJkLTRiYzItOTU0My1mZjA3YmIwOGU5MWMiLCJzdWIiOiJzeXN0ZW06c2VydmljZWFjY291bnQ6a3ViZXJuZXRlcy1kYXNoYm9hcmQ6YWRtaW4tdXNlciJ9.olewgwArPXj57FGM5Kmo99yeVRVl7tEnfbLorPzzQxP97nuACkO1aWCVakFMKkjT3UeVTSUyKvzpEO7qTF_T2xC556sKt_qJ-uxtFmooix3ix1gUIrrAYOKjaiFcajNFlSuZ5XscMlNoJkmqr8cpJkXWO_B0qXSm0o4KKWSBtU4up9Mus10Mu_wlJpBxPEpQ0O-95lA1jBvR9A7WkfhDXYJ-IzKFDqS30mizQUO8Lc-iZLftLdhj9aabbmSm3xScCpemo_rFP1RtH0Yr0WZCVoBq1xZSI7tC0rbRro1uhc15skCO5Y7Epr5xftorP1KVYi11ux7kFTcMFttjDGt_BQ</span><br></pre></td></tr></table></figure>
+</code></pre>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<h3 id="核心实战"><a href="#核心实战" class="headerlink" title="核心实战"></a>核心实战</h3><h4 id="Deployment"><a href="#Deployment" class="headerlink" title="Deployment"></a>Deployment</h4><ol>
+<li><p>通过Deployment启用Pod，负责控制Pod，使之有多个副本，有自愈、扩缩容等能力</p>
+</li>
+<li><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">apps/v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Deployment</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">my-nginx-03</span></span><br><span class="line">  <span class="attr">namespace:</span> <span class="string">default</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">replicas:</span> <span class="number">2</span></span><br><span class="line">  <span class="attr">selector:</span></span><br><span class="line">    <span class="attr">matchLabels:</span></span><br><span class="line">      <span class="attr">app:</span> <span class="string">my-nginx-03</span></span><br><span class="line">  <span class="attr">template:</span></span><br><span class="line">    <span class="attr">metadata:</span></span><br><span class="line">      <span class="attr">labels:</span></span><br><span class="line">        <span class="attr">app:</span> <span class="string">my-nginx-03</span></span><br><span class="line">    <span class="attr">spec:</span></span><br><span class="line">      <span class="attr">containers:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">nginx</span></span><br><span class="line">        <span class="attr">image:</span> <span class="string">ghcr.io/nginxinc/nginx-unprivileged:1.25</span></span><br><span class="line">        <span class="attr">ports:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">containerPort:</span> <span class="number">8080</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Service</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">my-nginx-03-svc</span></span><br><span class="line">  <span class="attr">namespace:</span> <span class="string">default</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">selector:</span></span><br><span class="line">    <span class="attr">app:</span> <span class="string">my-nginx-03</span></span><br><span class="line">  <span class="attr">ports:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">protocol:</span> <span class="string">TCP</span></span><br><span class="line">    <span class="attr">port:</span> <span class="number">80</span></span><br><span class="line">    <span class="attr">targetPort:</span> <span class="number">8080</span></span><br><span class="line">    <span class="attr">nodePort:</span> <span class="number">30080</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">NodePort</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>创建了一个deployment，设置replicas&#x3D;2，创建两个pod和一个service。</li>
+<li>两个pod的ip不一样。但一个pod中的不同container的ip一样的，端口不一样。</li>
+</ol>
+</li>
+<li><p>命令：</p>
+<ol>
+<li><pre><code class="language-bash"># 创建deployment
+kubectl create deployment my-nginx --image=nginx:1.25.2 --replicas=2
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">   2. </span><br><span class="line"></span><br><span class="line">4. 体验deployment的功能</span><br><span class="line"></span><br><span class="line">   1. 扩缩容`kubectl scale deploy/&lt;pod&gt; --replicas=&lt;n&gt; `</span><br><span class="line">   2. 自愈 &amp; 故障转移：如果感知到pod故障，就重启pod。如果pod无法重启，比如服务器断电，则在其他服务器部署</span><br><span class="line">   3. 滚动更新：pod要更新时，不停机更新，一个一个更新。</span><br><span class="line">      1. `kubectl set image deploy/&lt;deploy&gt; &lt;image&gt;=xxxx --record`</span><br><span class="line">   4. 版本控制：`kubectl rollout undo deploy/&lt;dep&gt; --to-revision=xxx`</span><br><span class="line"></span><br><span class="line">#### Service</span><br><span class="line"></span><br><span class="line">1. 将一组Pods公开为网络服务的抽象方法。负责Pod服务的发现与负载均衡。</span><br><span class="line"></span><br><span class="line">2. 命令</span><br><span class="line"></span><br><span class="line">   1. ```</span><br><span class="line">      # kubectl expose &lt;name&gt; </span><br></pre></td></tr></table></figure>
+</code></pre>
+</li>
+<li><p>–port：暴露端口（集群内部port）</p>
+</li>
+<li><p>–target-port：映射端口</p>
+</li>
+<li><p>–type&#x3D;NodePort：把所有pod的IP映射到同一个Service的IP，以实现负载均衡。可公网访问</p>
+</li>
+<li><p>–type&#x3D;ClusterIP：把所有pod的IP映射到同一个Service的IP，以实现负载均衡。但是只能在集群内部访问（也是默认情况）</p>
+</li>
+</ol>
+</li>
+</ol>
+<h4 id="Ingress"><a href="#Ingress" class="headerlink" title="Ingress"></a>Ingress<img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250920150332000.png" alt="image-20250920150332000"></h4><ol>
+<li><p>k8s希望Ingress是流量唯一入口（网关）</p>
+</li>
+<li><p>安装Ingress</p>
+<ol>
+<li><p>添加官方部署yaml文件（⚠️ 这一步可能失败（因为默认拉取的是 <code>k8s.gcr.io</code> &#x2F; <code>registry.k8s.io</code> 的国外镜像）。）：<code>kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controllerv-1.9.6/deploy/static/provider/baremetal/deploy.yaml</code></p>
+</li>
+<li><p>修改为国内镜像</p>
+<ol>
+<li><pre><code class="language-bash"># 找到pod
+kubectl get pods -n ingress-nginx
+
+# 修改镜像。用DaoCloud 提供的一个中国代理镜像仓库
+# 替换 Ingress Controller 镜像
+kubectl -n ingress-nginx set image deployment ingress-nginx-controller \
+  controller=k8s-gcr.m.daocloud.io/ingress-nginx/controller:v1.9.6
+
+
+# 替换 Admission Webhook Job 镜像
+# 因为一直调不通，就不用admiss了
+kubectl -n ingress-nginx set image job/ingress-nginx-admission-create \
+  create=k8s-gcr.m.daocloud.io/ingress-nginx/kube-webhook-certgen:v1.4.1
+
+kubectl -n ingress-nginx set image job/ingress-nginx-admission-patch \
+  patch=k8s-gcr.m.daocloud.io/ingress-nginx/kube-webhook-certgen:v1.4.1
+
+
+
+# 验证安装
+kubectl get pods -n ingress-nginx -w
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">   3. 一系列授权（改动的原理我就不知道了）</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#### nfs</span><br><span class="line"></span><br><span class="line">1. 为了同步各个服务器的存储信息，用nfs</span><br><span class="line"></span><br><span class="line">2. 服务端安装nfs-server（存储）</span><br><span class="line"></span><br><span class="line">   1. ```bash</span><br><span class="line">      sudo apt install -y nfs-kernel-server</span><br><span class="line">      </span><br><span class="line">      sudo mkdir -p /nfs/data</span><br><span class="line">      sudo chown nobody:nogroup /nfs/data</span><br><span class="line">      sudo chmod 777 /nfs/data</span><br><span class="line">      </span><br><span class="line">      # 编辑导出配置</span><br><span class="line">      echo &quot;/nfs/data *(rw,sync,no_subtree_check,no_root_squash,insecure)&quot; | sudo tee -a /etc/exports</span><br><span class="line">      </span><br><span class="line">      # 启动服务</span><br><span class="line">      sudo systemctl enable rpcbind --now</span><br><span class="line">      sudo systemctl enable nfs-kernel-server --now</span><br><span class="line">      </span><br><span class="line">      # 生效导出</span><br><span class="line">      sudo exportfs -rav</span><br><span class="line">      </span><br></pre></td></tr></table></figure>
+</code></pre>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+<li><p>所有节点安装nfs-client（挂载）</p>
+<ol>
+<li><pre><code class="language-bash">sudo apt update
+sudo apt install -y nfs-common
+
+
+# 查看服务端导出目录
+showmount -e 172.23.159.16
+
+# 本地挂载目录
+sudo mkdir -p /nfs/data
+sudo mount -t nfs 172.23.159.16:/nfs/data /nfs/data
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">4. PV：持久卷。就是真实存储内容的位置。</span><br><span class="line"></span><br><span class="line">5. PVC：持久卷声明。申请存储空间</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#### 小结</span><br><span class="line"></span><br><span class="line">![image-20250920164917122](C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250920164917122.png)</span><br><span class="line"></span><br><span class="line">1. **基础集群环境**</span><br><span class="line"></span><br><span class="line">   - 已经搭建好一个 **Kubernetes 集群 (v1.28.2)**，包含：</span><br><span class="line">     - 控制平面组件：`etcd`、`kube-apiserver`、`kube-controller-manager`、`kube-scheduler` ✅</span><br><span class="line">     - 网络插件：**Calico**（`calico-node`、`calico-kube-controllers`） ✅</span><br><span class="line">     - 集群 DNS：`coredns` ✅</span><br><span class="line">     - 代理：`kube-proxy`（iptables 模式） ✅</span><br><span class="line">     - 辅助：部署了 **kubernetes-dashboard** ✅</span><br><span class="line"></span><br><span class="line">   集群核心服务状态良好，全部 Running。</span><br><span class="line"></span><br><span class="line">   ------</span><br><span class="line"></span><br><span class="line">2. **业务工作负载**</span><br><span class="line"></span><br><span class="line">   - 在 `default` 命名空间部署了一个 **nginx 应用**：</span><br><span class="line">     - Deployment `my-nginx-03`，有 2 个 Pod Running ✅</span><br><span class="line">     - 用于后续测试 Service 和 Ingress 转发。</span><br><span class="line"></span><br><span class="line">   ------</span><br><span class="line"></span><br><span class="line">3. **Ingress 部署**</span><br><span class="line"></span><br><span class="line">   - 尝试部署了 **ingress-nginx-controller (v1.9.6)**，过程中遇到几个问题：</span><br><span class="line">     1. **镜像拉取失败** → 解决方法：换用 `k8s-gcr.m.daocloud.io/ingress-nginx/controller:v1.9.6` ✅</span><br><span class="line">     2. **Admission Jobs CrashLoopBackOff** → 你决定跳过 admission，不再使用 webhook ✅</span><br><span class="line">     3. **Controller Pod 启动失败** →</span><br><span class="line">        - 原因：`ServiceAccount` RBAC 权限不足</span><br><span class="line">        - 修复：补齐了对 `services`、`endpointslices`、`leases` 的访问权限 ✅</span><br><span class="line">     4. **最终 ingress-nginx-controller 正常 Running**，日志显示 Nginx 已经启动，并完成 Leader Election ✅</span><br><span class="line"></span><br><span class="line">   ------</span><br><span class="line"></span><br><span class="line">4. **验证 Ingress**</span><br><span class="line"></span><br><span class="line">   - 访问 `http://172.23.159.15:31080`（NodePort 方式） → 成功命中 ingress-nginx，但返回 **404**（因为还没有配置 Ingress 规则）。</span><br><span class="line">   - 这一步证明 **Ingress Controller + NodePort 已经完全打通**，只差创建路由规则。</span><br><span class="line"></span><br><span class="line">5. **有两个可对外访问的 NodePort 服务**：</span><br><span class="line"></span><br><span class="line">   1. **`my-nginx-03-svc`**</span><br><span class="line">      - 类型：`NodePort`</span><br><span class="line">      - ClusterIP: `10.97.118.5`</span><br><span class="line">      - 端口：`80:30080/TCP`</span><br><span class="line">         👉 直接访问 `http://&lt;NodeIP&gt;:30080` 就能看到 **nginx welcome page**。</span><br><span class="line">   2. **`ingress-nginx-controller`**</span><br><span class="line">      - 类型：`NodePort`</span><br><span class="line">      - ClusterIP: `10.101.33.201`</span><br><span class="line">      - 端口：`80:31080/TCP, 443:31443/TCP`</span><br><span class="line">         👉 这是 Ingress Controller 的入口，当前访问会返回 **404**，因为还没有配置任何 Ingress 规则。</span><br><span class="line"></span><br><span class="line">6. 示例demo</span><br><span class="line"></span><br><span class="line">1. ```yaml</span><br><span class="line">   # ---------------------------</span><br><span class="line">   # hello-server Deployment</span><br><span class="line">   # ---------------------------</span><br><span class="line">   apiVersion: apps/v1</span><br><span class="line">   kind: Deployment</span><br><span class="line">   metadata:</span><br><span class="line">     name: hello-server</span><br><span class="line">     namespace: default</span><br><span class="line">   spec:</span><br><span class="line">     replicas: 2</span><br><span class="line">     selector:</span><br><span class="line">       matchLabels:</span><br><span class="line">         app: hello-server</span><br><span class="line">     template:</span><br><span class="line">       metadata:</span><br><span class="line">         labels:</span><br><span class="line">           app: hello-server</span><br><span class="line">       spec:</span><br><span class="line">         containers:</span><br><span class="line">         - name: hello-server</span><br><span class="line">           image: registry.cn-hangzhou.aliyuncs.com/lfy_k8s_images/hello-server</span><br><span class="line">           ports:</span><br><span class="line">           - containerPort: 9000</span><br><span class="line">   ---</span><br><span class="line">   # hello-server Service</span><br><span class="line">   apiVersion: v1</span><br><span class="line">   kind: Service</span><br><span class="line">   metadata:</span><br><span class="line">     name: hello-server</span><br><span class="line">     namespace: default</span><br><span class="line">   spec:</span><br><span class="line">     selector:</span><br><span class="line">       app: hello-server</span><br><span class="line">     ports:</span><br><span class="line">     - port: 8000</span><br><span class="line">       targetPort: 9000</span><br><span class="line">       protocol: TCP</span><br><span class="line">   ---</span><br><span class="line">   # ---------------------------</span><br><span class="line">   # nginx-demo Deployment</span><br><span class="line">   # ---------------------------</span><br><span class="line">   apiVersion: apps/v1</span><br><span class="line">   kind: Deployment</span><br><span class="line">   metadata:</span><br><span class="line">     name: nginx-demo</span><br><span class="line">     namespace: default</span><br><span class="line">   spec:</span><br><span class="line">     replicas: 2</span><br><span class="line">     selector:</span><br><span class="line">       matchLabels:</span><br><span class="line">         app: nginx-demo</span><br><span class="line">     template:</span><br><span class="line">       metadata:</span><br><span class="line">         labels:</span><br><span class="line">           app: nginx-demo</span><br><span class="line">       spec:</span><br><span class="line">         containers:</span><br><span class="line">         - name: nginx-demo</span><br><span class="line">           image: ghcr.io/nginxinc/nginx-unprivileged:1.25</span><br><span class="line">           ports:</span><br><span class="line">           - containerPort: 80</span><br><span class="line">   ---</span><br><span class="line">   # nginx-demo Service</span><br><span class="line">   apiVersion: v1</span><br><span class="line">   kind: Service</span><br><span class="line">   metadata:</span><br><span class="line">     name: nginx-demo</span><br><span class="line">     namespace: default</span><br><span class="line">   spec:</span><br><span class="line">     selector:</span><br><span class="line">       app: nginx-demo</span><br><span class="line">     ports:</span><br><span class="line">     - port: 8000</span><br><span class="line">       targetPort: 80</span><br><span class="line">       protocol: TCP</span><br><span class="line">   ---</span><br><span class="line">   # ---------------------------</span><br><span class="line">   # Ingress 配置</span><br><span class="line">   # ---------------------------</span><br><span class="line">   apiVersion: networking.k8s.io/v1</span><br><span class="line">   kind: Ingress</span><br><span class="line">   metadata:</span><br><span class="line">     name: demo-ingress</span><br><span class="line">     namespace: default</span><br><span class="line">   spec:</span><br><span class="line">     ingressClassName: nginx</span><br><span class="line">     rules:</span><br><span class="line">     - host: hello.mukongshan.com</span><br><span class="line">       http:</span><br><span class="line">         paths:</span><br><span class="line">         - path: /</span><br><span class="line">           pathType: Prefix</span><br><span class="line">           backend:</span><br><span class="line">             service:</span><br><span class="line">               name: hello-server</span><br><span class="line">               port:</span><br><span class="line">                 number: 8000</span><br><span class="line">     - host: demo.mukongshan.com</span><br><span class="line">       http:</span><br><span class="line">         paths:</span><br><span class="line">         - path: /</span><br><span class="line">           pathType: Prefix</span><br><span class="line">           backend:</span><br><span class="line">             service:</span><br><span class="line">               name: nginx-demo</span><br><span class="line">               port:</span><br><span class="line">                 number: 8000</span><br></pre></td></tr></table></figure>
+</code></pre>
+</li>
+</ol>
+</li>
+</ol>
+<h4 id="高级"><a href="#高级" class="headerlink" title="高级"></a>高级</h4><ol>
+<li>ingress<ol>
+<li>路径重写</li>
+<li>限流</li>
+</ol>
+</li>
+</ol>
+<h2 id="Kubesphere"><a href="#Kubesphere" class="headerlink" title="Kubesphere"></a>Kubesphere</h2><h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><ol>
+<li>裸机安装（很方便，几条指令就好了）<ol>
+<li><p>如果遇到镜像联不通，试试<code>export KKZONE=cn</code></p>
+</li>
+<li><p>删除已有应用：</p>
+<ol>
+<li><pre><code class="language-bash"># 停止并卸载 kubeadm/kubelet/kubectl
+sudo systemctl stop kubelet
+sudo apt-get purge -y kubeadm kubectl kubelet kubernetes-cni kube*
+sudo apt-get autoremove -y
+sudo rm -rf ~/.kube /etc/kubernetes /var/lib/etcd /var/etcd /var/lib/kubelet
+
+# 卸载 Docker（如果不打算用 KK 自带的 Docker）
+sudo systemctl stop docker docker.socket
+sudo apt-get purge -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
+sudo apt-get autoremove -y
+sudo rm -rf /var/lib/docker /var/lib/containerd
+
+# 卸载containerd
+sudo systemctl stop containerd
+sudo apt-get purge -y containerd containerd.io
+sudo apt-get autoremove -y
+sudo rm -rf /etc/containerd /var/lib/containerd
+</code></pre>
+</li>
+<li></li>
+</ol>
+</li>
+</ol>
+</li>
+<li>在已有的k8s集群上安装<ol>
+<li>先安装Helm Chart</li>
+<li></li>
+</ol>
+</li>
+</ol>
+<h3 id="多租户"><a href="#多租户" class="headerlink" title="多租户"></a>多租户</h3><ol>
+<li>admin是最高权限</li>
+<li>划分多个角色，权限不同，对企业、项目、角色的访问能力不同</li>
+</ol>
+<h3 id="部署应用"><a href="#部署应用" class="headerlink" title="部署应用"></a>部署应用</h3><h4 id="概述-1"><a href="#概述-1" class="headerlink" title="概述"></a>概述</h4><p><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250922212806241.png" alt="image-20250922212806241"></p>
+<ol>
+<li>考虑工作负载<ol>
+<li>部署（无状态）</li>
+<li>有状态副本集</li>
+<li>守护进程集</li>
+</ol>
+</li>
+<li>考虑数据挂载和配置</li>
+<li>考虑访问控制</li>
+</ol>
+<h4 id="安装MySQL"><a href="#安装MySQL" class="headerlink" title="安装MySQL"></a>安装MySQL</h4><ol>
+<li>凡拉取镜像都应该先上DockerHub上看拉取方式</li>
+<li><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250923095045954.png" alt="image-20250923095045954"></li>
+<li>考虑配置文件<ol>
+<li>根据dockerhub上的mysql官方文档描述，以.cnf结尾的文件会被默认为配置文件。</li>
+<li>在Kubesphere的可视化平台中，找到配置，其中key就是原来的文件名，value就是你的配置</li>
+</ol>
+</li>
+<li>考虑卷挂载声明</li>
+</ol>
+<h4 id="安装redis"><a href="#安装redis" class="headerlink" title="安装redis"></a>安装redis</h4><h4 id="安装ElasticSearch"><a href="#安装ElasticSearch" class="headerlink" title="安装ElasticSearch"></a>安装ElasticSearch</h4><ol>
+<li>注意，如果挂载配置文件时，文件夹下有多个配置文件，但我们只想挂载某些时，需要把挂载路径精确到文件</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/12/04/SSM%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="prev" title="SSM学习笔记">
+                  <i class="fa fa-angle-left"></i> SSM学习笔记
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2025/12/04/Java%E5%85%AB%E8%82%A1/" rel="next" title="Java八股">
+                  Java八股 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">mukongshan</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>

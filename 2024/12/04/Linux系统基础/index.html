@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 8.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous" defer></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"kongshan.me","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.26.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":null,"gitalk":{"enable":true,"github_id":"mukongshan","repo":"mukongshan.github.io","client_id":"Ov23lifObx8GLwJlVsh3","client_secret":"ebc5f2cd8493752a92129fa16b4bf1635308b0d6","admin_user":"mukongshan","distraction_free_mode":true,"language":"zh-CN"}},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="安装Linux虚拟机 ~$ sudo apt update ~$ sudo apt upgrade ~$ sudo apt install openssh-server  ubuntu终端知识点 解释器为shell 三种指令格式： “&#x2F;usr&#x2F;ubuntu&#x2F;date”：绝对路径下的命令 “.&#x2F;date”：当前路径下的命令 “date”：从环境变量中找命令">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux系统基础">
+<meta property="og:url" content="https://kongshan.me/2024/12/04/Linux%E7%B3%BB%E7%BB%9F%E5%9F%BA%E7%A1%80/index.html">
+<meta property="og:site_name" content="kongshan&#39;s blog">
+<meta property="og:description" content="安装Linux虚拟机 ~$ sudo apt update ~$ sudo apt upgrade ~$ sudo apt install openssh-server  ubuntu终端知识点 解释器为shell 三种指令格式： “&#x2F;usr&#x2F;ubuntu&#x2F;date”：绝对路径下的命令 “.&#x2F;date”：当前路径下的命令 “date”：从环境变量中找命令">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-12-04T04:00:00.000Z">
+<meta property="article:modified_time" content="2025-12-03T09:01:19.897Z">
+<meta property="article:author" content="mukongshan">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://kongshan.me/2024/12/04/Linux%E7%B3%BB%E7%BB%9F%E5%9F%BA%E7%A1%80/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://kongshan.me/2024/12/04/Linux%E7%B3%BB%E7%BB%9F%E5%9F%BA%E7%A1%80/","path":"2024/12/04/Linux系统基础/","title":"Linux系统基础"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Linux系统基础 | kongshan's blog</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+
+  <script src="/js/third-party/pace.js" defer></script>
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">kongshan's blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-blog"><a href="/blog/" rel="section"><i class="fa fa-book-open fa-fw"></i>博客</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%89%E8%A3%85Linux%E8%99%9A%E6%8B%9F%E6%9C%BA"><span class="nav-number">1.</span> <span class="nav-text">安装Linux虚拟机</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ubuntu%E7%BB%88%E7%AB%AF%E7%9F%A5%E8%AF%86%E7%82%B9"><span class="nav-number">2.</span> <span class="nav-text">ubuntu终端知识点</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%92%8Cwindows%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">2.1.</span> <span class="nav-text">和windows的区别</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Linux%E9%83%A8%E5%88%86%E5%9F%BA%E7%A1%80%E6%8C%87%E4%BB%A4"><span class="nav-number">3.</span> <span class="nav-text">Linux部分基础指令</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%96%87%E6%9C%AC%E7%BC%96%E8%BE%91"><span class="nav-number">4.</span> <span class="nav-text">文本编辑</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#vim%E5%9F%BA%E7%A1%80"><span class="nav-number">4.1.</span> <span class="nav-text">vim基础</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%94%E5%A4%A7%E6%A8%A1%E5%BC%8F"><span class="nav-number">4.1.1.</span> <span class="nav-text">五大模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%AD%E6%B3%95"><span class="nav-number">4.1.2.</span> <span class="nav-text">语法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%91%BD%E4%BB%A4%E6%A8%A1%E5%BC%8F"><span class="nav-number">4.1.2.1.</span> <span class="nav-text">命令模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%AD%A3%E5%B8%B8%E6%A8%A1%E5%BC%8F"><span class="nav-number">4.1.2.2.</span> <span class="nav-text">正常模式</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#shell%E8%84%9A%E6%9C%AC%E8%AF%AD%E6%B3%95"><span class="nav-number">5.</span> <span class="nav-text">shell脚本语法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%98%E9%87%8F"><span class="nav-number">5.1.</span> <span class="nav-text">变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%BD%E6%95%B0"><span class="nav-number">5.2.</span> <span class="nav-text">函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%89%B9%E6%AE%8A%E5%8F%98%E9%87%8F"><span class="nav-number">5.3.</span> <span class="nav-text">特殊变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%91%BD%E4%BB%A4%E6%9B%BF%E6%8D%A2%E5%92%8C%E8%BF%9B%E7%A8%8B%E6%9B%BF%E6%8D%A2"><span class="nav-number">5.4.</span> <span class="nav-text">命令替换和进程替换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%9A%E9%85%8D"><span class="nav-number">5.5.</span> <span class="nav-text">通配</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86"><span class="nav-number">6.</span> <span class="nav-text">数据处理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8C%87%E4%BB%A4"><span class="nav-number">6.1.</span> <span class="nav-text">指令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="nav-number">6.2.</span> <span class="nav-text">正则表达式</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%80%9A%E4%BF%A1%E6%9C%BA%E5%88%B6"><span class="nav-number">7.</span> <span class="nav-text">通信机制</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#signal%E4%BF%A1%E5%8F%B7"><span class="nav-number">7.1.</span> <span class="nav-text">signal信号</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9B%E7%A8%8B"><span class="nav-number">7.2.</span> <span class="nav-text">进程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%88%E6%8A%A4%E8%BF%9B%E7%A8%8B%EF%BC%88%E6%9C%8D%E5%8A%A1%E8%BF%9B%E7%A8%8B%EF%BC%89"><span class="nav-number">7.2.1.</span> <span class="nav-text">守护进程（服务进程）</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BB%88%E7%AB%AF%E5%92%8C%E5%90%8E%E5%8F%B0%E5%88%86%E7%A6%BB"><span class="nav-number">8.</span> <span class="nav-text">终端和后台分离</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#tmux%E7%9F%A5%E8%AF%86"><span class="nav-number">8.1.</span> <span class="nav-text">tmux知识</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%AD%E6%B3%95-1"><span class="nav-number">8.1.1.</span> <span class="nav-text">语法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BC%9A%E8%AF%9D"><span class="nav-number">8.1.1.1.</span> <span class="nav-text">会话</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AA%97%E5%8F%A3"><span class="nav-number">8.1.1.2.</span> <span class="nav-text">窗口</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%9D%A2%E6%9D%BF"><span class="nav-number">8.1.1.3.</span> <span class="nav-text">面板</span></a></li></ol></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="mukongshan"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">mukongshan</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">19</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/mukongshan" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;mukongshan" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:2087179041@qq.com" title="E-Mail → mailto:2087179041@qq.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://kongshan.me/2024/12/04/Linux%E7%B3%BB%E7%BB%9F%E5%9F%BA%E7%A1%80/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="mukongshan">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="kongshan's blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Linux系统基础 | kongshan's blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Linux系统基础
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-12-04 12:00:00" itemprop="dateCreated datePublished" datetime="2024-12-04T12:00:00+08:00">2024-12-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-12-03 17:01:19" itemprop="dateModified" datetime="2025-12-03T17:01:19+08:00">2025-12-03</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/course/" itemprop="url" rel="index"><span itemprop="name">课业</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="安装Linux虚拟机"><a href="#安装Linux虚拟机" class="headerlink" title="安装Linux虚拟机"></a>安装Linux虚拟机</h1><ol>
+<li>~$ sudo apt update</li>
+<li>~$ sudo apt upgrade</li>
+<li>~$ sudo apt install openssh-server</li>
+</ol>
+<h1 id="ubuntu终端知识点"><a href="#ubuntu终端知识点" class="headerlink" title="ubuntu终端知识点"></a>ubuntu终端知识点</h1><ol>
+<li>解释器为shell</li>
+<li>三种指令格式：<ol>
+<li>“&#x2F;usr&#x2F;ubuntu&#x2F;date”：绝对路径下的命令</li>
+<li>“.&#x2F;date”：当前路径下的命令</li>
+<li>“date”：从环境变量中找命令</li>
+</ol>
+</li>
+<li>家目录快捷：’~’可以代替家目录</li>
+<li>Linux指令是不可逆的，所以要养成备份的习惯，现在用git很方便</li>
+<li>r：可读，w：可写，x：可执行·</li>
+<li>对于一个文件，对其父目录可写，才可以删除这个文件</li>
+<li>想要打开一个文件，必须对其所有上级目录可执行</li>
+<li>重定向：e.g. echo hello &gt; file.txt，使得hello不输出到屏幕，而是写入file中去。e.g. cat &lt; hello.txt，使得cat不再等待键盘输入，而是读hello文件。e.g. echo &gt;&gt; file.txt，追加内容，而非覆盖</li>
+<li>管道：’ | ‘ 将一个程序的输出和另一个程序的输入连接起来。注意，有的指令不接受输入，而是接受参数，直接把它串起来是没有用的。</li>
+<li>对于一条程序指令，要搞清楚哪部分是命令去完成的，哪部分是由shell完成的。e.g. sudo echo 1 &gt; text.txt 其中sudo让echo指令以超级用户的身份运行，但是重定向&gt;是由shell完成的，所以如果身份权限不够，即使用了sudo也无法完成。</li>
+<li>缓存：就是打开的文件</li>
+<li>Linux 系统中，文件的格式并不是由文件名或文件扩展名决定的，而是由文件的内容和用来打开文件的程序决定的。后缀只是用来方便用户使用。</li>
+<li>shell只能做整数计算，用库bc做小数运算</li>
+</ol>
+<h2 id="和windows的区别"><a href="#和windows的区别" class="headerlink" title="和windows的区别"></a>和windows的区别</h2><ol>
+<li>文件系统：Linux是从根目录开始的树状结构，而windows是先分区</li>
+<li>目录符号：Linux是正斜杠’&#x2F; ‘，Windows是反斜杠’\ ‘</li>
+</ol>
+<h1 id="Linux部分基础指令"><a href="#Linux部分基础指令" class="headerlink" title="Linux部分基础指令"></a>Linux部分基础指令</h1><ol>
+<li>echo：回显</li>
+<li>which：可以搜索到命令的位置（内置命令搜不到）</li>
+<li>type：可以搜索到命令的位置和属性（包括内置命令）</li>
+<li>pwd：打印目录（print working directory)</li>
+<li>cd：切换路径</li>
+<li>ls：列出目录（白色是文件，蓝色是文件夹，灰色是其他）</li>
+<li>man：查手册（如：man ls）</li>
+<li>–help：查帮助</li>
+<li>tldr：快速查询（too long don’t read）</li>
+<li>cat：查看文件（全部输出）</li>
+<li>less：查看文件（一页一页看）</li>
+<li>mv：重命名或移动</li>
+<li>cp：复制</li>
+<li>rm：删除文件</li>
+<li>rmdir：删除空文件夹（-r：删除文件夹包括文件，-i 提示我是否删除）</li>
+<li>Ctrl+l：清屏</li>
+<li>重定向：<ol>
+<li>e.g. echo hello &gt; file.txt，使得hello不输出到屏幕，而是写入file中去。</li>
+<li>e.g. cat &lt; hello.txt，使得cat不再等待键盘输入，而是读hello文件。</li>
+<li>e.g. echo &gt;&gt; file.txt，追加内容，而非覆盖</li>
+</ol>
+</li>
+<li>xargs：把输入参数化，传给后面的命令</li>
+<li>tail：展示最后的部分（默认是十行，-n1 改为一行）</li>
+<li>sudo -i：模拟超级用户登录过程，环境变量变了</li>
+<li>sudo su：切换为超级用户，但是你的环境变量没有变</li>
+<li>tee：接受一个文件作为参数，把输入写入文件（-a 表示追加）</li>
+<li>grep：查找文件内容。<ol>
+<li>递归搜索目录：grep -R test .</li>
+<li>获取匹配文本的上下文：grep -C 2 test *</li>
+<li>输出不匹配的结果：grep -v test file</li>
+</ol>
+</li>
+<li>wc：统计输出内容数据（-l 行数）</li>
+<li>find：查找。e.g. 删除当前目录下后缀为.tmp的所有文件：find . -name ‘*.tmp’ -exec rm {} ;  。</li>
+<li>history：列出历史记录（结合|，grep灵活应用）注：在命令前加一个空格，该命令就不会被记录。</li>
+<li>！：<ol>
+<li>！！：执行上一条命令</li>
+<li>！cd：执行上一条cd命令</li>
+</ol>
+</li>
+<li>Ctrl+r：进入搜索模式。</li>
+<li>sed：文件内容的查找和替换。<ol>
+<li>替换规则：sed -E ‘s&#x2F;查找的内容&#x2F;替换的内容&#x2F;‘（最后加个g表示持续替换）（-E表示让命令能够支持最新的正则表达式）</li>
+<li>（somethong）称为捕获组，可以用 \1 表示第一捕获组的内容（如果有）。</li>
+</ol>
+</li>
+<li>sort：<ol>
+<li>不带参数：按字母顺序排序</li>
+<li>-nk1,1：按照数值排序，关键词为第一个字段</li>
+</ol>
+</li>
+<li>uniq：唯一化（只会检测相邻行，所以一般和sort联用）</li>
+<li>awk：e.g. awk ‘{print $2}’ 打印第二个字段的内容</li>
+<li>paste：粘贴。（-s，变为单行输出，“d，”表示用逗号分隔）</li>
+<li>cut</li>
+<li>tr：<ol>
+<li>e.g. tr “[:upper:]” “[:lower:]” 大写转小写</li>
+</ol>
+</li>
+<li>改变权限：chmod<ol>
+<li>数字授权：r w x 分别赋予数字4 2 1，权限就是他们的总和</li>
+<li>获权方：u拥有者，g同组成员（group），o其他组（other），a所有人（all）</li>
+<li>示例：有权限-rwxrw-r–，前三位是拥有者，中三位是同组员，后三位是其他组</li>
+<li>示例：chmod u&#x3D;rwx file,    chmod 764 file</li>
+</ol>
+</li>
+<li>alias：取别名。e.g.  alias ll&#x3D;”ls -l”</li>
+<li>time：得出命令运行的时间（为什么real &gt; user + sys ?因为还有其他程序在运行）</li>
+</ol>
+<h1 id="文本编辑"><a href="#文本编辑" class="headerlink" title="文本编辑"></a>文本编辑</h1><h2 id="vim基础"><a href="#vim基础" class="headerlink" title="vim基础"></a>vim基础</h2><h3 id="五大模式"><a href="#五大模式" class="headerlink" title="五大模式"></a>五大模式</h3><ol>
+<li>正常模式</li>
+<li>插入模式</li>
+<li>可视化模式</li>
+<li>命令模式</li>
+<li>替换模式</li>
+</ol>
+<h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3><h4 id="命令模式"><a href="#命令模式" class="headerlink" title="命令模式"></a>命令模式</h4><ol>
+<li>用’ : ‘打开。</li>
+<li>w：保存</li>
+<li>q：退出</li>
+<li>sp：水平分屏</li>
+<li>vsp：上下分屏</li>
+<li>Ctrl+w：切换窗口</li>
+<li>tabnew：新建标签</li>
+<li>tabnext &#x2F; tabn：下一个标签（或者快捷键gt）</li>
+</ol>
+<h4 id="正常模式"><a href="#正常模式" class="headerlink" title="正常模式"></a>正常模式</h4><ol>
+<li>&#x2F; key :向后搜索</li>
+<li>? key：向前搜索</li>
+<li>[c+b]：向后翻页</li>
+<li>[c+f]：向前翻页</li>
+<li>e：单词末尾</li>
+<li>b：前一个单词</li>
+<li>（修饰语）i：内部 e.g.  ci( ：修改前方小括号内容</li>
+<li>（修饰语）a：周围 e.g. da’  ：删除周围的单引号</li>
+</ol>
+<h1 id="shell脚本语法"><a href="#shell脚本语法" class="headerlink" title="shell脚本语法"></a>shell脚本语法</h1><h2 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h2><ol>
+<li><p>赋值时不要空格</p>
+</li>
+<li><p>获取变量：$foo</p>
+</li>
+<li><p>引号：单引号输出字面，双引号会取值。</p>
+<p>“$foo” &#x3D;&#x3D;&gt; value, ‘$foo’ &#x3D;&#x3D;&gt; $foo</p>
+</li>
+</ol>
+<h2 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h2><h2 id="特殊变量"><a href="#特殊变量" class="headerlink" title="特殊变量"></a>特殊变量</h2><ol>
+<li>$?：查看上一个程序的退出状态。（0为成功，1为失败）</li>
+<li></li>
+</ol>
+<h2 id="命令替换和进程替换"><a href="#命令替换和进程替换" class="headerlink" title="命令替换和进程替换"></a>命令替换和进程替换</h2><ol>
+<li>foo&#x3D;$(pwd)</li>
+<li>echo $foo</li>
+<li>diff &lt;(ls) &lt;(ls ..)</li>
+</ol>
+<h2 id="通配"><a href="#通配" class="headerlink" title="通配"></a>通配</h2><h1 id="数据处理"><a href="#数据处理" class="headerlink" title="数据处理"></a>数据处理</h1><h2 id="指令"><a href="#指令" class="headerlink" title="指令"></a>指令</h2><p>见基础指令24~行</p>
+<h2 id="正则表达式"><a href="#正则表达式" class="headerlink" title="正则表达式"></a>正则表达式</h2><ol>
+<li>. ：除换行符之外的任意单个字符 </li>
+<li>*：匹配前面字符零次或多次 </li>
+<li>+：匹配前面字符一次或多次</li>
+<li>[abc]： 匹配 a、b、c 中的任意一个</li>
+<li>？：匹配零次或一次</li>
+<li>(RX1|RX2): 任何能够匹配RX1或RX2的结果</li>
+<li>^ 行首 $ 行尾</li>
+<li>{4}：重复4次</li>
+</ol>
+<p>注意：正则匹配都是“贪婪匹配”，即匹配的越多越好，所以会匹配到最后一个</p>
+<p>第三天的课堂练习一定要掌握</p>
+<h1 id="通信机制"><a href="#通信机制" class="headerlink" title="通信机制"></a>通信机制</h1><h2 id="signal信号"><a href="#signal信号" class="headerlink" title="signal信号"></a>signal信号</h2><ol>
+<li>SIGQUIT：终止程序执行并生成一个核心转储。Ctrl+\。</li>
+<li>SIGINT：中断程序。Ctrl+c。（与SIGTERM的区别在于可以用键盘发出）</li>
+<li>SIGHUB：默认行为是Term行为，在退出时触发，终止所有程序。</li>
+<li>SIGSTOP：Stop行为，暂停程序。</li>
+<li>SIGCONT：Cont行为，继续程序。</li>
+<li>SIGKILL：Term行为，</li>
+<li>SIGTERM：通过kill命令发送，终止程序执行</li>
+</ol>
+<h2 id="进程"><a href="#进程" class="headerlink" title="进程"></a>进程</h2><h3 id="守护进程（服务进程）"><a href="#守护进程（服务进程）" class="headerlink" title="守护进程（服务进程）"></a>守护进程（服务进程）</h3><ol>
+<li>概念：在后台运行的程序。</li>
+<li>执行方法：<ol>
+<li>Ctrl+z。</li>
+<li>“cmd &amp;”。</li>
+<li>job：查看进程</li>
+<li>“bg %1”：让第一个进程开始</li>
+<li>“fg %1”：让第一个任务停止</li>
+<li>“kill -STOP %1”：暂停</li>
+<li>“kill -CONT %1”：继续</li>
+<li>“kill -HUB %1”：终止</li>
+<li>“nohub cmd”：让程序不接受HUB信号，退出终端时不会停止。</li>
+<li>“kill -KILL”：强制终止。</li>
+</ol>
+</li>
+</ol>
+<h1 id="终端和后台分离"><a href="#终端和后台分离" class="headerlink" title="终端和后台分离"></a>终端和后台分离</h1><p>终端多路复用器：流行的是tmux</p>
+<h2 id="tmux知识"><a href="#tmux知识" class="headerlink" title="tmux知识"></a>tmux知识</h2><ol>
+<li>会话–&gt;窗口–&gt;面板</li>
+<li>会话：</li>
+<li>窗口：</li>
+</ol>
+<h3 id="语法-1"><a href="#语法-1" class="headerlink" title="语法"></a>语法</h3><h4 id="会话"><a href="#会话" class="headerlink" title="会话"></a>会话</h4><ol>
+<li>tmux new –s NAME 以指定名称开始一个新的会话</li>
+<li>tmux ls 列出当前所有会话 </li>
+<li>&lt;C+b&gt; d ：在tmux中按下该组合键，将当前会话分离</li>
+<li>tmux a 重新连接最后一个会话，可以通过-t参数指定具体的会话</li>
+</ol>
+<h4 id="窗口"><a href="#窗口" class="headerlink" title="窗口"></a>窗口</h4><ol>
+<li>&lt;C+b&gt; c： 创建一个新的窗口</li>
+<li>&lt;C+b&gt;  p： 切换到上一个窗口 </li>
+<li>&lt;C+b&gt;  n： 切换到下一个窗口 </li>
+<li>&lt;C+b&gt;  ,： 重命名当前窗口 </li>
+<li>&lt;C+b&gt;  w ：列出当前所有窗口</li>
+</ol>
+<h4 id="面板"><a href="#面板" class="headerlink" title="面板"></a>面板</h4><ol>
+<li>&lt;C+b&gt; “ ：水平分割 </li>
+<li>&lt;C+b&gt;  % ：垂直分割 </li>
+<li>&lt;C+b&gt;  &lt;方向键&gt; ：切换到指定方向的面板 </li>
+<li>&lt;C+b&gt;  z ：切换当前面板的缩放 </li>
+<li>&lt;C+b&gt;  &lt;空格&gt; ：在不同的面板布局间切换</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/12/04/PA%E5%B0%8F%E8%AE%B0/" rel="prev" title="PA小记">
+                  <i class="fa fa-angle-left"></i> PA小记
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/12/04/PA%E5%AE%9E%E9%AA%8C%E8%AF%BE%E7%AC%94%E8%AE%B0/" rel="next" title="PA实验课笔记">
+                  PA实验课笔记 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">mukongshan</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>

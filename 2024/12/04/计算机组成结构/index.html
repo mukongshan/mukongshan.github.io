@@ -1,0 +1,2071 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 8.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous" defer></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"kongshan.me","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.26.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":null,"gitalk":{"enable":true,"github_id":"mukongshan","repo":"mukongshan.github.io","client_id":"Ov23lifObx8GLwJlVsh3","client_secret":"ebc5f2cd8493752a92129fa16b4bf1635308b0d6","admin_user":"mukongshan","distraction_free_mode":true,"language":"zh-CN"}},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="导论第一章 · 计算机系统概述计算机的定义通用电子数字计算机 组织与结构 *** 组织：对编程人员不可见。（类比：实现乘法是通过硬件单元还是重复加法，我们不得而知）  操作单元及其相互连接。 包括控制信号，存储技术等等。   结构：对编程人员可见。（类比：有没有乘法指令）  直接影响程序逻辑执行的属性。  包括指令集，表示数据类型的位数等等。     计算机简史发展迭代 第一代：真空管 第二代：晶">
+<meta property="og:type" content="article">
+<meta property="og:title" content="计算机组成结构">
+<meta property="og:url" content="https://kongshan.me/2024/12/04/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E7%BB%93%E6%9E%84/index.html">
+<meta property="og:site_name" content="kongshan&#39;s blog">
+<meta property="og:description" content="导论第一章 · 计算机系统概述计算机的定义通用电子数字计算机 组织与结构 *** 组织：对编程人员不可见。（类比：实现乘法是通过硬件单元还是重复加法，我们不得而知）  操作单元及其相互连接。 包括控制信号，存储技术等等。   结构：对编程人员可见。（类比：有没有乘法指令）  直接影响程序逻辑执行的属性。  包括指令集，表示数据类型的位数等等。     计算机简史发展迭代 第一代：真空管 第二代：晶">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20241224221732284.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20241024151614944.png">
+<meta property="og:image" content="https://kongshan.me/home/mukongshan/.config/Typora/typora-user-images/image-20241121145038280.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20241126173941791.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20241126174334927.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20241126174432139.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20241126174939913.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20241126175746840.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20241128144729545.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20241128144910038.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20241128144547676.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20241029172144404.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20241029172905548.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20241112164441142.png">
+<meta property="og:image" content="https://kongshan.me/home/mukongshan/.config/Typora/typora-user-images/image-20241114144202010.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20241205144213747.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20241205144837921.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20241205150753461.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20241205151313019.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20241205151842681.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20241205152813457.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20241205153056387.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20241210164747852.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20241210172923240.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20241210172935289.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20241210173203480.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20241210175332306.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20241212141929684.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20241212142630555.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20241212144001533.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20241212145022256.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20241212150719380.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20241212150740407.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20241212150952106.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250109212107451.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250109212200698.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250108223846911.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250108231327863.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250102222325105.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20241216144714447.png">
+<meta property="article:published_time" content="2024-12-04T04:00:00.000Z">
+<meta property="article:modified_time" content="2025-12-03T09:01:19.919Z">
+<meta property="article:author" content="mukongshan">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20241224221732284.png">
+
+
+<link rel="canonical" href="https://kongshan.me/2024/12/04/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E7%BB%93%E6%9E%84/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://kongshan.me/2024/12/04/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E7%BB%93%E6%9E%84/","path":"2024/12/04/计算机组成结构/","title":"计算机组成结构"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>计算机组成结构 | kongshan's blog</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+
+  <script src="/js/third-party/pace.js" defer></script>
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">kongshan's blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-blog"><a href="/blog/" rel="section"><i class="fa fa-book-open fa-fw"></i>博客</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AF%BC%E8%AE%BA"><span class="nav-number">1.</span> <span class="nav-text">导论</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E7%AB%A0-%C2%B7-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0"><span class="nav-number">1.1.</span> <span class="nav-text">第一章 · 计算机系统概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="nav-number">1.1.1.</span> <span class="nav-text">计算机的定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%84%E7%BB%87%E4%B8%8E%E7%BB%93%E6%9E%84"><span class="nav-number">1.1.2.</span> <span class="nav-text">组织与结构 ***</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%AE%80%E5%8F%B2"><span class="nav-number">1.1.3.</span> <span class="nav-text">计算机简史</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8F%91%E5%B1%95%E8%BF%AD%E4%BB%A3"><span class="nav-number">1.1.3.1.</span> <span class="nav-text">发展迭代</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%86%AF%E8%AF%BA%E4%BE%9D%E6%9B%BC%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.1.3.2.</span> <span class="nav-text">冯诺依曼模型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%91%A9%E5%B0%94%E5%AE%9A%E5%BE%8B"><span class="nav-number">1.1.3.3.</span> <span class="nav-text">摩尔定律</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%80%A7%E8%83%BD"><span class="nav-number">1.1.4.</span> <span class="nav-text">计算机性能 ***</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#CPU%E6%80%A7%E8%83%BD"><span class="nav-number">1.1.4.1.</span> <span class="nav-text">CPU性能</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F%E6%97%B6%E9%92%9F"><span class="nav-number">1.1.4.1.1.</span> <span class="nav-text">系统时钟</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%8C%87%E4%BB%A4%E6%89%A7%E8%A1%8C"><span class="nav-number">1.1.4.1.2.</span> <span class="nav-text">指令执行</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%9F%BA%E5%87%86%E7%A8%8B%E5%BA%8F"><span class="nav-number">1.1.4.1.3.</span> <span class="nav-text">基准程序</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%80%A7%E8%83%BD%E8%AE%BE%E8%AE%A1%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8E%9F%E5%88%99"><span class="nav-number">1.1.4.2.</span> <span class="nav-text">性能设计的基本原则</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E7%AB%A0-%C2%B7-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%9A%84%E9%A1%B6%E5%B1%82%E8%A7%86%E5%9B%BE"><span class="nav-number">1.2.</span> <span class="nav-text">第二章 · 计算机的顶层视图</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="nav-number">1.2.1.</span> <span class="nav-text">计算机的工作原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98%E5%8F%8A%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="nav-number">1.2.2.</span> <span class="nav-text">计算机体系结构遇到的问题及解决方案</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E7%AB%A0-%C2%B7-%E6%95%B0%E6%8D%AE%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E8%A1%A8%E7%A4%BA"><span class="nav-number">1.3.</span> <span class="nav-text">第三章 · 数据的机器级表示</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%A1%E6%81%AF%E7%9A%84%E4%BA%8C%E8%BF%9B%E5%88%B6%E7%BC%96%E7%A0%81"><span class="nav-number">1.3.1.</span> <span class="nav-text">信息的二进制编码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B5%AE%E7%82%B9%E6%95%B0%E7%9A%84%E8%A1%A8%E7%A4%BA"><span class="nav-number">1.3.2.</span> <span class="nav-text">浮点数的表示 ***</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E8%BF%9B%E5%88%B6%E7%BC%96%E7%A0%81%E5%8D%81%E8%BF%9B%E5%88%B6%EF%BC%88BCD%EF%BC%89"><span class="nav-number">1.3.3.</span> <span class="nav-text">二进制编码十进制（BCD）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E5%9B%9B%E7%AB%A0-%C2%B7-%E6%95%B0%E6%8D%AE%E6%A0%A1%E9%AA%8C"><span class="nav-number">1.4.</span> <span class="nav-text">第四章 · 数据校验</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A5%87%E5%81%B6%E6%A0%A1%E9%AA%8C"><span class="nav-number">1.4.1.</span> <span class="nav-text">奇偶校验</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B5%B7%E6%98%8E%E6%A0%A1%E9%AA%8C%E7%A0%81"><span class="nav-number">1.4.2.</span> <span class="nav-text">海明校验码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BE%AA%E7%8E%AF%E5%86%97%E4%BD%99%E6%A0%A1%E9%AA%8C%E7%A0%81"><span class="nav-number">1.4.3.</span> <span class="nav-text">循环冗余校验码</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%AD%E5%A4%AE%E5%A4%84%E7%90%86%E5%99%A8%EF%BC%88CPU%EF%BC%89"><span class="nav-number">2.</span> <span class="nav-text">中央处理器（CPU）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%BA%94%E7%AB%A0-%C2%B7-%E6%95%B4%E6%95%B0%E8%BF%90%E7%AE%97"><span class="nav-number">2.1.</span> <span class="nav-text">第五章 · 整数运算</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8A%A0%E6%B3%95"><span class="nav-number">2.1.1.</span> <span class="nav-text">加法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%A8%E5%8A%A0%E5%99%A8%EF%BC%88FA%EF%BC%89"><span class="nav-number">2.1.1.1.</span> <span class="nav-text">全加器（FA）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%A8%E5%85%88%E8%A1%8C%E8%BF%9B%E4%BD%8D%E5%8A%A0%E6%B3%95%E5%99%A8%EF%BC%88CLA%EF%BC%89"><span class="nav-number">2.1.1.2.</span> <span class="nav-text">全先行进位加法器（CLA）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%83%A8%E5%88%86%E5%85%88%E8%A1%8C%E8%BF%9B%E4%BD%8D%E5%8A%A0%E6%B3%95%E5%99%A8"><span class="nav-number">2.1.1.3.</span> <span class="nav-text">部分先行进位加法器</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B9%98%E6%B3%95"><span class="nav-number">2.1.2.</span> <span class="nav-text">乘法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%99%A4%E6%B3%95"><span class="nav-number">2.1.3.</span> <span class="nav-text">除法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E5%85%AD%E7%AB%A0-%C2%B7-%E6%B5%AE%E7%82%B9%E6%95%B0%E8%BF%90%E7%AE%97"><span class="nav-number">2.2.</span> <span class="nav-text">第六章 · 浮点数运算</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8A%A0%E5%87%8F%E6%B3%95"><span class="nav-number">2.2.1.</span> <span class="nav-text">加减法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B9%98%E6%B3%95-1"><span class="nav-number">2.2.2.</span> <span class="nav-text">乘法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%99%A4%E6%B3%95-1"><span class="nav-number">2.2.3.</span> <span class="nav-text">除法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%83%E7%AB%A0-%C2%B7-%E4%BA%8C%E8%BF%9B%E5%88%B6%E7%BC%96%E7%A0%81%E7%9A%84%E5%8D%81%E8%BF%9B%E5%88%B6%E6%95%B0%E8%BF%90%E7%AE%97"><span class="nav-number">2.3.</span> <span class="nav-text">第七章 · 二进制编码的十进制数运算</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8A%A0%E6%B3%95-1"><span class="nav-number">2.3.1.</span> <span class="nav-text">加法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B9%9D%E7%AB%A0-%C2%B7-%E9%AB%98%E9%80%9F%E7%BC%93%E5%86%B2%E5%AD%98%E5%82%A8%E5%99%A8%EF%BC%88Cache%EF%BC%89"><span class="nav-number">2.4.</span> <span class="nav-text">第九章 · 高速缓冲存储器（Cache）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E6%80%9D%E8%B7%AF"><span class="nav-number">2.4.1.</span> <span class="nav-text">基本思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B"><span class="nav-number">2.4.2.</span> <span class="nav-text">工作流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%BE%E8%AE%A1%E8%A6%81%E7%B4%A0"><span class="nav-number">2.4.3.</span> <span class="nav-text">设计要素</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E5%8D%81%E4%B8%89%E7%AB%A0-%C2%B7-%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F"><span class="nav-number">2.5.</span> <span class="nav-text">第十三章 · 指令系统</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%BB%E5%9D%80%E6%96%B9%E5%BC%8F"><span class="nav-number">2.5.1.</span> <span class="nav-text">寻址方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8C%87%E4%BB%A4%E6%A0%BC%E5%BC%8F"><span class="nav-number">2.5.2.</span> <span class="nav-text">指令格式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E5%8D%81%E5%9B%9B%E7%AB%A0-%C2%B7-%E6%8C%87%E4%BB%A4%E5%91%A8%E6%9C%9F%E5%92%8C%E6%8C%87%E4%BB%A4%E6%B5%81%E6%B0%B4%E7%BA%BF"><span class="nav-number">2.6.</span> <span class="nav-text">第十四章 · 指令周期和指令流水线</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%97%B4%E5%9D%80%E5%91%A8%E6%9C%9F"><span class="nav-number">2.6.1.</span> <span class="nav-text">间址周期</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E6%B5%81"><span class="nav-number">2.6.2.</span> <span class="nav-text">数据流</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8C%87%E4%BB%A4%E6%B5%81%E6%B0%B4%E7%BA%BF"><span class="nav-number">2.6.3.</span> <span class="nav-text">指令流水线</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%92%E9%99%A9"><span class="nav-number">2.6.4.</span> <span class="nav-text">冒险</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E5%8D%81%E4%BA%94%E7%AB%A0-%C2%B7-%E6%8E%A7%E5%88%B6%E5%99%A8"><span class="nav-number">2.7.</span> <span class="nav-text">第十五章 · 控制器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BE%AE%E6%93%8D%E4%BD%9C"><span class="nav-number">2.7.1.</span> <span class="nav-text">微操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8C%87%E4%BB%A4%E5%91%A8%E6%9C%9F%E4%BB%A3%E7%A0%81%EF%BC%88ICC%EF%BC%8CInstruction-Cycle-Code%EF%BC%89"><span class="nav-number">2.7.2.</span> <span class="nav-text">指令周期代码（ICC，Instruction Cycle Code）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8E%A7%E5%88%B6%E5%99%A8"><span class="nav-number">2.7.3.</span> <span class="nav-text">控制器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BE%AE%E7%A8%8B%E5%BA%8F"><span class="nav-number">2.7.4.</span> <span class="nav-text">微程序</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AD%98%E5%82%A8"><span class="nav-number">3.</span> <span class="nav-text">存储</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E5%85%AB%E7%AB%A0-%C2%B7-%E5%86%85%E9%83%A8%E5%AD%98%E5%82%A8%E5%99%A8"><span class="nav-number">3.1.</span> <span class="nav-text">第八章 · 内部存储器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%9E%E9%A1%BE"><span class="nav-number">3.1.1.</span> <span class="nav-text">回顾</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%8A%E5%AF%BC%E4%BD%93%E5%AD%98%E5%82%A8%E5%99%A8-%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE-2024-10-21-172723-C-Users-HUAWEI-Pictures-Screenshots-%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE-2024-10-21-172723-png"><span class="nav-number">3.1.2.</span> <span class="nav-text">半导体存储器![屏幕截图 2024-10-21 172723](C:\Users\HUAWEI\Pictures\Screenshots\屏幕截图 2024-10-21 172723.png)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%9A%8F%E6%9C%BA%E5%AD%98%E5%8F%96%E5%AD%98%E5%82%A8%E5%99%A8%EF%BC%88RAM%EF%BC%89"><span class="nav-number">3.1.2.1.</span> <span class="nav-text">随机存取存储器（RAM）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8F%AA%E8%AF%BB%E5%AD%98%E5%82%A8%E5%99%A8%EF%BC%88ROM%EF%BC%89"><span class="nav-number">3.1.2.2.</span> <span class="nav-text">只读存储器（ROM）</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%8E%E4%BD%8D%E5%85%83%E5%88%B0%E4%B8%BB%E5%AD%98-%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE-2024-10-21-202052-C-Users-HUAWEI-Pictures-Screenshots-%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE-2024-10-21-202052-png"><span class="nav-number">3.1.3.</span> <span class="nav-text">从位元到主存![屏幕截图 2024-10-21 202052](C:\Users\HUAWEI\Pictures\Screenshots\屏幕截图 2024-10-21 202052.png)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E5%8D%81%E7%AB%A0-%C2%B7-%E5%A4%96%E9%83%A8%E5%AD%98%E5%82%A8%E5%99%A8"><span class="nav-number">3.2.</span> <span class="nav-text">第十章 · 外部存储器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-number">3.2.1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A1%AC%E7%A3%81%E7%9B%98%E5%AD%98%E5%82%A8%E5%99%A8"><span class="nav-number">3.2.2.</span> <span class="nav-text">硬磁盘存储器</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E5%8D%81%E4%B8%80%E7%AB%A0-%C2%B7-%E5%86%97%E4%BD%99%E7%A3%81%E7%9B%98%E9%98%B5%E5%88%97%EF%BC%88RAID%EF%BC%89"><span class="nav-number">3.3.</span> <span class="nav-text">第十一章 · 冗余磁盘阵列（RAID）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0-1"><span class="nav-number">3.3.1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%83%E7%A7%8D%E7%B1%BB%E5%9E%8B"><span class="nav-number">3.3.2.</span> <span class="nav-text">七种类型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E5%8D%81%E4%BA%8C%E7%AB%A0-%C2%B7-%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E5%99%A8"><span class="nav-number">3.4.</span> <span class="nav-text">第十二章 · 虚拟存储器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E5%8C%BA"><span class="nav-number">3.4.1.</span> <span class="nav-text">分区</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E9%A1%B5"><span class="nav-number">3.4.2.</span> <span class="nav-text">分页</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E5%99%A8"><span class="nav-number">3.4.3.</span> <span class="nav-text">虚拟存储器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BF%AB%E8%A1%A8%EF%BC%88TLB%EF%BC%89"><span class="nav-number">3.4.4.</span> <span class="nav-text">快表（TLB）</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E7%BA%BF"><span class="nav-number">4.</span> <span class="nav-text">总线</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E5%8D%81%E5%85%AD%E7%AB%A0-%C2%B7-%E6%80%BB%E7%BA%BF"><span class="nav-number">4.1.</span> <span class="nav-text">第十六章 · 总线</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0-2"><span class="nav-number">4.1.1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%A8%E9%80%94"><span class="nav-number">4.1.2.</span> <span class="nav-text">用途</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%B2%E8%A3%81"><span class="nav-number">4.1.3.</span> <span class="nav-text">仲裁</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%B6%E5%BA%8F"><span class="nav-number">4.1.4.</span> <span class="nav-text">时序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E7%BA%BF%E5%B8%A6%E5%AE%BD%E5%92%8C%E6%95%B0%E6%8D%AE%E4%BC%A0%E8%BE%93%E9%80%9F%E7%8E%87"><span class="nav-number">4.1.5.</span> <span class="nav-text">总线带宽和数据传输速率</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA"><span class="nav-number">5.</span> <span class="nav-text">输入输出</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E5%8D%81%E4%B8%83%E7%AB%A0-%C2%B7-%E8%BE%93%E5%85%A5-%E8%BE%93%E5%87%BA"><span class="nav-number">5.1.</span> <span class="nav-text">第十七章 · 输入 &#x2F; 输出</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0-3"><span class="nav-number">5.1.1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#I-O%E6%A8%A1%E5%9D%97%E7%BB%93%E6%9E%84"><span class="nav-number">5.1.2.</span> <span class="nav-text">I&#x2F;O模块结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#I-O%E6%93%8D%E4%BD%9C%E6%8A%80%E6%9C%AF"><span class="nav-number">5.1.3.</span> <span class="nav-text">I&#x2F;O操作技术</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%B4%E6%8E%A5%E5%AD%98%E5%82%A8%E5%99%A8%E5%AD%98%E5%8F%96DMA"><span class="nav-number">5.1.4.</span> <span class="nav-text">直接存储器存取DMA</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%9F%A5%E8%AF%86%E7%82%B9%E6%8B%BE%E9%81%97"><span class="nav-number">6.</span> <span class="nav-text">知识点拾遗</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%94%99%E9%A2%98%E6%9C%AC"><span class="nav-number">7.</span> <span class="nav-text">错题本</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B4%E6%95%B0%E8%BF%90%E7%AE%97"><span class="nav-number">7.1.</span> <span class="nav-text">整数运算</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%85%E5%AD%98"><span class="nav-number">7.2.</span> <span class="nav-text">内存</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Cache"><span class="nav-number">7.3.</span> <span class="nav-text">Cache</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%96%E5%AD%98"><span class="nav-number">7.4.</span> <span class="nav-text">外存</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98"><span class="nav-number">7.5.</span> <span class="nav-text">虚拟内存</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F"><span class="nav-number">7.6.</span> <span class="nav-text">指令系统</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8C%87%E4%BB%A4%E6%B5%81%E6%B0%B4%E7%BA%BF-1"><span class="nav-number">7.7.</span> <span class="nav-text">指令流水线</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%92%E9%99%A9-1"><span class="nav-number">7.7.1.</span> <span class="nav-text">冒险</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%A7%E5%88%B6%E5%99%A8-1"><span class="nav-number">7.8.</span> <span class="nav-text">控制器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BA%BF-1"><span class="nav-number">7.9.</span> <span class="nav-text">总线</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#I-O"><span class="nav-number">7.10.</span> <span class="nav-text">I&#x2F;O</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="mukongshan"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">mukongshan</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">19</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/mukongshan" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;mukongshan" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:2087179041@qq.com" title="E-Mail → mailto:2087179041@qq.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://kongshan.me/2024/12/04/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E7%BB%93%E6%9E%84/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="mukongshan">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="kongshan's blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="计算机组成结构 | kongshan's blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          计算机组成结构
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-12-04 12:00:00" itemprop="dateCreated datePublished" datetime="2024-12-04T12:00:00+08:00">2024-12-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-12-03 17:01:19" itemprop="dateModified" datetime="2025-12-03T17:01:19+08:00">2025-12-03</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/course/" itemprop="url" rel="index"><span itemprop="name">课业</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="导论"><a href="#导论" class="headerlink" title="导论"></a>导论</h1><h2 id="第一章-·-计算机系统概述"><a href="#第一章-·-计算机系统概述" class="headerlink" title="第一章 · 计算机系统概述"></a>第一章 · 计算机系统概述</h2><h3 id="计算机的定义"><a href="#计算机的定义" class="headerlink" title="计算机的定义"></a>计算机的定义</h3><p>通用电子数字计算机</p>
+<h3 id="组织与结构"><a href="#组织与结构" class="headerlink" title="组织与结构 ***"></a>组织与结构 ***</h3><ol>
+<li><p>组织：对编程人员不可见。（类比：实现乘法是通过硬件单元还是重复加法，我们不得而知）</p>
+<ul>
+<li>操作单元及其相互连接。</li>
+<li>包括控制信号，存储技术等等。</li>
+</ul>
+</li>
+<li><p>结构：对编程人员可见。（类比：有没有乘法指令）</p>
+<ul>
+<li><p>直接影响程序逻辑执行的属性。</p>
+</li>
+<li><p>包括指令集，表示数据类型的位数等等。</p>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="计算机简史"><a href="#计算机简史" class="headerlink" title="计算机简史"></a>计算机简史</h3><h4 id="发展迭代"><a href="#发展迭代" class="headerlink" title="发展迭代"></a>发展迭代</h4><ul>
+<li>第一代：真空管</li>
+<li>第二代：晶体管</li>
+<li>第三代以及之后：集成电路</li>
+</ul>
+<h4 id="冯诺依曼模型"><a href="#冯诺依曼模型" class="headerlink" title="冯诺依曼模型"></a>冯诺依曼模型</h4><ol>
+<li>五部分：<ul>
+<li>主存储器</li>
+<li>算术逻辑单元 &#x2F; 处理单元</li>
+<li>程序控制单元 &#x2F; 控制单元</li>
+<li>输入设备</li>
+<li>输出设备</li>
+</ul>
+</li>
+<li>存储程序思想：<ol>
+<li>指令和数据以同等地位储存到存储器中，并且可以按地址访问</li>
+<li>指令和数据以二进制表示</li>
+</ol>
+</li>
+</ol>
+<h4 id="摩尔定律"><a href="#摩尔定律" class="headerlink" title="摩尔定律"></a>摩尔定律</h4><ul>
+<li>单芯片上所能包含的晶体管数量每年翻一番 (1965-1969) &#x2F; 1970年起减慢为每18个月 翻一番 </li>
+<li>影响 </li>
+<li>由于单个芯片的成本几乎不变，计算机逻辑电路和存储电路的成本显著下降 </li>
+<li>这里“成本”是指原料，但制作成本是不断增加的 </li>
+<li>更小的尺寸带来更多灵活性和可能性 </li>
+<li>更强的计算能力带来更多可能性 </li>
+<li>减小了对电能消耗和冷却的要求 </li>
+<li>集成电路上的内部连接比焊接更可靠，芯片间的连接更少</li>
+</ul>
+<h3 id="计算机性能"><a href="#计算机性能" class="headerlink" title="计算机性能 ***"></a>计算机性能 ***</h3><ul>
+<li>计算机的关键参数：性能，成本，尺寸，安全性，可靠性，能耗……</li>
+<li>性能评价标准<ul>
+<li>CPU：速度</li>
+<li>存储器：速度，容量</li>
+<li>I&#x2F;O：速度，容量</li>
+</ul>
+</li>
+</ul>
+<h4 id="CPU性能"><a href="#CPU性能" class="headerlink" title="CPU性能"></a>CPU性能</h4><h5 id="系统时钟"><a href="#系统时钟" class="headerlink" title="系统时钟"></a>系统时钟</h5><ol>
+<li><p>时钟频率 &#x2F; 时钟速度（单位：Hz）：计算机在单位时间内（例如1秒钟）执行最基本操 作的次数 </p>
+</li>
+<li><p>时钟周期 &#x2F; 周期时间（单位：s）：执行每次最基本操作的时间</p>
+</li>
+</ol>
+<ul>
+<li><p>时钟滴答（有时也称为“时钟周期”）：CPU 中用于同步执行最基本操作的单个电子脉冲 </p>
+</li>
+<li><p>因此，周期时间即为两个电子脉冲之间的时间</p>
+</li>
+</ul>
+<p>   注：</p>
+<ol>
+<li>不是主频越高性能越好，因为可能一个步骤要用几个时钟周期</li>
+<li></li>
+</ol>
+<p>   $$<br>   时钟周期*时钟频率&#x3D;1<br>   $$</p>
+<h5 id="指令执行"><a href="#指令执行" class="headerlink" title="指令执行"></a>指令执行</h5><ul>
+<li><p>处理器由时钟驱动，时钟具有固定的频率f，或等价为固定的时钟周期t </p>
+</li>
+<li><p>如果用$CPI_i$来表示指定类型i所需要的周期数，用 表示在某一给定程序中所执行的i 类 指令的条数，则计算整个CPI如下：<br>$$<br>CPI&#x3D;\frac{\sum_{i&#x3D;1}^{n}(CPI_i*I_i)}{I_c},I_c&#x3D;\sum_{i&#x3D;1}^{n}I_i<br>$$</p>
+</li>
+<li><p>执行一个给定程序的处理时间表示为：<br>$$<br>T&#x3D;I_c<em>CPI</em>t<br>$$<br>每秒百万条指令（ Million Instructions Per Second ，MIPS）：<br>$$<br>MIPS&#x3D;\frac{I_c}{T<em>10^{6}}&#x3D;\frac{f}{CPI</em>10^6}<br>$$</p>
+<p> 每秒百万条浮点操作（Million Floating Point Operations Per Second，MFLOPS)：<br>$$<br>MFLOPS&#x3D;\frac{N_{floating-point op}}{T*10^6}<br>$$</p>
+</li>
+</ul>
+<h5 id="基准程序"><a href="#基准程序" class="headerlink" title="基准程序"></a>基准程序</h5><p>使用一系列基准程序来测量系统的性能 </p>
+<ul>
+<li>平均结果：</li>
+<li>算数平均值（Arithmetic mean） </li>
+<li>调和平均值（Harmonic mean）</li>
+</ul>
+<h4 id="性能设计的基本原则"><a href="#性能设计的基本原则" class="headerlink" title="性能设计的基本原则"></a>性能设计的基本原则</h4><ul>
+<li>大概率事件优先原则</li>
+<li>Amdahl定律 <ul>
+<li>加快某部件执行速度所获得的系统性能加速比，受限于该部件在系统中所占的重要性比例 </li>
+<li>性能增加的递减规则：如果仅仅对计算机中的一部分做性能改进，改进越多，系统获得 的效果越</li>
+</ul>
+</li>
+</ul>
+<h2 id="第二章-·-计算机的顶层视图"><a href="#第二章-·-计算机的顶层视图" class="headerlink" title="第二章 · 计算机的顶层视图"></a>第二章 · 计算机的顶层视图</h2><h3 id="计算机的工作原理"><a href="#计算机的工作原理" class="headerlink" title="计算机的工作原理"></a>计算机的工作原理</h3><ol>
+<li>指令和数据存储在单个读写储存器中</li>
+<li>主存中的内容按位置访问，不考虑内容类型</li>
+<li>CPU以顺序的方式执行指令（除非明确修改）</li>
+<li>I&#x2F;O模块与CPU，主存交换计算机系统外部的信息<ul>
+<li>注：I&#x2F;O模块不是I&#x2F;O设备</li>
+</ul>
+</li>
+</ol>
+<h3 id="计算机体系结构遇到的问题及解决方案"><a href="#计算机体系结构遇到的问题及解决方案" class="headerlink" title="计算机体系结构遇到的问题及解决方案"></a>计算机体系结构遇到的问题及解决方案</h3><ul>
+<li>CPU的频率不能无限提高 ➔ 改进CPU芯片结构 </li>
+<li>内存墙的存在 ➔ 采用高速缓存（Cache） </li>
+<li>CPU等待I&#x2F;O传输数据 ➔ 采用中断机制 </li>
+<li>兼顾存储容量、速度和成本 ➔ 层次式存储结构 </li>
+<li>I&#x2F;O设备传输速率差异大 ➔ 采用缓冲区和改进I&#x2F;O操作技术 </li>
+<li>计算机部件互连复杂 ➔ 采用总线</li>
+</ul>
+<h2 id="第三章-·-数据的机器级表示"><a href="#第三章-·-数据的机器级表示" class="headerlink" title="第三章 · 数据的机器级表示"></a>第三章 · 数据的机器级表示</h2><h3 id="信息的二进制编码"><a href="#信息的二进制编码" class="headerlink" title="信息的二进制编码"></a>信息的二进制编码</h3><ol>
+<li><p>编码：用少量简单的基本符号对复杂多样的信息进行一定规律的组合。实际上是现实世界的无限连续的信号到计算机有限离散的映射。</p>
+</li>
+<li><p>k位二进制编码可以至多表示2^k个不同的值</p>
+<ul>
+<li>注：可以小于等于，不能大于。比如我令00和11都表示值0。</li>
+</ul>
+</li>
+<li><p>补码，互补。一个数的补码和他本身加起来得到2^k。或者说，一个数的补码就是2^k减去它。</p>
+<ul>
+<li>在补码表示中，正数的第一位为0，负数的第一位为1。即使不是符号位，也有这个规律。</li>
+</ul>
+</li>
+</ol>
+<h3 id="浮点数的表示"><a href="#浮点数的表示" class="headerlink" title="浮点数的表示 ***"></a>浮点数的表示 ***</h3><ol>
+<li><p>规格化表示：要求要表达的浮点小数点左边为1。</p>
+</li>
+<li><p>32位表示：</p>
+<ul>
+<li>符号位（s)：1位</li>
+<li>指数位（E)：8位</li>
+<li>尾数（S)：23位</li>
+</ul>
+</li>
+<li><p>•补码（相对于无符号数） （实际上是强制无符号数变成有符号数）</p>
+<ul>
+<li>000…000 ~ 011…111：表示的值 不变</li>
+<li>100…000 ~ 111…111：表示的值由 2^(k-1)<del>2^k-1变为-2^(k-1)</del>-1</li>
+<li>真值为原来的无符号数对应的真值减去2^k（取反加1的由来）</li>
+</ul>
+</li>
+<li><p>规格化数可表示范围：<br>$$<br>-(2-2^{-23})*2^{127}到-2^{-127}之间的负数<br>$$<br>和<br>$$<br>2^{-127}到(2-2^{-23})*2^{127}之间的正数<br>$$</p>
+</li>
+<li><p>有非规格化的数：</p>
+<ul>
+<li>解决了下溢的情况</li>
+</ul>
+</li>
+<li><p>浮点数编码表示的性质：</p>
+<ul>
+<li>总体是不均匀的，局部是均匀的。</li>
+<li>对于32位数，它所能表示的数上限一定是确定的。</li>
+<li>总体上，绝对值越大的范围内可以表示的数越“稀疏”。1</li>
+<li>在同一个数量级上（即指数位相同）的范围里，数的表示是均匀的。</li>
+</ul>
+</li>
+<li><p>多种情况：</p>
+<ul>
+<li>指数位：00000000<ul>
+<li>非规格化数，尾数表示 0.S ，能表示0到2^-126^的数。注意！！！指数位全为零时表示2^1-127&#x3D;-126^。（？</li>
+</ul>
+</li>
+<li>指数位：11111111<ul>
+<li>尾数位全零：无穷</li>
+<li>尾数位非纯零：NaN</li>
+</ul>
+</li>
+<li>指数位：其他情况<ul>
+<li>规格化数</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>舍入：</p>
+<ul>
+<li>朝正无穷舍入</li>
+<li>朝负无穷舍入</li>
+<li>朝零舍入</li>
+<li>就近舍入</li>
+</ul>
+</li>
+</ol>
+<h3 id="二进制编码十进制（BCD）"><a href="#二进制编码十进制（BCD）" class="headerlink" title="二进制编码十进制（BCD）"></a>二进制编码十进制（BCD）</h3><ol>
+<li>自然BCD码 (NBCD, 8421 码) <ul>
+<li>0 ~ 9: 0000 ~ 1001 </li>
+<li>符号: 使用四个最高有效位 </li>
+<li>正: 1100 &#x2F; 0 ， 负: 1101 &#x2F; 1 </li>
+<li>例子： <ul>
+<li>+2039: 1100 0010 0000 0011 1001 &#x2F; 0 0010 0000 0011 1001</li>
+<li>-1265: 1101 0001 0010 0110 0101 &#x2F; 1 0001 0010 0110 0101</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>其他BCD码 • 2421, 5211, 4311, …</li>
+</ol>
+<h2 id="第四章-·-数据校验"><a href="#第四章-·-数据校验" class="headerlink" title="第四章 · 数据校验"></a>第四章 · 数据校验</h2><h3 id="奇偶校验"><a href="#奇偶校验" class="headerlink" title="奇偶校验"></a>奇偶校验</h3><h3 id="海明校验码"><a href="#海明校验码" class="headerlink" title="海明校验码"></a>海明校验码</h3><p>P1：1,2,4,5,7</p>
+<p>P2：1,3,4,6,7</p>
+<p>P3：2,3,4,8</p>
+<p>P4：5,6,7,8</p>
+<h3 id="循环冗余校验码"><a href="#循环冗余校验码" class="headerlink" title="循环冗余校验码"></a>循环冗余校验码</h3><h1 id="中央处理器（CPU）"><a href="#中央处理器（CPU）" class="headerlink" title="中央处理器（CPU）"></a>中央处理器（CPU）</h1><h2 id="第五章-·-整数运算"><a href="#第五章-·-整数运算" class="headerlink" title="第五章 · 整数运算"></a>第五章 · 整数运算</h2><h3 id="加法"><a href="#加法" class="headerlink" title="加法"></a>加法</h3><h4 id="全加器（FA）"><a href="#全加器（FA）" class="headerlink" title="全加器（FA）"></a>全加器（FA）</h4><ol>
+<li>延时：<ol>
+<li>逻辑门延时：<ol>
+<li>与门延迟：1级门延迟 (1ty)</li>
+<li>或门延迟：1级门延迟 (1ty)</li>
+<li>异或门延迟：3级门延迟 (3ty)</li>
+</ol>
+</li>
+<li>运算延时：<ol>
+<li>$S_i&#x3D;X_i⊕Y_i⊕C_{i-1}$</li>
+<li>$C_i&#x3D;X_iC_{i-1}+Y_iC_{i-1}+X_iY_i$</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<ul>
+<li>缺点：慢</li>
+</ul>
+<h4 id="全先行进位加法器（CLA）"><a href="#全先行进位加法器（CLA）" class="headerlink" title="全先行进位加法器（CLA）"></a>全先行进位加法器（CLA）</h4><ul>
+<li>缺点：复杂</li>
+</ul>
+<h4 id="部分先行进位加法器"><a href="#部分先行进位加法器" class="headerlink" title="部分先行进位加法器"></a>部分先行进位加法器</h4><h3 id="乘法"><a href="#乘法" class="headerlink" title="乘法"></a>乘法</h3><ol>
+<li>乘法器原理</li>
+</ol>
+<p>![屏幕截图 2024-09-26 062919](C:\Users\HUAWEI\Pictures\Screenshots\屏幕截图 2024-09-26 062919.png)</p>
+<ol start="2">
+<li>有符号乘法：<ol>
+<li>原理：布斯算法 ***<img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20241224221732284.png" alt="image-20241224221732284"><ol>
+<li>流程：<ul>
+<li>记$Y_0&#x3D;0$</li>
+<li>根据$Y_i-Y_{i+1}$, 决定是否增加+X，-X，0；</li>
+<li>右移部分积</li>
+<li>重复第二、三步</li>
+</ul>
+</li>
+<li>注意：<ol>
+<li>由于是有符号数的运算，在右移时补位要补的是符号位</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<h3 id="除法"><a href="#除法" class="headerlink" title="除法"></a>除法</h3><ol>
+<li><p>计算机除法原理：不断的削减被除数的绝对值到最小而不变号。</p>
+<ul>
+<li>注意：在计算机内，余数是和被除数同号的。即，若被除数为负数，余数也为负数。这与数学上不一样。</li>
+<li>部分余数：计算过程中的余数</li>
+</ul>
+</li>
+<li><p>无符号除法![屏幕截图 2024-09-26 072639](C:\Users\HUAWEI\Pictures\Screenshots\屏幕截图 2024-09-26 072639.png)</p>
+<p>![屏幕截图 2024-09-26 072720](C:\Users\HUAWEI\Pictures\Screenshots\屏幕截图 2024-09-26 072720.png)</p>
+<ol start="3">
+<li>有符号<ol>
+<li>恢复余数流程：<ol>
+<li>![屏幕截图 2024-09-26 073410](C:\Users\HUAWEI\Pictures\Screenshots\屏幕截图 2024-09-26 073410.png)</li>
+</ol>
+</li>
+<li>不恢复余数流程：<ul>
+<li>通过在前面加n位符号扩展被除数，并存储在余数寄存器和商寄 存器中 </li>
+<li>将余数和商左移，判断是否“够减”<ul>
+<li>如果“够”，则做减法（同号）或者加法（异号），并上 商为1 </li>
+<li>如果“不够，则上商为0</li>
+</ul>
+</li>
+<li>重复以上步骤 </li>
+<li>如果除数和被除数不同号，则将商替换为其相反数 </li>
+<li>余数存在余数寄存器中</li>
+</ul>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<p>![屏幕截图 2024-10-10 063945](C:\Users\HUAWEI\Pictures\Screenshots\屏幕截图 2024-10-10 063945.png)</p>
+<ul>
+<li>本质就是这次多减了，下次加回去</li>
+</ul>
+<h2 id="第六章-·-浮点数运算"><a href="#第六章-·-浮点数运算" class="headerlink" title="第六章 · 浮点数运算"></a>第六章 · 浮点数运算</h2><h3 id="加减法"><a href="#加减法" class="headerlink" title="加减法"></a>加减法</h3><ol>
+<li>流程：![屏幕截图 2024-10-10 065152](C:\Users\HUAWEI\Pictures\Screenshots\屏幕截图 2024-10-10 065152.png)<ol>
+<li>查零    </li>
+<li>对阶：小向大对齐，尾数右移，损失小。同时查零。</li>
+<li>相加并调整浮点</li>
+<li>处理溢出</li>
+<li>舍入：若上溢，设为无穷；若下溢，用非规格化表示</li>
+</ol>
+</li>
+<li>减法：加第二个操作数的补码（一个数的原码和补码之和为2^k^）<ul>
+<li>如果最高位有进位，正确 (符号与被减数相同) </li>
+<li>否则，计算它的补码作为原码，且符号与被减数相反</li>
+</ul>
+</li>
+</ol>
+<h3 id="乘法-1"><a href="#乘法-1" class="headerlink" title="乘法"></a>乘法</h3><p>![屏幕截图 2024-10-11 195205](C:\Users\HUAWEI\Pictures\Screenshots\屏幕截图 2024-10-11 195205.png)</p>
+<ol>
+<li><p>流程</p>
+<ol>
+<li><p>无论哪个操作数是0，乘积 即为0 </p>
+</li>
+<li><p>指数运算：从阶值的和中减去一个偏移量<br>$$<br>E_{mul}&#x3D;E_a+E_b-127<br>$$</p>
+</li>
+</ol>
+</li>
+<li><p>尾数运算：有效值相乘 （就直接乘就完了）</p>
+</li>
+<li><p>结果的规格化和舍入处理，规格化可能导致阶值下溢</p>
+</li>
+</ol>
+<h3 id="除法-1"><a href="#除法-1" class="headerlink" title="除法"></a>除法</h3><ol>
+<li><p>流程：</p>
+<ol>
+<li><p>如果除数为0，则报告出错， 或将结果设置为无穷大</p>
+</li>
+<li><p>如果被除数是0，则结果是0</p>
+</li>
+<li><p>被除数的阶值减除数的阶值， 加上偏移量<br>$$<br>E_{div}&#x3D;E_a-E_b+127<br>$$</p>
+</li>
+<li><p>有效值相除</p>
+</li>
+<li><p>结果规格化和舍入处理</p>
+<p>![屏幕截图 2024-10-11 200340](C:\Users\HUAWEI\Pictures\Screenshots\屏幕截图 2024-10-11 200340.png)</p>
+</li>
+</ol>
+</li>
+<li><p>保护位：24位有效值做运算时，放在ALU左端，右端多出来的几位作保护位。</p>
+<ul>
+<li>对有效值操作的结果通常保存在更长的寄存器中。当结果转换回浮点格式时，必须要去掉多余的位，有四种方法</li>
+</ul>
+</li>
+</ol>
+<h2 id="第七章-·-二进制编码的十进制数运算"><a href="#第七章-·-二进制编码的十进制数运算" class="headerlink" title="第七章 · 二进制编码的十进制数运算"></a>第七章 · 二进制编码的十进制数运算</h2><ol>
+<li><p>表示：</p>
+<ol>
+<li><p>数字<br>• 0 ~ 9：0000 ~ 1001</p>
+</li>
+<li><p>符号</p>
+<p>• 正: 1100 &#x2F; 0<br>• 负: 1101 &#x2F; 1</p>
+</li>
+</ol>
+</li>
+</ol>
+<h3 id="加法-1"><a href="#加法-1" class="headerlink" title="加法"></a>加法</h3><ol>
+<li>补偿：用4位二进制实际上可以看作十六进制，这比十进制能多表示6个数。所以当运算之后某处表示了大于十的数，应该加6帮忙进位。</li>
+</ol>
+<h2 id="第九章-·-高速缓冲存储器（Cache）"><a href="#第九章-·-高速缓冲存储器（Cache）" class="headerlink" title="第九章 · 高速缓冲存储器（Cache）"></a>第九章 · 高速缓冲存储器（Cache）</h2><h3 id="基本思路"><a href="#基本思路" class="headerlink" title="基本思路"></a>基本思路</h3><ul>
+<li>解决内存墙带来的CPU和主存协作问题</li>
+</ul>
+<ol>
+<li>在使用主存（相对大而慢）之余，添加一块小而快的cache</li>
+<li>Cache位于CPU和主存之间，可以集成在CPU内部或作为主板 上的一个模块</li>
+<li>Cache中存放了主存中的部分信息的“副本”</li>
+</ol>
+<h3 id="工作流程"><a href="#工作流程" class="headerlink" title="工作流程"></a>工作流程</h3><ol>
+<li><p>检查（Check）：当CPU试图访问主存中的某个字时，首先检查 这个字是否在cache中</p>
+</li>
+<li><p>检查后分两种情况处理：</p>
+</li>
+<li><p>命中（Hit）：如果在cache中，则把这个字传送给CPU</p>
+</li>
+<li><p>未命中（Miss）：如果不在cache中, 则将主存中包含这个字固定 大小的块（block）读入cache中，然后再从cache传送该字给CPU</p>
+</li>
+<li><p>注：</p>
+<ol>
+<li><p>如何判断命中与否？</p>
+<ol>
+<li>冯·诺伊曼体系的设计： CPU通过位置对主存中的内容进行寻址，不关心存储在其中的内容</li>
+<li>Cache通过标记（tags）来标识其内容在主存中的对应位置</li>
+</ol>
+</li>
+<li><p>如果未命中，为什么不直接把所需要的字从内存传送到CPU?为什么从内存中读入一个块而不只读入一个字?</p>
+<ol>
+<li>程序访问的局部性原理：处理器频繁访问主存中相同位置或者相邻存储位置的现象</li>
+<li>类型：<ol>
+<li>时间局部性：在相对较短的时间周期内，重复访问特定的信息（也就是访问相同位置的信息） </li>
+<li>空间局部性：在相对较短的时间周期内，访问相邻存储位置的数据<ul>
+<li>顺序局部性：当数据被线性排列和访问时，出现的空间局部性 的一种特殊情况。例如：遍历一维数组中的元素</li>
+</ul>
+</li>
+</ol>
+</li>
+<li>利用时间局部性：可能多次取同一个数据，所以第一次取的时候会把数据复制到cache中，以便之后取用。</li>
+<li>利用空间局部性：可能短时间内取多个相邻数据，所以复制一个块以便之后取用。</li>
+</ol>
+</li>
+<li><p>使用Cache后需要更多的操作，为什么还可以节省时间?</p>
+</li>
+<li><p>假设p是命中率， $T_c$是cache的访问时间，$T_m$是主存的访问时间，使用cache时的平均访问时间为<br>$$<br>T_A&#x3D;p<em>T_C+(1-p)</em>(T_C+T_M)&#x3D;T_C+(1-p)*T_M<br>$$</p>
+<ul>
+<li>命中率p越大， $T_C$越小， 效果越好</li>
+<li>如果想要 $T_A&lt;T_M$, 必须要求 $p&gt;T_C&#x2F;T_M$</li>
+<li>难点：cache的容量远远小于主存的容量</li>
+</ul>
+</li>
+</ol>
+</li>
+</ol>
+<h3 id="设计要素"><a href="#设计要素" class="headerlink" title="设计要素"></a>设计要素</h3><ol>
+<li><p>容量：扩大容量可以提高p，但是增加了成本和$T_C$</p>
+</li>
+<li><p>映射功能：</p>
+<ol>
+<li><p>直接映射：</p>
+<ol>
+<li><p>将主存中的每个块映射到一个固定可用的cache行中</p>
+</li>
+<li><p>假设𝑖是cache行号，𝑗是主存储器的块号，𝐶是cache的行数</p>
+</li>
+</ol>
+<p>   i &#x3D; j mod C</p>
+<ol start="3">
+<li><p><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20241024151614944.png" alt="image-20241024151614944"></p>
+<ul>
+<li>前两部分合称为块号</li>
+</ul>
+</li>
+<li><p>流程：</p>
+<ol>
+<li>对块号进行mod C，得到了块所在的行号。对于二进制而言，mod 4 表示取后两位。</li>
+<li>找到行号cache中对应的行，检查块号前的tag和行号前的tag。若相同则表示这一行后面的数据是所求的块。</li>
+<li>找到对应的块，再利用块内地址找到数据。</li>
+</ol>
+</li>
+<li><p>优点：简单，快速</p>
+</li>
+<li><p>缺点：抖动现象：如果一个程序重复访问两个需要映射到 同一行中且来自不同块的字，则这两个块不断地被交换到cache中， cache的命中率将会降低</p>
+</li>
+<li><p>适合大容量cache</p>
+</li>
+</ol>
+</li>
+<li><p>关联映射：</p>
+<ol>
+<li>一个主存块可以装入cache任意一行</li>
+<li>寻找块时要遍历cache所有行</li>
+<li>优点：避免抖动现象</li>
+<li>缺点：实现起来比较复杂，$T_C$变长</li>
+<li>适合小容量cache</li>
+</ol>
+</li>
+<li><p>组关联映射</p>
+<ol>
+<li>Cache分为若干组，每一组包含相同数量的行，每个主存块被映射到固定组的任意一行。组间为直接映射，组内为关联映射。<ol>
+<li>假设𝑠是cache组号，𝑗是主存块号，𝑆是组数 𝑠 &#x3D; 𝑗 𝑚𝑜𝑑 𝑆 </li>
+<li>K-路组关联映射 𝐾 &#x3D; C &#x2F; S。即：每个组里有几行。</li>
+</ol>
+</li>
+<li>优点：结合了前两种的优点</li>
+<li>缺点：结合了前两种的缺点</li>
+</ol>
+</li>
+</ol>
+</li>
+<li><p>替换算法</p>
+<ul>
+<li>直接映射没得选，每个块只有一个位置可以放</li>
+</ul>
+<ol>
+<li>最近最少使用算法<ol>
+<li>假设：最近使用过的数据块更有可能会被再次使用</li>
+<li>策略：替换掉在cache中最长时间未被访问的数据块</li>
+</ol>
+</li>
+<li>先进先出算法</li>
+<li>假设：最近由主存载入Cache的数据块更有可能被使用</li>
+<li>策略：替换掉在Cache中停留时间最长的块</li>
+<li>最不经常使用算法</li>
+<li>假设：访问越频繁的数据块越有可能被再次使用</li>
+<li>策略：替换掉cache中被访问次数最少的数据块</li>
+<li>随机替换算法</li>
+<li>假设：每个数据块被再次使用的可能性是相同的</li>
+<li>策略：随机替换cache中的数据块</li>
+<li>实现：随机替换。随机替换算法在性能上只稍逊于使用其它替换算法</li>
+</ol>
+</li>
+<li><p>写策略</p>
+<ol>
+<li>写直达：<ol>
+<li>所有写操作都同时对cache和主存进行</li>
+<li>优点：确保主存中的数据总是和cache中的数据一致，总是最新的</li>
+<li>缺点：产生大量的主存访问，减慢写操作</li>
+</ol>
+</li>
+<li>写回法<ol>
+<li>先更新cache中的数据，当cache中某个数据块被替换时，如 果它被修改了，才被写回主存。利用一个脏位（dirty bit）或者使用位（use bit）来表示块是 否被修改</li>
+<li>优点：减少了访问主存的次数</li>
+<li>缺点：部分主存数据可能不是最新的</li>
+</ol>
+</li>
+</ol>
+</li>
+<li><p>行大小</p>
+<ol>
+<li>假设从行的大小为一个字开始，随着行大小的逐步增大，则Cache命中率会增加</li>
+<li>当行大小变得较大之后，继续增加行大小，则Cache命中率会下降</li>
+</ol>
+</li>
+<li><p>Cache数目：</p>
+<ol>
+<li>一级VS.多级</li>
+<li>统一VS.分立</li>
+</ol>
+</li>
+</ol>
+<h2 id="第十三章-·-指令系统"><a href="#第十三章-·-指令系统" class="headerlink" title="第十三章 · 指令系统"></a>第十三章 · 指令系统</h2><h3 id="寻址方式"><a href="#寻址方式" class="headerlink" title="寻址方式"></a>寻址方式</h3><ol>
+<li>立即寻址：指令里存放操作数</li>
+<li>直接寻址：指令里存放操作数地址（A），把操作数放在内存中</li>
+<li>间接寻址：指令里存放的是有效地值（EA）的地址，EA放在内存中，再访问EA得到操作数</li>
+<li>寄存器寻址：指令里存放寄存器编号，寄存器里面放操作数</li>
+<li>寄存器间接寻址：指令里存放寄存器编号，寄存器放EA</li>
+<li>偏移寻址：EA &#x3D; （R）+ A<ol>
+<li>相对寻址：R默认为PC。A为偏移量</li>
+<li>基址寄存器寻址（寄存器为基）：被引用的寄存器含有一个存储器地址，地址字段含有一个相对于那个地址的偏移量</li>
+<li>变址寻址（寄存器为变）：指令中有一个形式地址，被引用的寄存器含有对于该地址的一个正的偏移量</li>
+</ol>
+</li>
+<li>栈寻址：栈指针保存在寄存器中，对寄存器中栈位置的访问实际上是一种寄存器间接寻址方式</li>
+</ol>
+<h3 id="指令格式"><a href="#指令格式" class="headerlink" title="指令格式"></a>指令格式</h3><ol>
+<li>指令格式通过它的各个构成部分来定义指令的位安排</li>
+<li>一个指令格式必须包含一个操作码，以及隐式或显式的、零个或<br>多个操作数</li>
+<li>指令格式必须显式或隐式地为每个操作数指定其寻址方式</li>
+<li>大多数指令集使用不止一种指令格式</li>
+</ol>
+<h2 id="第十四章-·-指令周期和指令流水线"><a href="#第十四章-·-指令周期和指令流水线" class="headerlink" title="第十四章 · 指令周期和指令流水线"></a>第十四章 · 指令周期和指令流水线</h2><h3 id="间址周期"><a href="#间址周期" class="headerlink" title="间址周期"></a>间址周期</h3><ol>
+<li>指令的执行可能涉及一个或多个存储器中的操作数，它们每<br>   个都要求一次存储器访问。使用间接寻址，还需要额外的存储器访问</li>
+<li>间址周期：把间接地址的读取看成是一个额外的指令子周期</li>
+</ol>
+<h3 id="数据流"><a href="#数据流" class="headerlink" title="数据流"></a>数据流</h3><p><img src="/home/mukongshan/.config/Typora/typora-user-images/image-20241121145038280.png" alt="image-20241121145038280"></p>
+<h3 id="指令流水线"><a href="#指令流水线" class="headerlink" title="指令流水线"></a>指令流水线</h3><ul>
+<li>指令流水线：一条指令的处理过程分成若干个阶段，每个阶段由<br>  相应的功能部件完成</li>
+</ul>
+<ol>
+<li><p>两阶段方法：</p>
+<ol>
+<li>将指令处理分成两个阶段：取指令和执行指令。在当前指令的执行期间取下一条指令</li>
+<li>问题：<ol>
+<li>执行时间一般要长于取指时间</li>
+<li>主存访问冲突</li>
+<li>条件分支指令使得待取的下一条指令的地址是未知的</li>
+</ol>
+</li>
+</ol>
+</li>
+<li><p>六阶段方法：</p>
+<ol>
+<li>六个阶段<ol>
+<li>取指令（Fetch instruction，FI）：读下一条预期的指令到缓冲器</li>
+<li>译码指令（Decode instruction，DI）：确定操作码和操作数指定符</li>
+<li>计算操作数（Calculate operands，CO）：计算每个源操作数的有效地址</li>
+<li>取操作数（Fetch operands，FO）：从存储器取出每个操作数，寄存器中<br>的操作数不需要取</li>
+<li>执行指令（Execute instruction，EI）：完成指定的操作。若有指定的目的<br>操作数位置，则将结果写入此位置</li>
+<li>写操作数（Write operand，WO）：将结果存入存储器</li>
+</ol>
+</li>
+<li>注意：<ol>
+<li>不是所有指令都包含6个阶段<br>• 例：一条LOAD指令不需要WO阶段</li>
+<li>为了简化流水线硬件设计，在假定每条指令都要求这6个阶段的基<br>础上来建立时序</li>
+<li>不是所有的阶段都能并行完成<br>• 例：FI、FO和 WO都涉及存储器访问</li>
+<li>若6个阶段不全是相等的时间，则会在各个流水阶段涉及某种等待</li>
+</ol>
+</li>
+<li>限制：<ol>
+<li>条件转移指令能使若干指令的读取变为无效</li>
+</ol>
+</li>
+</ol>
+</li>
+<li><p>误解：流水线中的阶段数越多，执行速度越快。$t &#x3D; t_m + d$，d是固定的</p>
+</li>
+<li><p>对于k阶段流水线执行n条指令所需时间为：$T_{k,n}&#x3D;[k+(n-1)]t$</p>
+</li>
+<li><p>加速比：<br>$$<br>S_k&#x3D;\frac{T_{1,n}}{T_{k,n}}&#x3D;\frac{nkt}{[k+(n-1)]t}&#x3D;\frac{n}{1+\frac{n-1}{k}}&gt;1<br>$$</p>
+</li>
+</ol>
+<h3 id="冒险"><a href="#冒险" class="headerlink" title="冒险"></a>冒险</h3><ol>
+<li>类型：<ol>
+<li>结构冒险（Structure hazard） &#x2F; 硬件资源冲突</li>
+<li>数据冒险（Data hazard） &#x2F; 数据依赖性<ol>
+<li>解决方案三：旁路(处理不了load)</li>
+<li>解决方案四：交换指令顺序</li>
+</ol>
+</li>
+<li>控制冒险（Control hazard）</li>
+</ol>
+</li>
+</ol>
+<h2 id="第十五章-·-控制器"><a href="#第十五章-·-控制器" class="headerlink" title="第十五章 · 控制器"></a>第十五章 · 控制器</h2><h3 id="微操作"><a href="#微操作" class="headerlink" title="微操作"></a>微操作</h3><ol>
+<li><p>定义</p>
+<ol>
+<li>执行程序时，计算机操作是由一系列指令周期组成，每个周期执行一条机器指令</li>
+<li>每个指令周期又可以看作是由几个更小的子周期组成，包括：取指、间址、执行、中断</li>
+<li>每个子周期由一系列涉及CPU寄存器操作的更小步骤组成，这些 步骤称为微操作</li>
+</ol>
+</li>
+<li><p>分组原则：</p>
+<ul>
+<li>所谓同组或者同时进行，就是说交换顺序也不会影响结果</li>
+</ul>
+<ol>
+<li>事件的流动顺序必须是恰当的</li>
+<li>必须避免冲突</li>
+<li>满足上述条件下，所用的时间单位尽可能少</li>
+</ol>
+</li>
+</ol>
+<h3 id="指令周期代码（ICC，Instruction-Cycle-Code）"><a href="#指令周期代码（ICC，Instruction-Cycle-Code）" class="headerlink" title="指令周期代码（ICC，Instruction Cycle Code）"></a>指令周期代码（ICC，Instruction Cycle Code）</h3><p><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20241126173941791.png" alt="image-20241126173941791"></p>
+<h3 id="控制器"><a href="#控制器" class="headerlink" title="控制器"></a>控制器</h3><p><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20241126174334927.png" alt="image-20241126174334927"></p>
+<p><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20241126174432139.png" alt="image-20241126174432139"></p>
+<ul>
+<li>注：AC是累加器，是ALU的数据源之一</li>
+</ul>
+<ol>
+<li><p>控制CPU的功能需求</p>
+<ol>
+<li>CPU的基本元素 <ol>
+<li>ALU，寄存器组，内部数据通路，控制器，外部数据通路</li>
+</ol>
+</li>
+<li>CPU需要完成的微操作 <ol>
+<li>在寄存器之间传送数据</li>
+<li>将数据由寄存器传送到外部接口（如系统总线）</li>
+<li>将数据由外部接口传送到寄存器</li>
+<li>将寄存器作为输入和输出，完成算术和逻辑运算</li>
+</ol>
+</li>
+<li>控制器的两个基本任务<ol>
+<li>定序（sequencing）：根据正被执行的程序，控制器使CPU以正确 的顺序通过一系列微操作</li>
+<li>执行（execution）：控制器使每个微操作得以完成</li>
+</ol>
+</li>
+</ol>
+</li>
+<li><p>控制器的输入</p>
+<ol>
+<li><p>指令寄存器（IR）：当前指令的寻址方式（影响间址周期）和操作码（影响执行）</p>
+</li>
+<li><p>外部控制信号（包括中断）</p>
+<ol>
+<li>标志：确定CPU的状态和前一个ALU操作的结果</li>
+<li>时钟：控制器要在每个时钟脉冲完成一个或一组同时的微操作</li>
+<li>来自控制总线的控制信号：向控制器提供控制信号</li>
+</ol>
+</li>
+<li><p>标记</p>
+<p><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20241126174939913.png" alt="image-20241126174939913"></p>
+</li>
+</ol>
+</li>
+<li><p>控制器的输出</p>
+<p><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20241126175746840.png" alt="image-20241126175746840"></p>
+</li>
+<li><p>控制器的最小特性</p>
+<ol>
+<li>它只需要知道将被执行的指令和算术、逻辑运算结果的性质（如 正负、溢出等），而不需要知道正被处理的数据或得到的实际结 果具体是什么</li>
+<li>它只是以少量的送到CPU内的和送到系统总线上的控制信号来实 现控制</li>
+</ol>
+</li>
+<li><p>控制器的实现</p>
+<ol>
+<li>硬布线实现（hardwired implementation）：控制器是一个组合电路，把输入逻辑信号转换为一组输出逻辑信号， 即控制信号</li>
+<li>微程序实现（microprogrammed implementation）：控制逻辑是微程序指定的，控制器是一个相对简单的逻辑电路，通 过执行每条微指令来产生控制信号</li>
+</ol>
+</li>
+</ol>
+<h3 id="微程序"><a href="#微程序" class="headerlink" title="微程序"></a>微程序</h3><ol>
+<li><p>基本思路和概念<img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20241128144729545.png" alt="image-20241128144729545"></p>
+</li>
+<li><p>构成</p>
+<ol>
+<li>注意，存入控制缓冲寄存器的微指令就可以认为是直接执行了<img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20241128144910038.png" alt="image-20241128144910038"></li>
+</ol>
+</li>
+<li><p>工作流程</p>
+<p><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20241128144547676.png" alt="image-20241128144547676"></p>
+</li>
+</ol>
+<h1 id="存储"><a href="#存储" class="headerlink" title="存储"></a>存储</h1><h2 id="第八章-·-内部存储器"><a href="#第八章-·-内部存储器" class="headerlink" title="第八章 · 内部存储器"></a>第八章 · 内部存储器</h2><h3 id="回顾"><a href="#回顾" class="headerlink" title="回顾"></a>回顾</h3><p>存储器（Memory）由一定数量的单元构成，每个单元可以被<br>唯一标识，每个单元都有存储一个数值的能力</p>
+<ul>
+<li>地址：单元的唯一标识符（采用二进制）</li>
+<li>地址空间：可唯一标识的单元总数</li>
+<li>寻址能力：存储在每个单元中的信息的位数</li>
+<li>大多数存储器是字节寻址的，而执行科学计算的计算机通常是64位寻址的</li>
+</ul>
+<h3 id="半导体存储器-屏幕截图-2024-10-21-172723-C-Users-HUAWEI-Pictures-Screenshots-屏幕截图-2024-10-21-172723-png"><a href="#半导体存储器-屏幕截图-2024-10-21-172723-C-Users-HUAWEI-Pictures-Screenshots-屏幕截图-2024-10-21-172723-png" class="headerlink" title="半导体存储器![屏幕截图 2024-10-21 172723](C:\Users\HUAWEI\Pictures\Screenshots\屏幕截图 2024-10-21 172723.png)"></a>半导体存储器![屏幕截图 2024-10-21 172723](C:\Users\HUAWEI\Pictures\Screenshots\屏幕截图 2024-10-21 172723.png)</h3><ol>
+<li><p>用半导体芯片作主存储器是目前的主流做法</p>
+</li>
+<li><p>位元（memory cell）</p>
+<ol>
+<li><p>半导体存储器的基本元件，用于存储1位数据</p>
+</li>
+<li><p>特性</p>
+<ul>
+<li><p>呈现两种稳态（或半稳态）：分别表示二进制的0和1</p>
+</li>
+<li><p>它们能够至少被写入（write）数据一次：用来设置状态</p>
+</li>
+<li><p>它们能够被读取（read）来获得状态信息</p>
+</li>
+</ul>
+</li>
+</ol>
+</li>
+</ol>
+<h4 id="随机存取存储器（RAM）"><a href="#随机存取存储器（RAM）" class="headerlink" title="随机存取存储器（RAM）"></a>随机存取存储器（RAM）</h4><ol>
+<li>特性：<ol>
+<li>随机访问：访问地址的时间是相对一致的</li>
+<li>可以简单快速的读写</li>
+<li>易失的</li>
+</ol>
+</li>
+<li>类型<ol>
+<li>动态RAM（DRAM）<ol>
+<li>在电容器上用电容充电的方式存储数据，电容器中有无电荷在分别代表二进制的1与0</li>
+<li>需要周期地充电刷新以维护数据存储<ul>
+<li>原因：电容器有漏电的自然趋势</li>
+<li>由一个阈值来确定电荷是被解释为1还是0</li>
+</ul>
+</li>
+</ol>
+</li>
+<li>静态RAM（SRAM）<ol>
+<li>只要有电源，就可以一直维持数据</li>
+<li>要有电源，但不用刷新</li>
+</ol>
+</li>
+<li>DRAM和SRAM类型对比<ol>
+<li>相同点： 易失的：两者都要求电源持续供电才能保存位值</li>
+<li>不同点：<ul>
+<li>DRAM比SRAM具有更简单、更小的位元，但要求能支持刷新<br>的电路</li>
+<li>DRAM比相应的SRAM集成度更高，价格更低</li>
+<li>SRAM通常比DRAM快</li>
+<li>DRAM更倾向于满足大容量存储器的需求，SRAM一般用于高<br>  速缓存，DRAM用于主存</li>
+</ul>
+</li>
+</ol>
+</li>
+<li>SDRAM（要刷新）<ul>
+<li>传统DRAM是异步的，DRAM执行各种内部功能，如激活行和列地址线的高电容，读取数据，以及通过输出缓 冲将数据输出，处理器只能等待这段延迟，即存取时间 。延时后，DRAM才写入或读取数据</li>
+<li>SDRAM与处理器的数据交互同步与外部的时钟信号，并且以处理器&#x2F;存储器总 线的最高速度运行，而不需要插入等待状态。由于SDRAM随系统时钟及时移动数据，CPU知道数据何时准备好，控制器可以完成其它工作</li>
+<li>理解：在内存没有准备好数据的时候，CPU先干其他事情</li>
+</ul>
+</li>
+</ol>
+</li>
+</ol>
+<h4 id="只读存储器（ROM）"><a href="#只读存储器（ROM）" class="headerlink" title="只读存储器（ROM）"></a>只读存储器（ROM）</h4><ol>
+<li>特性：<ol>
+<li>随机访问</li>
+<li>非易失的</li>
+</ol>
+</li>
+<li>类别：<ol>
+<li>ROM：只能写一次，用掩膜</li>
+<li>可编程ROM（PROM）：也只能写一次，只是这次用电来“编程”，用户写入想要的东西</li>
+<li>（紫外线）可擦除PROM（EPROM）：电写入，光擦除</li>
+<li>电可擦除PROM（EEPROM）：电写入，电擦除</li>
+<li>快闪存储器（Flash Memory）：<ol>
+<li>特电可擦除：与EEPROM相同，优于EPROM </li>
+<li>擦除时间为几秒：优于EPROM，不如EEPROM </li>
+<li>可以在块级擦除，不能在字节级擦除：优于EPROM，不如EEPROM</li>
+<li>达到与EPROM相同的密度：优于EEPROM </li>
+<li>与EPROM、EEPROM对比 ：价格和功能介于EPROM和EEPROM之间</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<h3 id="从位元到主存-屏幕截图-2024-10-21-202052-C-Users-HUAWEI-Pictures-Screenshots-屏幕截图-2024-10-21-202052-png"><a href="#从位元到主存-屏幕截图-2024-10-21-202052-C-Users-HUAWEI-Pictures-Screenshots-屏幕截图-2024-10-21-202052-png" class="headerlink" title="从位元到主存![屏幕截图 2024-10-21 202052](C:\Users\HUAWEI\Pictures\Screenshots\屏幕截图 2024-10-21 202052.png)"></a>从位元到主存![屏幕截图 2024-10-21 202052](C:\Users\HUAWEI\Pictures\Screenshots\屏幕截图 2024-10-21 202052.png)</h3><ol>
+<li><p>寻址单元：由若干相同地址的位元组成</p>
+</li>
+<li><p>寻址模式：</p>
+<ol>
+<li>字节（Byte）</li>
+<li>字（Word）</li>
+</ol>
+</li>
+<li><p>如何寻址：用地址译码器</p>
+<ol>
+<li>一个n位译码器有2^n^种输出</li>
+</ol>
+</li>
+<li><p>如何刷新：</p>
+<ol>
+<li>集中式刷新（Centralized refresh）<br>• 停止读写操作，并刷新每一行<br>• 刷新时无法操作内存</li>
+<li>分散式刷新（Decentralized refresh）<br>• 在每个存储周期中，当读写操作完成时进行刷新<br>• 会增加每个存储周期的时间</li>
+<li>异步刷新（Asynchronous refresh）<br>• 每一行各自以64ms间隔刷新<br>• 效率高：常用</li>
+</ol>
+</li>
+<li><p>存储阵列：由大量寻址单元组成</p>
+<ol>
+<li>2048 * 2048 * 4 表示有2048行，2048列，每个单元4位。</li>
+<li>地址线可表示2^n^个单元，数据线表示只能n位。<ol>
+<li>一个字的每一位都需要数据线。</li>
+<li>RAM和ROM采用的都是地址复用技术，地址线是原来的一半。</li>
+</ol>
+</li>
+</ol>
+</li>
+<li><p>模块组织</p>
+<ol>
+<li>位扩展：地址线不变，数据线增加<br>• 使用 8 块 4K<em>1 bit 的芯片组成 4K</em>8<br>bit 的存储器</li>
+<li>字扩展：地址线增加，数据线不变<br>• 使用 4 个 16K<em>8 bit 的芯片组成<br>64K</em>8 bit 的存储器</li>
+<li>字、位同时扩展：地址线增加，数据线<br>增加<br>• 使用 8 个 16K<em>4 bit 的芯片组成<br>64K</em>8 bit 的存储器</li>
+</ol>
+</li>
+<li><p>交叉编址：</p>
+<ol>
+<li>模块序号 &#x3D; 访存地址 % 存储器交叉模块数。</li>
+<li>给定的访存地址在相邻的四次访问中出现在同一个存储模块内，则会发生冲突。</li>
+</ol>
+</li>
+</ol>
+<h2 id="第十章-·-外部存储器"><a href="#第十章-·-外部存储器" class="headerlink" title="第十章 · 外部存储器"></a>第十章 · 外部存储器</h2><h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><ol>
+<li>特性：<ol>
+<li>用于存储不经常使用的、数据量较大的信息</li>
+<li>非易失</li>
+</ol>
+</li>
+<li>类型：<ol>
+<li>磁盘存储器（magnetic disk）</li>
+<li>光存储器（optical memory）</li>
+<li>磁带（magnetic tape）</li>
+<li>U盘（USB flash disk），固态硬盘（solid state disk，SSD）</li>
+</ol>
+</li>
+</ol>
+<h3 id="硬磁盘存储器"><a href="#硬磁盘存储器" class="headerlink" title="硬磁盘存储器"></a>硬磁盘存储器</h3><ol>
+<li><p>结构</p>
+<ol>
+<li><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20241029172144404.png" alt="image-20241029172144404"></li>
+<li>由磁头对盘片读写·</li>
+</ol>
+</li>
+<li><p>读写机制</p>
+<ol>
+<li>在读或写操作期间，磁头静止，而盘片在其下方旋转</li>
+<li>磁头的数量<ol>
+<li>单磁头：读写公用同一个磁头（软盘、早期硬盘）</li>
+<li>双磁头：使用一个单独的磁头进行读取（当代硬盘）</li>
+</ol>
+</li>
+<li>写入机制<ol>
+<li>电流脉冲被发送到写入磁头</li>
+<li>变化的电流激发出磁场</li>
+<li>产生的磁性图案被记录在下面的盘片表面上</li>
+<li>反转电流方向，则记录介质上的磁化方向也会反转</li>
+</ol>
+</li>
+<li>读取机制<ol>
+<li>读取磁头是由一个部分屏蔽的磁阻（MR）敏感器组成，其电阻 取决于在其下移动的介质的磁化方向</li>
+<li>电流通过MR敏感器时，通过电压信号检测其电阻变化</li>
+<li>MR敏感器允许更高频率的操作，实现更高的存储密度和更快的 操作速度</li>
+</ol>
+</li>
+</ol>
+</li>
+<li><p>数据组织</p>
+<ol>
+<li><p>盘片上的数据组织呈现为一组同心圆环，称为磁道（track）</p>
+</li>
+<li><p>数据以扇区（sector）的形式传输到磁盘或从传出磁盘</p>
+<ul>
+<li>默认值为512B</li>
+</ul>
+</li>
+<li><p>相邻磁道之间有间隙（gap），相邻的扇区之间也留有间隙</p>
+</li>
+<li><p>扇区划分</p>
+<ol>
+<li>恒定角速度</li>
+<li>多带式记录 &#x2F; 多重区域记录<img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20241029172905548.png" alt="image-20241029172905548"><ol>
+<li>提升了存储容量，但是需要更复杂的电路</li>
+</ol>
+</li>
+</ol>
+</li>
+<li><p>所有盘片上处于相同的相对位置的一组磁道被称为柱面 (cylinder)</p>
+</li>
+<li><p>格式化：</p>
+<ol>
+<li>磁道必须有一些起始点和辨别每个扇区起点及终点的方法</li>
+<li>格式化时，会附有一些仅被磁盘驱动器使用而不被用户存取 的额外数据</li>
+</ol>
+</li>
+<li><p>I&#x2F;O访问时间</p>
+<ol>
+<li>寻道时间（seek time）：磁头定位到所需移动到的磁道所花 费的时间<ul>
+<li>初始启动时间，跨越若干磁道所用的时间</li>
+</ul>
+</li>
+<li>旋转延迟（rotational delay）：等待响应扇区的起始处到达 磁头所需的时间<ul>
+<li>通常是磁道旋转半周所需的时间</li>
+</ul>
+</li>
+<li>传送时间（transfer time）：数据传输所需的 时间</li>
+</ol>
+<p>$$<br>T&#x3D;\frac{b}{rN}&#x3D;\frac{1}{r}·\frac{b}{N}<br>$$</p>
+<p>​    T：传送时间，b：传送的字节数，N：每磁道的字节数，r：旋转速率，单位是 转每秒（rad&#x2F;s).</p>
+</li>
+<li><p>柱面：写入时是在某一磁道写完一圈之后，不动读写头位置，继续读写另一面。</p>
+</li>
+</ol>
+</li>
+<li><p>磁盘调度</p>
+<p>效率：SSTF &gt; LOOK &gt; SCAN ~ C-LOOK &gt; C-SCAN &gt; FCFS</p>
+<p>公平性反过来</p>
+</li>
+</ol>
+<h2 id="第十一章-·-冗余磁盘阵列（RAID）"><a href="#第十一章-·-冗余磁盘阵列（RAID）" class="headerlink" title="第十一章 · 冗余磁盘阵列（RAID）"></a>第十一章 · 冗余磁盘阵列（RAID）</h2><h3 id="概述-1"><a href="#概述-1" class="headerlink" title="概述"></a>概述</h3><ol>
+<li>基本思想<ol>
+<li>将多个独立操作的磁盘按某种方式组织成磁盘阵列，以增加容量</li>
+<li>将数据存储在多个盘体上，通过这些盘并行工作来提高数据传输率</li>
+<li>采用数据冗余来进行错误恢复以提高系统可靠性</li>
+</ol>
+</li>
+<li>特性：<ol>
+<li>由一组物理磁盘驱动器组成，被视为单个的逻辑驱动器</li>
+<li>数据是分布在多个物理磁盘上</li>
+<li>冗余磁盘容量用于存储校验信息，保证磁盘万一损坏时能恢复数据</li>
+</ol>
+</li>
+</ol>
+<p><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20241112164441142.png" alt="image-20241112164441142"></p>
+<h3 id="七种类型"><a href="#七种类型" class="headerlink" title="七种类型"></a>七种类型</h3><ol>
+<li>RAID 0 ***：<ol>
+<li>数据以条带的形式在可用的磁盘上分布</li>
+<li>不采用冗余来改善性能（不是RAID家族中的真正成员）</li>
+<li>用途 <ol>
+<li>高数据传输率</li>
+<li>高速响应I&#x2F;O请求</li>
+</ol>
+</li>
+<li>如果一个文件横跨四个盘，如果一个盘损坏，就会导致所有文件都不可用。</li>
+</ol>
+</li>
+<li>RAID 1 ***：<ol>
+<li>采用简单地备份所有数据的方法来实现冗余</li>
+<li>优点<ol>
+<li>高速响应I&#x2F;O请求：即便是同一个磁盘上的数据块，也可以由两 组硬盘分别响应</li>
+<li>读请求可以由包含请求数据的两个对应磁盘中的某一个提供服 务，可以选择寻道时间较小的那个</li>
+<li>写请求需要更新两个对应的条带：可以并行完成，但受限于写 入较慢的磁盘</li>
+<li>单个磁盘损坏时不会影响数据访问，恢复受损磁盘简单</li>
+</ol>
+</li>
+<li>缺点： 价格昂贵</li>
+</ol>
+</li>
+<li>RAID 2：<ol>
+<li>所有磁盘都参与每个I&#x2F;O请求的执行</li>
+<li>纠错：对位于同一条带的各个数据盘上的数据位计算校验码（通常采 用海明码），校验码存储在该条带中多个校验盘的对应位置</li>
+</ol>
+</li>
+<li>RAID 3：<ol>
+<li>采用并行存取技术<ol>
+<li>各个驱动器的轴同步旋转</li>
+<li>采用非常小的数据条带</li>
+</ol>
+</li>
+<li>对所有数据盘上同一位置的数据计算奇偶校验码<ol>
+<li>当某一磁盘损坏时，可以用于重构数据。注意，是恢复不是纠错，RAID 3只能解决损坏的问题，但是不能解决出错的问题，换句话说也就是我们不能确定出错的是哪一位。</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>RAID 4：<ol>
+<li>采用相对较大的数据条带</li>
+<li>根据各个数据盘上的数据来逐位计算奇偶校验条带，奇偶校 验位存储在奇偶校验盘的对应条带上</li>
+</ol>
+</li>
+<li>RAID 5 ***：<ol>
+<li>在所有磁盘上都分布了奇偶校验条带</li>
+<li>避免潜在的I&#x2F;O瓶颈问题<ol>
+<li>访问时的“<strong>两读两写</strong>”：<ol>
+<li>既要读或写用户数据，也要读写校验条带。</li>
+<li>一定是先读后写。</li>
+<li>最好是两读或两写分别同时进行，最短时间为一次读加一次写，最长时间为两次度加两次写。</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>RAID 6：略</li>
+</ol>
+<h2 id="第十二章-·-虚拟存储器"><a href="#第十二章-·-虚拟存储器" class="headerlink" title="第十二章 · 虚拟存储器"></a>第十二章 · 虚拟存储器</h2><h3 id="分区"><a href="#分区" class="headerlink" title="分区"></a>分区</h3><ol>
+<li>固定分区：会造成浪费</li>
+<li>可变长分区：会出现碎片</li>
+</ol>
+<h3 id="分页"><a href="#分页" class="headerlink" title="分页"></a>分页</h3><ol>
+<li>基本思想<ol>
+<li>将内存分为一个个叫做<strong>页框</strong>的固定长度的块，然后将程序分为可以放进块的叫做<strong>页</strong>的部分</li>
+<li>程序叫做页，放程序的地点叫做页框<ul>
+<li>页放在哪里由OS决定，在我们的程序中写的是逻辑地址，由操作系统的决定物理地址。</li>
+<li>页放进去并不是连续的放入，记录页存在的位置</li>
+<li>像链表一样，存放不是连续的，必须要<strong>页表</strong>来记录地址</li>
+</ul>
+</li>
+<li>页表<ol>
+<li>页表中包含了所有虚拟页的信息，包括虚拟页的存放位置、装<br>入位（valid）、修改位（dirty）、存取权限位等等</li>
+<li>保存在主存中</li>
+<li>虚拟地址</li>
+<li>虚拟页号 + 页内偏移量</li>
+</ol>
+</li>
+<li>逻辑地址:指令中的地址</li>
+<li>物理地址:内存中的地址</li>
+</ol>
+</li>
+</ol>
+<h3 id="虚拟存储器"><a href="#虚拟存储器" class="headerlink" title="虚拟存储器"></a>虚拟存储器</h3><ul>
+<li>从此，CPU不管物理地址了，程序员可以假设独享一块大的连续的内存。</li>
+</ul>
+<ol>
+<li><p>设计：</p>
+<ol>
+<li>页大小<br>• 4KB, 8KB, …</li>
+<li>映射算法<br>• 关联映射</li>
+<li>写策略<br>• 写回</li>
+<li>类型<br>• 分页式虚拟存储器<br>• 分段式虚拟存储器<br>• 段页式虚拟存储器</li>
+</ol>
+</li>
+<li><p>将虚拟页号转换为物理页号</p>
+<p><img src="/home/mukongshan/.config/Typora/typora-user-images/image-20241114144202010.png" alt="image-20241114144202010"></p>
+<ul>
+<li>null：申请了，但没用</li>
+<li>PP0：物理页号</li>
+<li>空白：一个指针</li>
+</ul>
+</li>
+</ol>
+<h3 id="快表（TLB）"><a href="#快表（TLB）" class="headerlink" title="快表（TLB）"></a>快表（TLB）</h3><ol>
+<li>类比cache</li>
+<li>页表的使用增加了主存的访问次数。为了减少访存次数，把页表中最活跃的几个页表项复制到高速缓存中</li>
+<li>后备转换缓冲器（简称“快表”）：将页表项放入高速缓存中<br>• 映射：关联映射，组关联映射<br>• 替换：随机替换<br>• 主存中的页表相应地称之为“慢表”</li>
+</ol>
+<h1 id="总线"><a href="#总线" class="headerlink" title="总线"></a>总线</h1><h2 id="第十六章-·-总线"><a href="#第十六章-·-总线" class="headerlink" title="第十六章 · 总线"></a>第十六章 · 总线</h2><h3 id="概述-2"><a href="#概述-2" class="headerlink" title="概述"></a>概述</h3><ol>
+<li>分类<ol>
+<li>芯片内部总线</li>
+<li>系统总线：连接CPU、存储器、IO控制器和其他功能设备</li>
+<li>通信总线：连接主机和I&#x2F;O设备，或连接不同的计算机系统</li>
+</ol>
+</li>
+<li>复用：<ol>
+<li>数据线和地址线可以服用</li>
+<li>控制线不能复用</li>
+</ol>
+</li>
+<li>总线结构：<ol>
+<li>数据线：在系统组件之间传输数据。数据线的数量决定了一次可以传输的数据的大小</li>
+<li>地址线：在数据线和地址I&#x2F;O端口上指定数据的来源和去向。地址线的数量决定了寻址空间的大小</li>
+<li>控制线：控制对数据线和地址线的存取和使用<ol>
+<li>时钟（clock）：用于总线同步操作</li>
+<li>总线请求（bus request）：表示模块需要获得对总线的控制</li>
+<li>总线允许（bus grant）：发出请求的设备已经被允许控制总线</li>
+<li>中断请求（interrupt request）：表示某个中断正在悬而未决</li>
+<li>中断响应（interrupt ACK）：未决的终端请求被响应 • 存储器读（memory read）：从存储器读数据到总线</li>
+<li>存储器写（memory write）：将数据从总线写入存储器</li>
+<li>I&#x2F;O读（I&#x2F;O read）：从I&#x2F;O端口读数据到总线</li>
+<li>I&#x2F;O写（I&#x2F;O write）：将数据从总线写入I&#x2F;O端口</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>总线上数据传输的特点<ol>
+<li>总线可以被多个设备监听，但同一时刻只能由一个设备发送数据</li>
+<li>如果同一时刻多个设备同时发送数据，会造成数据之间的混淆</li>
+<li>使用总线进行数据传输：如果连在总线上的某个设备希望向另一个设备发送数据，需要：<ol>
+<li>获得总线的使用权</li>
+<li>通过总线传送数据</li>
+</ol>
+</li>
+<li>如果连在总线上的某个设备希望向另一个组件请求数据，需要：<ol>
+<li>获得总线的使用权</li>
+<li>通过总线向另一个设备发送请求，等待另一个设备发送数据</li>
+</ol>
+</li>
+<li>当总线在被使用过程中，其它设备不可以抢占</li>
+</ol>
+</li>
+<li>设计要素<ol>
+<li>用途：专用总线，复用总线</li>
+<li>仲裁：集中式，分布式</li>
+<li>时序：同步，异步，半同步，分离事务</li>
+<li>总线带宽和数据传输速率</li>
+<li>总线层次结构：单总线，双总线，多总线</li>
+</ol>
+</li>
+</ol>
+<h3 id="用途"><a href="#用途" class="headerlink" title="用途"></a>用途</h3><ol>
+<li>专用总线：始终只负责一项功能，或始终分配给 特定的计算机组件<ol>
+<li>优点：高吞吐量，减少总线冲突</li>
+<li>缺点：增加了系统的规模和成本</li>
+</ol>
+</li>
+<li>复用（multiplexed）总线：将同一线路用于多种用途<ol>
+<li>优点：使用的布线数量少，节省空间和成本</li>
+<li>缺点：每个模块需要更复杂的控制电路，且共享可能会降低性能</li>
+</ol>
+</li>
+</ol>
+<h3 id="仲裁"><a href="#仲裁" class="headerlink" title="仲裁"></a>仲裁</h3><ol>
+<li>总线仲裁：当多个设备需要与总线通信时，通过某种策略选择一个设备</li>
+<li>平衡因素<ol>
+<li>优先级：优先级高的设备优先被服务</li>
+<li>公平性：优先级最低的设备不能一直被延迟</li>
+</ol>
+</li>
+<li>仲裁方案<ol>
+<li>分类<ol>
+<li>集中式（centralized）：由仲裁器（arbiter）或总线控制器 （bus controller）负责分配总线使用权<ol>
+<li>链式查询 &#x2F; 菊花链（daisy chain）</li>
+<li>计数器查询（query by a counter）</li>
+<li>独立请求（independently request）</li>
+</ol>
+</li>
+<li>分布式（distributed）：每个设备都包含访问控制逻辑，各设 备共同作用分享总线<ol>
+<li>自举式（self selection）</li>
+<li>冲突检测（collision detection）</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>链式查询<img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20241205144213747.png" alt="image-20241205144213747"><ol>
+<li>优点：<ol>
+<li>确定优先级很简单</li>
+<li>可以很灵活地添加设备</li>
+</ol>
+</li>
+<li>缺点<ol>
+<li>不能保证公平性</li>
+<li>对电路故障敏感</li>
+<li>限制总线的速度</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>计数器查询<img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20241205144837921.png" alt="image-20241205144837921"><ol>
+<li>优点：<ol>
+<li>通过使用不同的初始计数，可以灵活地确定设备优先级</li>
+<li>强调优先级：从1开始</li>
+<li>强调公平性：从下一个设备的ID开始</li>
+<li>对电路故障不敏感</li>
+</ol>
+</li>
+<li>缺点<ol>
+<li>需要添加设备ID线</li>
+<li>需要解码和比较设备ID信号</li>
+<li>限制总线的速度</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>独立请求<img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20241205150753461.png" alt="image-20241205150753461"><ol>
+<li>优点<ol>
+<li>快速响应</li>
+<li>可编程的优先级</li>
+</ol>
+</li>
+<li>缺点<ol>
+<li>复杂的控制逻辑</li>
+<li>更多的控制线路</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>自举式<img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20241205151313019.png" alt="image-20241205151313019"><ul>
+<li>需要n条线</li>
+</ul>
+</li>
+<li>冲突检测<img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20241205151842681.png" alt="image-20241205151842681"></li>
+</ol>
+</li>
+</ol>
+<h3 id="时序"><a href="#时序" class="headerlink" title="时序"></a>时序</h3><ol>
+<li>事务：传输一次地址和数据。</li>
+<li>同步时序<ol>
+<li>优点：容易实现</li>
+<li>缺陷：所有设备共享一个时钟，总线长度受到始终偏差的限制</li>
+</ol>
+</li>
+<li>异步时序<ol>
+<li>握手策略<img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20241205152813457.png" alt="image-20241205152813457"></li>
+<li>异步数据传输<img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20241205153056387.png" alt="image-20241205153056387"><ul>
+<li>实际上是一个七次握手3+1+3</li>
+</ul>
+</li>
+<li>优点：可以灵活地协调速度不同的设备</li>
+<li>缺点：接口逻辑复杂，对噪声敏感</li>
+</ol>
+</li>
+<li>半同步时序<ol>
+<li>为了减少噪声的影响，在异步计时中使用时钟<ol>
+<li>准备和响应信号在时钟上升沿有效</li>
+</ol>
+</li>
+<li>结合同步和异步定时的优点</li>
+</ol>
+</li>
+<li>分离事务<ol>
+<li>将一个总线事件分离为两个过程</li>
+<li>优点：增加总线利用率</li>
+<li>缺点：增加每个总线事件的持续时间和系统复杂度</li>
+</ol>
+</li>
+</ol>
+<h3 id="总线带宽和数据传输速率"><a href="#总线带宽和数据传输速率" class="headerlink" title="总线带宽和数据传输速率"></a>总线带宽和数据传输速率</h3><ul>
+<li>主要是些计算</li>
+</ul>
+<ol>
+<li>数据块传输：<ol>
+<li>为了提高效率，我们采用数据块传输的方法，这样只需要传输一次地址就可以得到多个字的数据。</li>
+<li>一次事务四个时间：<ol>
+<li>地址传输</li>
+<li>数据准备</li>
+<li>数据传输</li>
+<li>空闲</li>
+</ol>
+</li>
+<li>上一个数据传输时，可以同时准备下一个数据</li>
+<li>例题<img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20241210164747852.png" alt="image-20241210164747852"></li>
+</ol>
+</li>
+</ol>
+<h1 id="输入输出"><a href="#输入输出" class="headerlink" title="输入输出"></a>输入输出</h1><h2 id="第十七章-·-输入-输出"><a href="#第十七章-·-输入-输出" class="headerlink" title="第十七章 · 输入 &#x2F; 输出"></a>第十七章 · 输入 &#x2F; 输出</h2><h3 id="概述-3"><a href="#概述-3" class="headerlink" title="概述"></a>概述</h3><ol>
+<li>I&#x2F;O模块：本身属于计算机，不是外设。外围设备要与I&#x2F;O模块相连，才能与计算机交互。<img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20241210172923240.png" alt="image-20241210172923240"></li>
+<li>外围设备的接口：不同的外设可能有不同的编码，在与I&#x2F;O模块相连时，要用接口把数据格式转换过来，并且要能够接受控制信号。<img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20241210172935289.png" alt="image-20241210172935289"></li>
+</ol>
+<h3 id="I-O模块结构"><a href="#I-O模块结构" class="headerlink" title="I&#x2F;O模块结构"></a>I&#x2F;O模块结构</h3><p><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20241210173203480.png" alt="image-20241210173203480"></p>
+<ol>
+<li>注意：控制线是CPU控制I&#x2F;O模块本身的，如果想控制外设，走数据线</li>
+<li>外部接口：<ol>
+<li>接口类型<ol>
+<li>并行接口：多根线连接输入&#x2F;输出模块和外设，同时传送多位数据</li>
+<li>串行接口：只有一根线用于传输数据，每次只传输一位数据</li>
+</ol>
+</li>
+<li>由于并行接口要求每次同时传送，当传输速度和总线长度增加时， 总线的时钟频率会受到限制。所以我们用串行接口。</li>
+</ol>
+</li>
+<li>外设至少要有三个内容的交互：数据，状态，控制。数据能交换，状态能出来，控制能进去。</li>
+</ol>
+<h3 id="I-O操作技术"><a href="#I-O操作技术" class="headerlink" title="I&#x2F;O操作技术"></a>I&#x2F;O操作技术</h3><ol>
+<li><p>分类：</p>
+<ol>
+<li>编程式 I&#x2F;O：处理器通过执行程序来直接控制I&#x2F;O操作，当处理器 发送一条命令到I&#x2F;O模块时，它必须等待，直到I&#x2F;O操作完成</li>
+<li>中断驱动式 I&#x2F;O：处理器发送一条I&#x2F;O命令后，继续执行其他指令； 并且当I&#x2F;O模块完成其工作后，才去中断处理器工作</li>
+<li>直接存储器读取（Direct Memory Access，DMA）：I&#x2F;O模块与 主存直接交换数据，而不需要处理器的干涉</li>
+</ol>
+</li>
+<li><p>编程式</p>
+<p><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20241210175332306.png" alt="image-20241210175332306"></p>
+<ol>
+<li>在编程式I&#x2F;O中，CPU的占用率是100%。即CPU不能够执行其他任务。</li>
+<li>这是因为I&#x2F;O不会“敲门”，所以他要不断地检查I&#x2F;O是否就绪</li>
+<li>但是不代表CPU一直在工作，只是占用</li>
+</ol>
+</li>
+<li><p>中断驱动<img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20241212141929684.png" alt="image-20241212141929684"></p>
+<ol>
+<li><p>从I&#x2F;O的视角来看：</p>
+<ol>
+<li>I&#x2F;O模块接收来自处理器的读命令</li>
+<li>I&#x2F;O模块从相关的外设中读入数据</li>
+<li>一旦数据进入I&#x2F;O模块的数据寄存器后，该模块通过控制总线给处 理器发送中断信号</li>
+<li>I&#x2F;O模块等待直到处理器请求该数据时为止</li>
+<li>当处理器有数据请求时，I&#x2F;O模块把数据传送到数据总线上，并准 备另一个I&#x2F;O操作</li>
+</ol>
+</li>
+<li><p>从控制器的视角来看</p>
+<ol>
+<li>处理器发送一个读命令</li>
+<li>处理器离开去做其它的事情，并在每个指令周期结束时检查中断</li>
+<li>当来自I&#x2F;O模块的中断出现时，处理器保存当前程序的现场到<strong>栈</strong>中</li>
+<li>处理器从I&#x2F;O模块读取数据字并保存到主存中</li>
+<li>处理器恢复刚才正在运行的程序的现场，并继续运行原来的程序</li>
+</ol>
+</li>
+</ol>
+</li>
+<li><p>中断启用<img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20241212142630555.png" alt="image-20241212142630555"></p>
+</li>
+<li><p>中断优先级</p>
+<ol>
+<li>响应优先级：“抢得快”</li>
+<li>处理优先级：“优先级高”</li>
+<li>掩码字 &#x2F; 屏蔽字：“不用管”</li>
+<li>主程序没有优先级（或者说优先级最低）</li>
+<li>例子<img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20241212144001533.png" alt="image-20241212144001533"><ol>
+<li>注意：从哪来回哪去。因为保存恢复是看栈中内容，所以一定会对称。</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<h3 id="直接存储器存取DMA"><a href="#直接存储器存取DMA" class="headerlink" title="直接存储器存取DMA"></a>直接存储器存取DMA</h3><ol>
+<li><p><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20241212145022256.png" alt="image-20241212145022256"></p>
+</li>
+<li><p>CPU和DMA访问内存冲突时，CPU让DMA。否则DMA的缓冲可能溢出。</p>
+</li>
+<li><p>DMA内存访问：</p>
+<ol>
+<li>CPU停止法<img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20241212150719380.png" alt="image-20241212150719380"></li>
+<li>周期窃取<img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20241212150740407.png" alt="image-20241212150740407"></li>
+<li>交替访问<img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20241212150952106.png" alt="image-20241212150952106"></li>
+</ol>
+</li>
+</ol>
+<h1 id="知识点拾遗"><a href="#知识点拾遗" class="headerlink" title="知识点拾遗"></a>知识点拾遗</h1><ol>
+<li><p>计算机性能</p>
+<ol>
+<li><p>如果用$CPI_i$来表示指定类型i所需要的周期数，用 表示在某一给定程序中所执行的i 类 指令的条数，则计算整个CPI如下：<br>$$<br>CPI&#x3D;\frac{\sum_{i&#x3D;1}^{n}(CPI_i*I_i)}{I_c},I_c&#x3D;\sum_{i&#x3D;1}^{n}I_i<br>$$</p>
+</li>
+<li><p>执行一个给定程序的处理时间表示为：<br>$$<br>T&#x3D;I_c<em>CPI</em>t<br>$$</p>
+</li>
+<li><p>每秒百万条指令（ Million Instructions Per Second ，MIPS）：<br>$$<br>MIPS&#x3D;\frac{I_c}{T<em>10^{6}}&#x3D;\frac{f}{CPI</em>10^6}<br>$$</p>
+</li>
+<li><p>每秒百万条浮点操作（Million Floating Point Operations Per Second，MFLOPS)：<br>   $$<br>   MFLOPS&#x3D;\frac{N_{floating-point op}}{T*10^6}<br>   $$</p>
+</li>
+<li><p>基准程序</p>
+</li>
+</ol>
+</li>
+<li><p>奇校验多一个异或1</p>
+</li>
+<li><p>海明码校验</p>
+</li>
+</ol>
+<h1 id="错题本"><a href="#错题本" class="headerlink" title="错题本"></a>错题本</h1><ol>
+<li>一定与机器字长相同的部件是ALU和通用寄存器。<ul>
+<li>机器字长是指计算机进行一次整数运算所能处理的二进制数据的位数，它直接影响了CPU内部数据通路的宽度以及运算的精度和速度。</li>
+<li>ALU（算术逻辑单元）作为执行算术和逻辑操作的核心部件，其设计通常是基于机器字长的，能够处理与机器字长相同位数的数据，因此ALU的位数一定与机器字长相同。</li>
+<li>通用寄存器用于存储临时数据和计算结果，这些寄存器通常与机器字长相匹配，以便能够存储和处理与机器字长相同位数的数据，因此通用寄存器的位数也与机器字长相同。</li>
+</ul>
+</li>
+<li>量级单位：K, M, B, T, G, P, E</li>
+<li>CPU区分指令和数据的依据是指令周期的不同阶段</li>
+<li>当最高位进位和符号位进位的值不相同时才产生溢出</li>
+<li>只有在表述内存时，M表示2^20^，例如Mb就是2^20^bit。在表示速度时，M表示10^6^。所以Mbps是M*bps，而不是Mb&#x2F;s。</li>
+</ol>
+<h2 id="整数运算"><a href="#整数运算" class="headerlink" title="整数运算"></a>整数运算</h2><ol>
+<li>加法器：（学会分析）<ol>
+<li>逻辑运算延时：与、或、非均为1ty，异或为3ty</li>
+<li><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250109212107451.png" alt="image-20250109212107451"><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250109212200698.png" alt="image-20250109212200698"><ol>
+<li>得到进位后，计算本位和要3ty，计算进位要2ty。</li>
+</ol>
+</li>
+<li>串行进位加法器：<img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250108223846911.png" alt="image-20250108223846911"><ol>
+<li>在FA0运算时，其他的XY也在同时运算。在$C_1$出结果之前，各个位置上的XY已经完成异或</li>
+<li>由此，我们得到，<strong>向第n位</strong>进位$C_n &#x3D; (2n+3)ty$，第n位本位和$S_n&#x3D;(2n+6)$。注意，索引从0开始。</li>
+<li>从第二位开始，计算出本位和的时间比得到进位的时间多3ty，计算出向下进位的多2ty</li>
+</ol>
+</li>
+<li>先行进位加法器<img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250108231327863.png" alt="image-20250108231327863"><ol>
+<li>C3 &#x3D; 𝐺3 + 𝑃3𝐺2 + 𝑃3𝑃2𝐺1 + 𝑃3𝑃2𝑃1𝐶0</li>
+<li></li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<h2 id="内存"><a href="#内存" class="headerlink" title="内存"></a>内存</h2><ol>
+<li><p>搞清楚哪些需要刷新，哪些可以改写</p>
+</li>
+<li><p>判断可能发生访存冲突的规则如下：给定的访存地址在相邻的四次访问中出现在同一个 存储模块内。</p>
+</li>
+<li><blockquote>
+<p>使用 32 个 64K×1bit 的 DRAM 芯片组成一个 256K×8bit 的存储器。</p>
+<p> a) 若采用集中刷新方式，则存储器刷新一遍最少用多少次刷新操作？</p>
+<p> 64K×1bit 的 DRAM 由 256×256 的位元阵列组成，即每个芯片有 256 行、256 列的位元 阵列。集中式刷新按行刷新，因此需要用 256 次刷新操作。</p>
+<p> b) 若采用异步刷新方式，每单元刷新间隔不超过 2ms，则生成的刷新信号的间隔时间 最长是多少？（保留一位小数，单位为 μs） 2ms&#x2F;256≈7.8μs </p>
+<p> c) 若改用 16K×4bit 的 DRAM 芯片构成上述 256K×8bit 的存储器，则以集中式刷新一 遍所有单元需要多少次刷新操作？ 16K×4bit 的 DRAM 芯片由 4 个 128×128 的位元阵列组成，这 4 个存储阵列中行号相同 的那些行将被同时刷新，共有 128 行，因此需要 128 次刷新操作。</p>
+</blockquote>
+</li>
+</ol>
+<h2 id="Cache"><a href="#Cache" class="headerlink" title="Cache"></a>Cache</h2><ol>
+<li><p>要会分析主存地址的格式，用已知条件推断出地址的某几位是什么功能</p>
+<blockquote>
+<p>e.g. 一个组关联 Cache 由 64 个行组成，每组 4 行。主存储器包含 4K 个块，每块 128 字，请表示主存 地址的格式。</p>
+<blockquote>
+<p>解：由每块 128 字得到块内地址长 7 位，64 行每组 4 行得一共 16 组，需要 4 位表示，标记需要 12（4K） -4（组号）&#x3D;8 位</p>
+</blockquote>
+</blockquote>
+<ul>
+<li>先分析多少块，再分析块内地址，块，行，再分析tag</li>
+<li>一行一块</li>
+</ul>
+<ol>
+<li>直接映射：<ul>
+<li>块数 &#x3D; 总数据区大小 &#x2F; 块大小</li>
+<li>块内地址：表示块大小</li>
+<li>行号 &#x3D; 块数 mod 行数</li>
+<li>tag</li>
+</ul>
+</li>
+<li>关联映射<ul>
+<li>块内地址：表示块大小</li>
+</ul>
+</li>
+<li>组关联映射：<ul>
+<li>块数 &#x3D; 总数据区大小 &#x2F; 块大小</li>
+<li>组数 &#x3D; 块数 &#x2F; 每组行数</li>
+<li>块内地址 &#x3D; 表示块大小</li>
+<li>组号：表示组数</li>
+<li>tag</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><p>题目中说的Cache的行号是数据区的大小。在数据之前还有额外的几位作为tag</p>
+</li>
+<li><p>1K &#x3D; 2^10^ , 1M &#x3D; 2^20^ </p>
+</li>
+<li><p>采用指令 Cache 与数据 Cache 分离的主要目的是减少指令流水线资源冲突</p>
+</li>
+<li><p>Cache 的总容量包括：存储容量和标记阵列容量（有效位、标记位、一致性维护位和替换算法控制位）。</p>
+</li>
+</ol>
+<h2 id="外存"><a href="#外存" class="headerlink" title="外存"></a>外存</h2><ol>
+<li>平均访问时间 &#x3D; 平均寻道时间 + 平均旋转延迟 + 扇区传送时间</li>
+<li>磁盘存储器的最小读写单位为一个扇区，即磁盘按块存取。一个扇面默认为512字节。</li>
+<li>磁盘存储数据之前 需要进行格式化，将磁盘分成扇区，并写入信息，因此磁盘的格式化容量比非格式化容量小</li>
+<li>磁盘扇区中包含数据、地址和校验等信息</li>
+<li>磁盘存储器由磁盘控制器、磁盘驱动器和盘片组成</li>
+<li>RAID0 方案是无冗余和无校验的磁盘阵列，而 RAID1～RAID5 方案均是加入了冗余(镜 像）或校验的磁盘阵列。</li>
+</ol>
+<h2 id="虚拟内存"><a href="#虚拟内存" class="headerlink" title="虚拟内存"></a>虚拟内存</h2><ol>
+<li><p>解决问题时也要分析地址结构，区分页内地址和页号，然后查表</p>
+</li>
+<li><p>关于缺页处理：</p>
+<ol>
+<li>缺页是在地址转换时 CPU 监测到的一种异常</li>
+<li>缺页处理由操作系统提供的缺页处理程序来完成</li>
+<li>缺页处理程序根据页故障地址从外存读入所缺失的页</li>
+<li>缺页处理完成后回到发生缺页的指令继续执行</li>
+</ol>
+</li>
+<li><p>Cache和TLB的相同点：</p>
+<ol>
+<li>命中率都与程序局部性有关</li>
+<li>缺失后都需要去访问主存</li>
+<li>缺失处理都可以由硬件实现</li>
+<li>Cache 由 SRAM 组成；TLB 通常由相联存储器组成，也可由 SRAM 组成。DRAM 需要不断刷 新，性能偏低，不适合组成 TLB 和 Cache。静态存储器（SRAM），读写速度快，但成本高， 多用于容量较小的高速缓冲存储器。</li>
+</ol>
+</li>
+<li><p>例题</p>
+<blockquote>
+<p>假设一个分页虚拟存储系统的虚拟地址为 40 位，物理地址为 36 位，页大小为 16KB，按字节编址。 若页表中的有效位、存储保护位、修改位、使用位共占 4 位，磁盘地址不在页表中。则该存储系统 中每个程序的页表大小为多少（单位：MB）？（说明：1.假设每个程序都能使用全部的虚拟内存； 2.页表项的长度必须为字节的整数倍） </p>
+<p>答：256MB</p>
+<p>按字节编址，故： 虚拟主存页面个数：2^(40-14)^&#x3D;2^26^ 物理主存页面数：2^(36-14)^&#x3D;2^22^ 页表项的最小长度：22+4&#x3D;26 根据说明 2，取 32 位（4B） 页表大小：2^26^ * 4B&#x3D;256MB</p>
+</blockquote>
+</li>
+<li><p>通过虚拟地址查页，取到的物理页号和页内地址拼起来，就是物理地址了。</p>
+</li>
+<li><p>看第七次作业第二题，每一步都搞懂</p>
+</li>
+<li><blockquote>
+<p>为什么 Cache 可以采用直写策略，而修改页面内容时总是采用回写策略？</p>
+<p>答：因为采用直写策略时需要同时写快速存储器和慢速存储器，而写磁盘比写主存慢很多，所以在 Cache-主存层次，Cache 可以采用直写策略，而在主存-外存（磁盘）层次，修改页面内容时总是 采用回写策略。</p>
+</blockquote>
+</li>
+<li><p>计算cache的总容量时，除了数据位，注意每一行都还有一些标志位，如脏位，策略位等等。</p>
+<ol>
+<li><p>策略：</p>
+<ol>
+<li>最近最少使用算法（Least Recently Used, LRU）：在2路组时，需要一位标志位</li>
+<li>先进先出算法（First In First Out, FIFO）：需要一位标志位</li>
+<li>最不经常使用算法（Least Frequently Used, LFU）：需要一个计数器，不是标志位</li>
+<li>随机替换算法（Random）：不需要</li>
+</ol>
+</li>
+<li><p>映射：</p>
+<ol>
+<li>关联映射又称为全相联映射</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<h2 id="指令系统"><a href="#指令系统" class="headerlink" title="指令系统"></a>指令系统</h2><ol>
+<li><p>牢记多种寻址方式</p>
+</li>
+<li><p>括号（）表示取其内容。</p>
+</li>
+<li><p>汇编语言程序员可见的是程序计数器(PC),即汇编语言程序员通过汇编程序可以对某个寄存器进行访问。 汇编程序员可以通过指定待执行指令的地址来设置 PC 的值，如转移指令、子程序调用指令等。而 IR、 MAR、MDR 是 CPU 的内部工作寄存器，对程序员不可见。</p>
+</li>
+<li><p>汇编程序员可见的寄存器有基址寄存器(用于实现多道程序设计或者编制浮动程序)和状态&#x2F;标志寄存器、 程序计数器 PC 及通用寄存器组；而 MAR、MDR、IR 是 CPU 的 内部工作寄存器，对汇编程序员不 可见。微指令寄存器属于微程序控制器的组成部分，它是硬 件设计者的任务，对汇编程序员是不可见的。</p>
+</li>
+<li><p>程序计数器 PC 给出下一条指令字的访存地址（指令在内存中的地址），它取决于存储器的字数，而不是编址的字节数。所以对于32字按字节编址的机器来说，每条指令要4字节，PC应该+4.</p>
+</li>
+<li><p>例题</p>
+<blockquote>
+<p>【2017 统考真题】某计算机按字节编址，指令字长固定且只有两种指令格式，其中三地址指令 29  条、二地址指令 107 条，每个地址字段为 6 位，则指令字长至少应该是( )。 A. 24 位 B.26 位 C. 28 位 D.32 位</p>
+<p>答：A</p>
+<p>三地址指令有 29 条，所以其操作码至少为 5 位。以 5 位进行计算，它剩余 32-29&#x3D;3 种操作码给二地址。 而二地址另外多了 6 位给操作码，因此其数量最大达 3×64&#x3D;192。所以指令字长最少为 23 位，因为计算 机按字节编址，需要是 8 的倍数，所以指令字长至少应该 24 位，选 A。</p>
+</blockquote>
+</li>
+</ol>
+<h2 id="指令流水线-1"><a href="#指令流水线-1" class="headerlink" title="指令流水线"></a>指令流水线</h2><ol>
+<li><p>字段直接编码法将微命令字段分成若干小字段，互斥性微命令组合在同一字段中，相容性微命令分在不 同字段中，每个字段还要留出一个状态，表示本字段不发出任何微命令。</p>
+</li>
+<li><p>数据在功能部件之间传送的路径被称为数据通路，包括数据通路上流经的部件，如程序计 数器、ALU、通用寄存器、状态寄存器、异常和中断处理逻辑等。数据通路由控制部件控制，控制部件 根据每条指令功能的不同生成对数据通路的控制信号。因此，不包括控制部件。</p>
+</li>
+<li><p>加速比的计算：</p>
+<ol>
+<li><p>误解：流水线中的阶段数越多，执行速度越快。$t &#x3D; t_m + d$，d是固定的</p>
+</li>
+<li><p>对于k阶段流水线执行n条指令所需时间为：$T_{k,n}&#x3D;[k+(n-1)]t$</p>
+</li>
+<li><p>加速比：<br>$$<br>S_k&#x3D;\frac{T_{1,n}}{T_{k,n}}&#x3D;\frac{nkt}{[k+(n-1)]t}&#x3D;\frac{n}{1+\frac{n-1}{k}}&gt;1<br>$$</p>
+</li>
+</ol>
+<h3 id="冒险-1"><a href="#冒险-1" class="headerlink" title="冒险"></a>冒险</h3></li>
+</ol>
+<h2 id="控制器-1"><a href="#控制器-1" class="headerlink" title="控制器"></a>控制器</h2><ol>
+<li><p>在编写微操作序列时，别忘记括号</p>
+<ol>
+<li>例如，(MBR)表示取到MBR中的值</li>
+<li>例如，（IR(address1)）表示取到IR中一地址的部分的值</li>
+</ol>
+</li>
+<li><p>做减法时，为操作数一减操作数二</p>
+</li>
+<li><blockquote>
+<p>一个指令周期有 4 个主要阶段：取指、间址、执行和中断。硬布线方式实现时，采用一个 2 位的寄 存器来标志当前阶段，但微程序式控制器却不需要类似的标志。请问为什么硬布线式控制器需要这 些标志，而微程序式控制器不需要这些标志？</p>
+<p>答：在硬连线式控制器中，当前阶段会作为输入的一部分，用于布尔逻辑式的计算，因此需要采用 2 位 的寄存器来标志当前阶段。 在微程序式控制器中，所有的微指令都存储在控制存储器中，排序逻辑会确定下一条将要执行的微 指令，各个阶段之间通过跳转来实现，因此不需要状态标志。</p>
+</blockquote>
+</li>
+</ol>
+<h2 id="总线-1"><a href="#总线-1" class="headerlink" title="总线"></a>总线</h2><ol>
+<li><p>在计算数据传输速率时，读出一个字，要考虑把地址传给内存，内存准备，内存把数据送回来的三个过程。</p>
+</li>
+<li><p>同步总线中的各个步骤的时间要求是时钟周期的整数倍，注意时钟同步！！！</p>
+</li>
+<li><p>在异步总线中，数据准备是2,3,4步。内存收到地址就立马开始准备，同时发送第2次握手的信息。</p>
+</li>
+<li><p>USB(通用串行总线)的特点有：①即插即用；②热插拔；③有很强的连接能力，采用菊花链 形式将众多外设连接起来；④有很好的可扩充性，一个 USB 控制器可扩充高达 127 个外 部 USB 设备；⑤高速传输，速率可达 480Mb&#x2F;s。所以 A、B、C 都符合 USB 总线的特点。 对于 D,USB 是串行总线，不能同时传输 2 位数据。</p>
+</li>
+<li><p>USB 是一种连接外部设备的 I&#x2F;O 总线标准，属于设备总线，是设备和设备控制器之间的接 口。而 PCI、AGP、PCI-E 作为计算机系统的局部总线标准，通常用来连接主存、网卡、视 频卡等。</p>
+</li>
+<li><p>猝发(突发)传输是在一个总线周期中，可以传输多个存储地址连续的数据，即一次传输一个 地址和一批地址连续的数据，并行传输是在传输中有多个数据位同时在设备之间进行的传 输，串行传输是指数据的二进制代码在一条物理信道上以位为单位按时间顺序逐位传输的方 式，同步传输是指传输过程由统一的时钟控制。</p>
+</li>
+<li><p>【2016 统考真题】下列关于总线设计的叙述中，错误的是（A）。 A.并行总线传输比串行总线传输速度快 B.采用信号线复用技术可减少信号线数量 C.采用突发传输方式可提高总线数据传输率 D.采用分离事务通信方式可提高总线利用率</p>
+<ol>
+<li>初看可能会觉得 A 正确，并行总线传输通常比串行总线传输速率快，但这不是绝对的。在 实际时钟频率较低的情况下，并行总线因为可以同时传输若干比特，速率确实比串行总线快。 但是，随着技术的发展，时钟频率越来越高，并行总线之间的相互干扰越来越严重，当时钟 频率提高到一定程度时，传输的数据已无法恢复。而串行总线因为导线少，线间干扰容易控 制，反而可通过不断提高时钟频率来提高传输速率，A 错误。</li>
+<li>总线复用是指一种信号线在不 同的时 间传输不同的信息，它可使用较少的线路传输更多的信息，从而节省空间和成本， 因此 B 正确。</li>
+<li>突发(猝发)传输是指在一个总线周期中，可以传输多个存储地址连续的数据， 即一次传输一个地址和一批地址连续的数据，C 正确。</li>
+<li>分离事务通信是总线复用的一种，相 比单一的传输线路可以提高总线的利用率，D 正确。</li>
+</ol>
+</li>
+<li><p>各总线通过桥接器相连，后者起流量交换作用。</p>
+</li>
+<li><p>如果每个时钟周期传送两次数据，则意思是上升沿和下降沿各传送一次数 据</p>
+</li>
+<li><p>注意，事务间空闲要算到事务时间当中，即使是最后一个事务，也要有空闲时间。</p>
+</li>
+<li><blockquote>
+<p>一个 32 位的微处理器，它有 16 位的外部数据总线，由 40MHz 输入时钟驱动。 </p>
+<p>a) 假设一个总线事务需要的最短时间等于 4 个输入时钟周期，那么需要 16 个时钟周 期的总线事务中，这个处理器可能维持的最大数据传输率是多少（单位：Mbps）？</p>
+<p>b) 如果将它的外部数据总线扩展为 32 位，那么该总线的最大数据传输率提高到多少 （单位：Mbps）？ </p>
+<p>解：</p>
+<p>a）一个总线事务过程除了数据传送阶段外，还包括其他阶段，如传送地址和总线 命令、准备数据等，所以，完成一个总线事务所用的所有时钟周期并不都用来传输数据。 由于一个总线事务需要的最短时间为4个时钟周期，这表明在传输最少数据的情况下（占 用1个时钟周期），依然需要3个时钟周期来传送其它信息。 假设一个总线事务占用n个时钟周期，那么最大数据传输率为： 16bit * (n-3)&#x2F;n * 40MHz &#x3D; 640(n-3)&#x2F;n Mbps 例如，当n为16时，最大数据传输率为520Mbps </p>
+<p>b）若采用32位总线宽度，则总线带宽可以提高到1280(n-3)&#x2F;n Mbps。这种措施 的效果和加倍外部处理器总线时钟频率的效果相同。 补充：由于处理器是32位的，地址可能为32位。当采用16位数据总线时，需要 2个时钟周期传递地址；而改成32位总线，只需要1个周期传递地址。原来所需要的 3个额外时钟周期可能减少到2个，因此带宽可以提高到1280(n-2)&#x2F;n Mbps，优于加 倍时钟频率。</p>
+</blockquote>
+</li>
+<li><p>带宽是最大<strong>数据</strong>传输率，可以认为是一秒钟最多传多少位。<strong>注意，若地址线和数据线不复用，也只算数据线。</strong></p>
+</li>
+<li><blockquote>
+<p>每次传输 8 个字的数据块，其中 60%的访问是读操作总线事务，40%的访问是写操 作总线事务，总线 2 的数据传输率是多少（单位：Mbps）？</p>
+</blockquote>
+<p><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250102222325105.png" alt="image-20250102222325105"></p>
+</li>
+</ol>
+<h2 id="I-O"><a href="#I-O" class="headerlink" title="I&#x2F;O"></a>I&#x2F;O</h2><ol>
+<li><p>.I&#x2F;O 接口中 CPU 可访问的寄存器称为 I&#x2F;O 端口</p>
+</li>
+<li><blockquote>
+<p>【2014 统考真题】下列有关 I&#x2F;O 接口的叙述中，错误的是( D )。</p>
+<p> A.状态端口和控制端口可以合用同一个寄存器 </p>
+<p>B.I&#x2F;O 接口中 CPU 可访问的寄存器称为 I&#x2F;O 端口 </p>
+<p>C.采用独立编址方式时，I&#x2F;O 端口地址和主存地址可能相同 </p>
+<p>D.采用统一编址方式时，CPU 不能用访存指令访问 I&#x2F;O 端口</p>
+</blockquote>
+<ol>
+<li>采用统一编址时，CPU 访存和访问 I&#x2F;O 端口用的是一样的指令，所以访存指令可访问 I&#x2F;O 端 口，D 选项错误。其他三个选项均为正确陈述。</li>
+</ol>
+</li>
+<li><p>外部中断是指 CPU 执行指令以外的事件产生的中断，通常指来自 CPU 与内存以外的中断。 </p>
+</li>
+<li><p>在单级(或单重)中断系统中，不允许中断嵌套。中断处理过程为：① 关中断；② 保存断点； ③ 识别中断源；④ 保存现场；⑤ 中断事件处理；⑥恢复现场；⑦ 开中断；⑧ 中断返回。 其中①～③由硬件完成，④～⑧由中断服务程序完成。</p>
+<ol>
+<li>所以如果问<strong>中断程序内</strong>的事务，不考虑<strong>关</strong>中断。</li>
+<li>响应外部中断的过程中，中断<strong>隐指令</strong>完成的操作，不算在中断服务程序内，也就是硬件部分的操作</li>
+</ol>
+</li>
+<li><p>中断处理方式：在 I&#x2F;O 设备输入每个数据的过程中，由于无须 CPU 干预，因而可使 CPU 与 I&#x2F;O 设备并行工作。仅当输完一个数据时，才需 CPU 花费极短的时间去做一些中断处理。 因此中断申请使用的是 CPU 处理时间，发生的时间是在一条指令执行结束之后，数据在软 件的控制下完成传送。而 DMA 方式与之不同。DMA 方式：数据传输的基本单位是数据块， 即在 CPU 与 I&#x2F;O 设备之间，每次传送至少一个数据块；DMA 方式每次申请的是总线的使 用权，所传送的数据是从设备直接送入内存的，或者相反；仅在传送一个或多个数据块的开 始和结束时，才需要 CPU 干预，整块数据的传送是在控制器的控制下完成的。</p>
+</li>
+<li><p>DMA也不是仅适用于快速外部设备，只是低速的不划算</p>
+</li>
+<li><p>一个多重中断系统的中断可以看做是三大步：保护现场，中断处理，恢复现场。其中，中断处理时为开中断。</p>
+</li>
+<li><p>每类设备都配置一个设备驱动程序，设备驱动程序向上层用户程序提供一组标准接口，负责 实现对设备发出各种具体操作指令，用户程序不能直接和 DMA 打交道。</p>
+</li>
+<li><p>DMA 的数据传送 过程分为预处理、数据传送和后处理 3 个阶段。</p>
+<ol>
+<li>预处理阶段由 CPU 完成必要的准备工作， 数据传送前由 DMA 控制器请求总线使用权；</li>
+<li>数据传送由 DMA 控制器直接控制总线完成</li>
+<li>传送结束后，DMA 控制器向 CPU 发送中断请求，CPU 执行中断服务程序做 DMA 结束处 理。</li>
+</ol>
+</li>
+<li><p>周期挪用法就是周期窃取</p>
+</li>
+<li><p>周期挪用法由 DMA 控制器挪用一个或几个主存周期来访问主存，传送完<strong>一个数据字</strong>后立 即释放总线，是一种单字传送方式，每个字传送完后 CPU 可以访问主存，选项 C 错误。停 止 CPU 访存法则是指在整个数据块的传送过程中，使 CPU 脱离总线，停止访问主存。</p>
+</li>
+<li><p><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20241216144714447.png" alt="image-20241216144714447"></p>
+<ol>
+<li>DMA获得和释放总线权限的时间都要算</li>
+<li>第一问：五个时间分别是：获取权限，第一个字节的准备时间，后面127字节的准备时间和前127字节的传送时间（同时进行取最大），最后一个字节的传输时间，释放权限</li>
+<li>第二问：为什么没有考虑准备时间呢？</li>
+</ol>
+</li>
+<li><p>周期窃取中，如果CPU和DMA没有访存冲突，则在数据传输阶段时，CPU不受影响，不用考虑CPU占用时间。</p>
+</li>
+<li><p>在传输数据时，可以同时准备数据！！！要比较他们的时间（一般来说是准备时间比较长）</p>
+</li>
+<li><p>总结：</p>
+<ol>
+<li>I&#x2F;O访问方式：<ol>
+<li>查询：注意CPU占用率总是100%</li>
+<li>中断驱动：注意中断服务程序可能包含了数据传输</li>
+</ol>
+</li>
+<li>DMA访存<ol>
+<li>CPU停止法</li>
+<li>周期挪用</li>
+<li>交替分时访问（没考过？）</li>
+</ol>
+</li>
+</ol>
+</li>
+<li><blockquote>
+<p>在包含 DMA 模块的系统中，一般 DMA 存取主存储器的优先级比处理器存取主存储器的优 先级高，为什么？</p>
+<p>答： 如果处理器被停止访问主存储器，除处理时间延长外不产生其它问题。但 DMA 可能连接 高速数据传输设备，如果不及时获取主存储器的存取权限来及时写入数据，则可能会因 为缓冲区溢出而造成数据丢失。所以，一般 DMA 存取主存储器的优先级会高于处理器。</p>
+</blockquote>
+</li>
+<li><p>注意描述速度时，1K&#x3D;1000；描述内存大小时，1K&#x3D;1024</p>
+</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/05/04/%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A1%80/" rel="prev" title="数据管理基础">
+                  <i class="fa fa-angle-left"></i> 数据管理基础
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/12/04/%E6%AF%9B%E6%A6%82%E5%A4%8D%E4%B9%A0/" rel="next" title="毛概复习">
+                  毛概复习 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">mukongshan</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>

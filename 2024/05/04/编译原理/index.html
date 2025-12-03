@@ -1,0 +1,2926 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 8.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous" defer></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"kongshan.me","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.26.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":null,"gitalk":{"enable":true,"github_id":"mukongshan","repo":"mukongshan.github.io","client_id":"Ov23lifObx8GLwJlVsh3","client_secret":"ebc5f2cd8493752a92129fa16b4bf1635308b0d6","admin_user":"mukongshan","distraction_free_mode":true,"language":"zh-CN"}},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="Ch1 · 综述 编译路线  源代码 (Source Code) → 词法分析 (Lexical Analysis) → 生成标记 (Tokens）→ 语法分析 (Syntax Analysis) → 生成抽象语法树 (AST)→ 中间表示生成 (Intermediate Rep. Generation) → 生成中间表示 (IR)→ 目标代码生成 (Target Code Generation)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="编译原理">
+<meta property="og:url" content="https://kongshan.me/2024/05/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/index.html">
+<meta property="og:site_name" content="kongshan&#39;s blog">
+<meta property="og:description" content="Ch1 · 综述 编译路线  源代码 (Source Code) → 词法分析 (Lexical Analysis) → 生成标记 (Tokens）→ 语法分析 (Syntax Analysis) → 生成抽象语法树 (AST)→ 中间表示生成 (Intermediate Rep. Generation) → 生成中间表示 (IR)→ 目标代码生成 (Target Code Generation)">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250302135338910.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250302140829022.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250304104127271.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250304111925097.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250304112616625.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250304112853465.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250307102558284.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250307103850553.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250307111851680.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250307114000658.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250311102259084.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250312115949062.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250312120001244.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250311103010549.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250318190033673.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250318190330720.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250318190933404.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250318113548445.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250321102857707.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250321103016549.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250321103147179.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250321103407418.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250321104736738.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250324190913322.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250325103218021.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250325103734981.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250325111907799.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250325112933226.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250401114121645.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250401115551979.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250408105428665.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250408114747094.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250408114804851.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250415103337166.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250415103419020.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250415103714763.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250415104155080.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250415104426587.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250415105431266.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250415105822251.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250415105922568.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250415110022464.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250418102830059.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250418103029116.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250418103508101.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250418103518725.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250506102505983.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250422105041017.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250422104858892.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250422115748201.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250422115801249.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250422105552642.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250422112630916.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250422112839015.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250422113330019.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250422114728765.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250506104548798.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250513103332875.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250506105354032.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250506105808269.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250506110127990.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250506110152514.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250506110215171.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250513105230264.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250516102321293.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250516102636633.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250516103721661.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250516112439776.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250516115056197.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250516115042183.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250520102803449.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250520103309407.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250520105953438.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250520111846295.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250520112733340.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250520113018740.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250520114748097.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250527103256566.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250527103451399.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250527104131158.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250527104659476.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250527112708159.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250527114858805.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250530102322022.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250530103232544.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250529210604379.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250601210954519.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250307112214690.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250601211756710.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250601213025655.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250530161958331.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250530164309828.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250530164235753.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250602145848506.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250530110305304.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250601213830036.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250311103010549.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250530171736424.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250318112510132.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250531153012392.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250531153024914.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250601215759188.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250531154758707.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250531165713429.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250531162952427.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250602133052384.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250531170153835.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250408114747094.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250408114804851.png">
+<meta property="og:image" content="e:\Pictures\Screenshots\A4C440C08DF9249AEC705CA307F288F2.jpg">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250602150004004.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250325103734981.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250602152334869.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250602152632442.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250602152728775.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250602152823700.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250506103954853.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250601162651074.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250601162721099.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250601162709850.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250602150656533.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250601154304668.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250601154519643.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250602150853983.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250415103857514.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250520105953438.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250527113455654.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250618131723617.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250618135828457.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250618135811577.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250618140443487.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250618140627168.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250618140635824.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250618140654350.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250618142606727.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250618143451757.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250618153542522.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250601162651074.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250601162721099.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250601162709850.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250618155858785.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250618171712068.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250618172323976.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250618172334864.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250603110011894.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250618170337256.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250618170056744.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250618170204728.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250618172816314.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250618171443973.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250618173441994.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250618175218831.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250618175614916.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250618193019411.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250618194058524.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250618194722884.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250618212144681.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250618203329396.png">
+<meta property="og:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250618203446736.png">
+<meta property="article:published_time" content="2024-05-04T04:00:00.000Z">
+<meta property="article:modified_time" content="2025-12-03T09:03:24.504Z">
+<meta property="article:author" content="mukongshan">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="c:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250302135338910.png">
+
+
+<link rel="canonical" href="https://kongshan.me/2024/05/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://kongshan.me/2024/05/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/","path":"2024/05/04/编译原理/","title":"编译原理"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>编译原理 | kongshan's blog</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+
+  <script src="/js/third-party/pace.js" defer></script>
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">kongshan's blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-blog"><a href="/blog/" rel="section"><i class="fa fa-book-open fa-fw"></i>博客</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Ch1-%C2%B7-%E7%BB%BC%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">Ch1 · 综述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Ch3-1-%C2%B7-%E6%9C%89%E7%A9%B7%E8%87%AA%E5%8A%A8%E6%9C%BA"><span class="nav-number">2.</span> <span class="nav-text">Ch3-1 · 有穷自动机</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A1%AE%E5%AE%9A%E6%9C%89%E7%A9%B7%E8%87%AA%E5%8A%A8%E6%9C%BA%EF%BC%88Deterministic-Finite-Automata"><span class="nav-number">2.1.</span> <span class="nav-text">确定有穷自动机（Deterministic Finite Automata</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-number">2.1.1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Minimization"><span class="nav-number">2.1.2.</span> <span class="nav-text">Minimization</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Bi-Simulation"><span class="nav-number">2.1.3.</span> <span class="nav-text">Bi-Simulation</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%9C%89%E7%A9%B7%E8%87%AA%E5%8A%A8%E6%9C%BA%EF%BC%88Non-deterministic-Finite-Automata%EF%BC%8CNFA%EF%BC%89"><span class="nav-number">2.2.</span> <span class="nav-text">不确定有穷自动机（Non-deterministic Finite Automata，NFA）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0-1"><span class="nav-number">2.2.1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%F0%9D%9C%96-Closure"><span class="nav-number">2.2.2.</span> <span class="nav-text">𝜖-Closure</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%CE%B4"><span class="nav-number">2.2.3.</span> <span class="nav-text">$δ^*$</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DFA%E5%92%8CNFA%E7%9A%84%E5%85%B3%E8%81%94"><span class="nav-number">2.3.</span> <span class="nav-text">DFA和NFA的关联</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Ch3-2-%C2%B7-%E8%AF%8D%E6%B1%87%E5%88%86%E6%9E%90%EF%BC%88Lexical-Analysis"><span class="nav-number">3.</span> <span class="nav-text">Ch3-2 · 词汇分析（Lexical Analysis)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AD%A3%E5%88%99%E8%AF%AD%E8%A8%80-Regular-Language"><span class="nav-number">3.1.</span> <span class="nav-text">正则语言(Regular Language)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%8E%E6%AD%A3%E5%88%99%E5%88%B0NFA"><span class="nav-number">3.1.1.</span> <span class="nav-text">从正则到NFA</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%8EDFA%E5%88%B0%E6%AD%A3%E5%88%99"><span class="nav-number">3.1.2.</span> <span class="nav-text">从DFA到正则</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Pumping-Lemma"><span class="nav-number">3.2.</span> <span class="nav-text">Pumping Lemma</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Ch4-1-%C2%B7-%E4%B8%8A%E4%B8%8B%E6%96%87%E6%97%A0%E5%85%B3%E8%AF%AD%E8%A8%80"><span class="nav-number">4.</span> <span class="nav-text">Ch4-1 · 上下文无关语言</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8A%E4%B8%8B%E6%96%87%E6%97%A0%E5%85%B3%E6%96%87%E6%B3%95%EF%BC%88Context-Free-Grammar%EF%BC%8CCFG%EF%BC%89"><span class="nav-number">4.1.</span> <span class="nav-text">上下文无关文法（Context-Free Grammar，CFG）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8B%E6%8E%A8%E8%87%AA%E5%8A%A8%E6%9C%BA-Push-Down-Automata-PDA"><span class="nav-number">4.2.</span> <span class="nav-text">下推自动机(Push-Down Automata, PDA)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0-2"><span class="nav-number">4.2.1.</span> <span class="nav-text">概述</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CFG%E7%AD%89%E4%BB%B7%E4%BA%8EPDA"><span class="nav-number">4.3.</span> <span class="nav-text">CFG等价于PDA</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%8ECFG%E5%88%B0PDA"><span class="nav-number">4.3.1.</span> <span class="nav-text">从CFG到PDA</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%8EPDA%E5%88%B0CFG"><span class="nav-number">4.3.2.</span> <span class="nav-text">从PDA到CFG</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NPDA%E5%92%8CDPDA"><span class="nav-number">4.4.</span> <span class="nav-text">NPDA和DPDA</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8A%E4%B8%8B%E6%96%87%E6%97%A0%E5%85%B3%E8%AF%AD%E8%A8%80%EF%BC%88CFL%EF%BC%89"><span class="nav-number">4.5.</span> <span class="nav-text">上下文无关语言（CFL）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Pumping-Lemma-for-CFL"><span class="nav-number">4.6.</span> <span class="nav-text">Pumping Lemma for CFL</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Chomsky-Normal-Form%EF%BC%88CNF%EF%BC%89"><span class="nav-number">4.6.1.</span> <span class="nav-text">Chomsky Normal Form（CNF）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Puming-Lemma"><span class="nav-number">4.6.2.</span> <span class="nav-text">Puming Lemma</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Ch4-2-%C2%B7-%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90-Syntax-Analysis"><span class="nav-number">5.</span> <span class="nav-text">Ch4-2 · 语法分析(Syntax Analysis)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%87%AA%E4%B8%8A%E8%80%8C%E4%B8%8B%E7%9A%84%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90%EF%BC%88Top-down-parsing%EF%BC%89"><span class="nav-number">5.1.</span> <span class="nav-text">自上而下的语法分析（Top-down parsing）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0-3"><span class="nav-number">5.1.1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LL%EF%BC%881%EF%BC%89%E6%96%87%E6%B3%95"><span class="nav-number">5.1.2.</span> <span class="nav-text">LL（1）文法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%B3%E4%B8%8B%E8%A7%92%E7%9A%84%E7%A4%BA%E4%BE%8B%E6%96%87%E6%B3%95"><span class="nav-number">5.1.3.</span> <span class="nav-text">右下角的示例文法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%92%E5%BD%92%E4%B8%8B%E9%99%8D%E8%A7%A3%E6%9E%90%EF%BC%88Recursive-Descent-Parsing%EF%BC%89"><span class="nav-number">5.2.</span> <span class="nav-text">递归下降解析（Recursive Descent Parsing）</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Ch6-1-%C2%B7-%E4%B8%AD%E9%97%B4%E8%A1%A8%E7%A4%BA%EF%BC%88Intermediate-Representation%EF%BC%8CIR%EF%BC%89"><span class="nav-number">6.</span> <span class="nav-text">Ch6-1 · 中间表示（Intermediate Representation，IR）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E5%9C%B0%E5%9D%80%E7%A0%81"><span class="nav-number">6.1.</span> <span class="nav-text">三地址码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%AD%E6%B3%95%E5%88%B6%E5%AF%BC%E7%BF%BB%E8%AF%91"><span class="nav-number">6.2.</span> <span class="nav-text">语法制导翻译</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Ch6-2-%C2%B7-%E7%BF%BB%E8%AF%91%E4%B8%BASSA%E5%BD%A2%E5%BC%8F"><span class="nav-number">7.</span> <span class="nav-text">Ch6-2 · 翻译为SSA形式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9D%99%E6%80%81%E5%8D%95%E8%B5%8B%E5%80%BC%EF%BC%88Static-Single-Assignment%EF%BC%8CSSA%EF%BC%89"><span class="nav-number">7.1.</span> <span class="nav-text">静态单赋值（Static Single Assignment，SSA）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LLVM-IR"><span class="nav-number">7.2.</span> <span class="nav-text">LLVM IR</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BF%BB%E8%AF%91%E4%B8%BA-SSA"><span class="nav-number">7.3.</span> <span class="nav-text">翻译为 SSA</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Ch8-1-%C2%B7-Target-Code-Generation"><span class="nav-number">8.</span> <span class="nav-text">Ch8-1 · Target Code Generation</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9D%97%E5%86%85%E4%BC%98%E5%8C%96"><span class="nav-number">8.1.</span> <span class="nav-text">块内优化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E6%A0%91%E7%9A%84%E6%8C%87%E4%BB%A4%E9%80%89%E6%8B%A9"><span class="nav-number">8.1.1.</span> <span class="nav-text">基于树的指令选择</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AA%A5%E5%AD%94%E4%BC%98%E5%8C%96"><span class="nav-number">8.2.</span> <span class="nav-text">窥孔优化</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Ch8-2-%C2%B7-Translation-out-of-SSA"><span class="nav-number">9.</span> <span class="nav-text">Ch8-2 · Translation out of SSA</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B6%88%E9%99%A4%CF%86"><span class="nav-number">9.1.</span> <span class="nav-text">消除φ</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Ch8-3-%C2%B7-%E5%AF%84%E5%AD%98%E5%99%A8%E5%88%86%E9%85%8D"><span class="nav-number">10.</span> <span class="nav-text">Ch8-3 · 寄存器分配</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B1%80%E9%83%A8%E5%88%86%E9%85%8D%EF%BC%88Local-Register-Allocation%EF%BC%89"><span class="nav-number">10.1.</span> <span class="nav-text">局部分配（Local Register Allocation）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%A8%E5%B1%80%E5%88%86%E9%85%8D%EF%BC%88Global-Register-Allocation%EF%BC%89"><span class="nav-number">10.2.</span> <span class="nav-text">全局分配（Global Register Allocation）</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Ch10-%C2%B7-%E6%8C%87%E4%BB%A4%E6%B5%81%E6%B0%B4%E7%BA%BF"><span class="nav-number">11.</span> <span class="nav-text">Ch10 · 指令流水线</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8C%87%E4%BB%A4%E8%B0%83%E5%BA%A6%E7%9A%84%E7%BA%A6%E6%9D%9F%EF%BC%88Scheduling-Constraints%EF%BC%89"><span class="nav-number">11.1.</span> <span class="nav-text">指令调度的约束（Scheduling Constraints）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E5%9D%97%E8%B0%83%E5%BA%A6"><span class="nav-number">11.2.</span> <span class="nav-text">基本块调度</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%A8%E5%B1%80%E4%BB%A3%E7%A0%81%E8%B0%83%E5%BA%A6"><span class="nav-number">11.3.</span> <span class="nav-text">全局代码调度</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Ch9-1-%C2%B7-%E6%95%B0%E6%8D%AE%E6%B5%81%E5%88%86%E6%9E%90%EF%BC%88Data-Flow-Analysis%EF%BC%89"><span class="nav-number">12.</span> <span class="nav-text">Ch9-1 · 数据流分析（Data Flow Analysis）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E6%B5%81%E6%96%B9%E7%A8%8B"><span class="nav-number">12.1.</span> <span class="nav-text">数据流方程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E5%A4%A7%E7%BB%8F%E5%85%B8DFA"><span class="nav-number">12.2.</span> <span class="nav-text">三大经典DFA</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B1%80%E9%83%A8%E5%86%97%E4%BD%99%EF%BC%88Partial-Redundancy%EF%BC%89"><span class="nav-number">12.3.</span> <span class="nav-text">局部冗余（Partial Redundancy）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%87%92%E6%83%B0%E4%BB%A3%E7%A0%81%E8%BF%90%E5%8A%A8%E9%97%AE%E9%A2%98%EF%BC%88The-Lazy-Code-Motion-Problem%EF%BC%89"><span class="nav-number">12.4.</span> <span class="nav-text">懒惰代码运动问题（The Lazy Code Motion Problem）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B6%88%E9%99%A4%E6%89%80%E6%9C%89%E5%8F%AF%E4%BB%A5%E6%B6%88%E9%99%A4%E7%9A%84%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%86%97%E4%BD%99%E8%AE%A1%E7%AE%97"><span class="nav-number">12.4.1.</span> <span class="nav-text">消除所有可以消除的表达式冗余计算</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%98%E5%8C%96%E5%90%8E%E7%9A%84%E7%A8%8B%E5%BA%8F%E4%B8%8D%E4%BC%9A%E6%89%A7%E8%A1%8C%E5%8E%9F%E7%A8%8B%E5%BA%8F%E4%B8%AD%E4%B8%8D%E5%AD%98%E5%9C%A8%E7%9A%84%E8%AE%A1%E7%AE%97"><span class="nav-number">12.4.2.</span> <span class="nav-text">优化后的程序不会执行原程序中不存在的计算</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%BD%E5%8F%AF%E8%83%BD%E6%99%9A%E5%9C%B0%E8%AE%A1%E7%AE%97%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="nav-number">12.4.3.</span> <span class="nav-text">尽可能晚地计算表达式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E6%95%B0%E4%BC%A0%E6%92%AD%EF%BC%88Constant-Propagation%EF%BC%89"><span class="nav-number">12.5.</span> <span class="nav-text">常数传播（Constant Propagation）</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Ch9-2-%C2%B7-%E7%AC%A6%E5%8F%B7%E6%89%A7%E8%A1%8C%EF%BC%88Symbolic-Execution%EF%BC%89"><span class="nav-number">13.</span> <span class="nav-text">Ch9-2 · 符号执行（Symbolic Execution）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%91%BD%E9%A2%98%E9%80%BB%E8%BE%91%EF%BC%88PL%EF%BC%89"><span class="nav-number">13.1.</span> <span class="nav-text">命题逻辑（PL）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Tseitin-Transformation"><span class="nav-number">13.1.1.</span> <span class="nav-text">Tseitin Transformation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SAT-problem"><span class="nav-number">13.1.2.</span> <span class="nav-text">SAT problem</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E9%98%B6%E9%80%BB%E8%BE%91%EF%BC%88FOL%EF%BC%89"><span class="nav-number">13.2.</span> <span class="nav-text">一阶逻辑（FOL）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%AF%E6%BB%A1%E8%B6%B3%E6%80%A7%E6%A8%A1%E7%90%86%E8%AE%BA%EF%BC%88Satisfiability-Modulo-Theories%EF%BC%8C-SMT%EF%BC%89"><span class="nav-number">13.2.1.</span> <span class="nav-text">可满足性模理论（Satisfiability Modulo Theories， SMT）</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Ch12-1-%C2%B7-Inter-procedural-Data-Flow-Analysis"><span class="nav-number">14.</span> <span class="nav-text">Ch12-1 · Inter-procedural Data Flow Analysis</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0-4"><span class="nav-number">14.1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B0%83%E7%94%A8%E5%9B%BE%E5%92%8C%E8%B0%83%E7%94%A8%E9%93%BE"><span class="nav-number">14.2.</span> <span class="nav-text">调用图和调用链</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8A%E4%B8%8B%E6%96%87%E6%95%8F%E6%84%9F%E7%9A%84%E6%95%B0%E6%8D%AE%E6%B5%81%E5%88%86%E6%9E%90%EF%BC%88Context-Sensitive-Data-Flow-Analysis%EF%BC%89"><span class="nav-number">14.3.</span> <span class="nav-text">上下文敏感的数据流分析（Context-Sensitive Data Flow Analysis）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E9%A1%B6%E5%90%91%E4%B8%8B%EF%BC%88Top-Down-TD%EF%BC%89%E5%88%86%E6%9E%90"><span class="nav-number">14.3.1.</span> <span class="nav-text">自顶向下（Top-Down, TD）分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E5%BA%95%E5%90%91%E4%B8%8A%EF%BC%88Bottom-Up-BU%EF%BC%89%E5%88%86%E6%9E%90"><span class="nav-number">14.3.2.</span> <span class="nav-text">自底向上（Bottom-Up, BU）分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DFA-as-Graph-Reachability"><span class="nav-number">14.3.3.</span> <span class="nav-text">DFA as Graph Reachability</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IFDS%E9%97%AE%E9%A2%98"><span class="nav-number">14.3.4.</span> <span class="nav-text">IFDS问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Indexing-Conventional-Reachability"><span class="nav-number">14.3.5.</span> <span class="nav-text">Indexing Conventional Reachability</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8A%E4%B8%8B%E6%96%87%E6%95%8F%E6%84%9F%E7%9A%84%E6%95%B0%E6%8D%AE%E4%BE%9D%E8%B5%96%E5%88%86%E6%9E%90%EF%BC%88CS-DDA%EF%BC%89"><span class="nav-number">14.4.</span> <span class="nav-text">上下文敏感的数据依赖分析（CS-DDA）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%8C%E7%BA%A7%E6%95%B0%E6%8D%AE%E4%BE%9D%E8%B5%96%E5%88%86%E6%9E%90"><span class="nav-number">14.4.1.</span> <span class="nav-text">同级数据依赖分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89-%E6%A0%91%E5%88%86%E8%A7%A3"><span class="nav-number">14.4.2.</span> <span class="nav-text">定义 [树分解]</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%91%E5%AE%BD"><span class="nav-number">14.4.3.</span> <span class="nav-text">树宽</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8D%E5%90%8C%E7%BA%A7%E6%95%B0%E6%8D%AE%E4%BE%9D%E8%B5%96%E5%88%86%E6%9E%90"><span class="nav-number">14.4.4.</span> <span class="nav-text">不同级数据依赖分析</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Ch12-2-%C2%B7-%E6%8C%87%E9%92%88%E5%88%AB%E5%90%8D%E5%88%86%E6%9E%90"><span class="nav-number">15.</span> <span class="nav-text">Ch12-2 · 指针别名分析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0-5"><span class="nav-number">15.1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#May-Must-Pointer-Alias-Analysis"><span class="nav-number">15.2.</span> <span class="nav-text">May&#x2F;Must Pointer Alias Analysis</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Soundness%EF%BC%88%E5%8F%AF%E9%9D%A0%E6%80%A7%EF%BC%89"><span class="nav-number">15.2.1.</span> <span class="nav-text">Soundness（可靠性）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Completeness%EF%BC%88%E5%AE%8C%E6%95%B4%E6%80%A7%EF%BC%89"><span class="nav-number">15.2.2.</span> <span class="nav-text">Completeness（完整性）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Over-approximation%EF%BC%88%E8%BF%87%E8%BF%91%E4%BC%BC%EF%BC%89%EF%BC%88%E4%B8%8A%E8%BF%91%E4%BC%BC%EF%BC%89"><span class="nav-number">15.2.3.</span> <span class="nav-text">Over-approximation（过近似）（上近似）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Under-approximation%EF%BC%88%E6%AC%A0%E8%BF%91%E4%BC%BC%EF%BC%89%EF%BC%88%E4%B8%8B%E8%BF%91%E4%BC%BC%EF%BC%89"><span class="nav-number">15.2.4.</span> <span class="nav-text">Under-approximation（欠近似）（下近似）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Andersen%E2%80%99s-Algorithm"><span class="nav-number">15.3.</span> <span class="nav-text">Andersen’s Algorithm</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%94%E8%AE%B0"><span class="nav-number">16.</span> <span class="nav-text">笔记</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E7%AB%A0"><span class="nav-number">16.1.</span> <span class="nav-text">第三章</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E5%9B%9B%E7%AB%A0"><span class="nav-number">16.2.</span> <span class="nav-text">第四章</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#RL%E5%92%8CCFL"><span class="nav-number">16.2.1.</span> <span class="nav-text">RL和CFL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Puming-Lemma-for-CFL"><span class="nav-number">16.2.2.</span> <span class="nav-text">Puming Lemma for CFL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Top-down-parsing%E8%87%AA%E4%B8%8A%E8%80%8C%E4%B8%8B%E5%88%86%E6%9E%90"><span class="nav-number">16.2.3.</span> <span class="nav-text">Top-down parsing自上而下分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Bottom-Up-Parsing%E8%87%AA%E4%B8%8B%E8%80%8C%E4%B8%8A%E5%88%86%E6%9E%90"><span class="nav-number">16.2.4.</span> <span class="nav-text">Bottom-Up Parsing自下而上分析</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%BA%94%E7%AB%A0"><span class="nav-number">16.3.</span> <span class="nav-text">第五章</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E5%85%AD%E7%AB%A0"><span class="nav-number">16.4.</span> <span class="nav-text">第六章</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E7%BB%93%E6%9E%84"><span class="nav-number">16.4.1.</span> <span class="nav-text">内存结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B0%83%E7%94%A8%E5%89%8D"><span class="nav-number">16.4.2.</span> <span class="nav-text">. 调用前</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E8%B0%83%E7%94%A8%E6%97%B6"><span class="nav-number">16.4.3.</span> <span class="nav-text">2. 调用时</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E8%B0%83%E7%94%A8%E5%90%8E"><span class="nav-number">16.4.4.</span> <span class="nav-text">3. 调用后</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">16.4.5.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%89%E5%9C%B0%E5%9D%80%E7%A0%81-1"><span class="nav-number">16.4.6.</span> <span class="nav-text">三地址码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9D%99%E6%80%81%E5%8D%95%E8%B5%8B%E5%80%BC%EF%BC%88%E6%9C%89%E9%A2%98%E4%B8%8D%E4%BC%9A%EF%BC%89"><span class="nav-number">16.4.7.</span> <span class="nav-text">静态单赋值（有题不会）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E5%85%AB%E7%AB%A0"><span class="nav-number">16.5.</span> <span class="nav-text">第八章</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%BA%E5%99%A8%E7%A0%81"><span class="nav-number">16.5.1.</span> <span class="nav-text">机器码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%84%E5%AD%98%E5%99%A8"><span class="nav-number">16.5.2.</span> <span class="nav-text">寄存器</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B9%9D%E7%AB%A0"><span class="nav-number">16.6.</span> <span class="nav-text">第九章</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%94%AF%E9%85%8D"><span class="nav-number">16.6.1.</span> <span class="nav-text">支配 ***</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E6%A0%91%E8%BE%B9%EF%BC%88Tree-edge%EF%BC%89"><span class="nav-number">16.6.2.</span> <span class="nav-text">1. 树边（Tree edge）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E5%89%8D%E8%BF%9B%E8%BE%B9%EF%BC%88Forward-edge%EF%BC%89"><span class="nav-number">16.6.3.</span> <span class="nav-text">2. 前进边（Forward edge）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E5%90%8E%E9%80%80%E8%BE%B9%EF%BC%88Back-edge%EF%BC%89"><span class="nav-number">16.6.4.</span> <span class="nav-text">3. 后退边（Back edge）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E4%BA%A4%E5%8F%89%E8%BE%B9%EF%BC%88Cross-edge%EF%BC%89"><span class="nav-number">16.6.5.</span> <span class="nav-text">4. 交叉边（Cross edge）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ch9-1"><span class="nav-number">16.7.</span> <span class="nav-text">ch9-1</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%89%E5%A4%A7%E7%BB%8F%E5%85%B8DFA-1"><span class="nav-number">16.7.1.</span> <span class="nav-text">三大经典DFA ***</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ch9-2"><span class="nav-number">16.8.</span> <span class="nav-text">ch9-2</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%A6%E5%8F%B7%E6%89%A7%E8%A1%8C"><span class="nav-number">16.8.1.</span> <span class="nav-text">符号执行</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E5%8D%81%E7%AB%A0"><span class="nav-number">16.9.</span> <span class="nav-text">第十章</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC%E5%8D%81%E4%BA%8C%E7%AB%A0"><span class="nav-number">17.</span> <span class="nav-text">第十二章</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A4%8D%E4%B9%A0%E9%87%8D%E7%82%B9"><span class="nav-number">18.</span> <span class="nav-text">复习重点</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E7%AB%AF"><span class="nav-number">18.1.</span> <span class="nav-text">前端</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#part1-%C2%B7-Regex%EF%BC%8CNFA%EF%BC%8CDFA"><span class="nav-number">18.1.1.</span> <span class="nav-text">part1 · Regex，NFA，DFA</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#part2-%C2%B7-CFG-and-Parsing"><span class="nav-number">18.1.2.</span> <span class="nav-text">part2 · CFG and Parsing</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#part3-%C2%B7-IR-Generation"><span class="nav-number">18.1.3.</span> <span class="nav-text">part3 · IR Generation</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%AD%E7%AB%AF"><span class="nav-number">18.2.</span> <span class="nav-text">中端</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#part1-%C2%B7-Data-Flow-Analysis"><span class="nav-number">18.2.1.</span> <span class="nav-text">part1 · Data Flow Analysis</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#part2-%C2%B7-Symbolic-Execution"><span class="nav-number">18.2.2.</span> <span class="nav-text">part2 · Symbolic Execution</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#part3-%C2%B7-Pointer-Analysis"><span class="nav-number">18.2.3.</span> <span class="nav-text">part3 · Pointer Analysis</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#part4-%C2%B7-Datalog-Based-Analysis"><span class="nav-number">18.2.4.</span> <span class="nav-text">part4 · Datalog-Based Analysis</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%8E%E7%AB%AF"><span class="nav-number">18.3.</span> <span class="nav-text">后端</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#part1-%C2%B7-Instruction-Selection"><span class="nav-number">18.3.1.</span> <span class="nav-text">part1 · Instruction Selection</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#part2-%C2%B7-Register-Allocation"><span class="nav-number">18.3.2.</span> <span class="nav-text">part2 · Register Allocation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#part3-%C2%B7-Instruction-Scheduling"><span class="nav-number">18.3.3.</span> <span class="nav-text">part3 · Instruction Scheduling</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#part4-%C2%B7-Exercises"><span class="nav-number">18.3.4.</span> <span class="nav-text">part4 · Exercises</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%80%83%E8%AF%95"><span class="nav-number">19.</span> <span class="nav-text">考试</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="mukongshan"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">mukongshan</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">19</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/mukongshan" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;mukongshan" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:2087179041@qq.com" title="E-Mail → mailto:2087179041@qq.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://kongshan.me/2024/05/04/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="mukongshan">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="kongshan's blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="编译原理 | kongshan's blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          编译原理
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-05-04 12:00:00" itemprop="dateCreated datePublished" datetime="2024-05-04T12:00:00+08:00">2024-05-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-12-03 17:03:24" itemprop="dateModified" datetime="2025-12-03T17:03:24+08:00">2025-12-03</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/course/" itemprop="url" rel="index"><span itemprop="name">课业</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="Ch1-·-综述"><a href="#Ch1-·-综述" class="headerlink" title="Ch1 · 综述"></a>Ch1 · 综述</h1><ol>
+<li><p>编译路线<img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250302135338910.png" alt="image-20250302135338910"></p>
+<ul>
+<li><p>源代码 (Source Code)</p>
+<p>→ 词法分析 (Lexical Analysis) → 生成标记 (Tokens）<br>→ 语法分析 (Syntax Analysis) → 生成抽象语法树 (AST)<br>→ 中间表示生成 (Intermediate Rep. Generation) → 生成中间表示 (IR)<br>→ 目标代码生成 (Target Code Generation) → 生成机器代码 (Machine Code)</p>
+</li>
+</ul>
+<ol>
+<li>词法分析（Lexical Analysis)<ol>
+<li>正则语言(Regular Language)</li>
+<li>有穷自动机(Finite Automata)</li>
+</ol>
+</li>
+<li>语法分析 (Syntax Analysis)：<ol>
+<li>上下文无关语言 (Context-Free Language)</li>
+<li>下推自动机 (Push-Down Automata)</li>
+</ol>
+</li>
+<li>更复杂的语言（例如递归语言等）：<ol>
+<li>递归语言 (Recursive Language)</li>
+<li>图灵自动机 (Turing Automata)</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<h1 id="Ch3-1-·-有穷自动机"><a href="#Ch3-1-·-有穷自动机" class="headerlink" title="Ch3-1 · 有穷自动机"></a>Ch3-1 · 有穷自动机</h1><h2 id="确定有穷自动机（Deterministic-Finite-Automata"><a href="#确定有穷自动机（Deterministic-Finite-Automata" class="headerlink" title="确定有穷自动机（Deterministic Finite Automata"></a>确定有穷自动机（Deterministic Finite Automata</h2><p>，DFA）</p>
+<h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><ol>
+<li><p>是一个五元组<img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250302140829022.png" alt="image-20250302140829022"></p>
+<ol>
+<li>有限的状态集Q</li>
+<li>有限的输入Σ</li>
+<li>转换函数𝛿</li>
+<li>初始状态q</li>
+<li>终止状态集F</li>
+</ol>
+</li>
+<li><p>总能输出”accept”或”reject”</p>
+</li>
+<li><p>有两个“基本集合”：最终状态和非最终状态</p>
+</li>
+</ol>
+<h3 id="Minimization"><a href="#Minimization" class="headerlink" title="Minimization"></a>Minimization</h3><ol>
+<li>首先，把状态区分为最终状态和非最终状态两个集合</li>
+<li>然后细分集合，把“去向”不同状态的分开</li>
+</ol>
+<h3 id="Bi-Simulation"><a href="#Bi-Simulation" class="headerlink" title="Bi-Simulation"></a>Bi-Simulation</h3><ul>
+<li>用于判断两个状态机是否等价</li>
+</ul>
+<ol>
+<li>用一个pair把两者的起始状态表示出来</li>
+<li>写出它们分别经过a, b后的pair</li>
+<li>若这些pair没有出现在state pairs中，则加入进去，重复上述操作</li>
+<li>如果两个状态机同时进入最终状态，则等价</li>
+</ol>
+<h2 id="不确定有穷自动机（Non-deterministic-Finite-Automata，NFA）"><a href="#不确定有穷自动机（Non-deterministic-Finite-Automata，NFA）" class="headerlink" title="不确定有穷自动机（Non-deterministic Finite Automata，NFA）"></a>不确定有穷自动机（Non-deterministic Finite Automata，NFA）</h2><h3 id="概述-1"><a href="#概述-1" class="headerlink" title="概述"></a>概述</h3><ol>
+<li><p>判断：</p>
+<ol>
+<li>“路径”是不确定的，可能有多条路</li>
+<li>含有空字符边</li>
+</ol>
+</li>
+<li><p>如果一个走不通，就试其他路径</p>
+</li>
+<li><p>只要有一条路通了，就认为这个自动机接受这个字符串</p>
+</li>
+</ol>
+<h3 id="𝜖-Closure"><a href="#𝜖-Closure" class="headerlink" title="𝜖-Closure"></a>𝜖-Closure</h3><ul>
+<li>如果从状态集合 S 出发，可以经过零个或多个ε转换到达其他状态，那么这些状态都属于𝜖-Closure(S)。</li>
+</ul>
+<h3 id="δ"><a href="#δ" class="headerlink" title="$δ^*$"></a>$δ^*$</h3><ul>
+<li>δ∗(q,w)&#x3D;{q′∣q′∈δ(q,a) for some a∈Σ or w&#x3D;ϵ}</li>
+<li>用于描述在给定状态下，经过一整个输入字符串的处理后，自动机可能到达的状态集合。</li>
+</ul>
+<h2 id="DFA和NFA的关联"><a href="#DFA和NFA的关联" class="headerlink" title="DFA和NFA的关联"></a>DFA和NFA的关联</h2><ol>
+<li><p>NFA&lt;&#x3D;&gt;DFA，二者可以相互转化</p>
+<ol>
+<li><p>DFA是特殊的NFA，只不过没有空串，且只有一条出边</p>
+</li>
+<li><p>NFA可以通过子集构造法变为DFA</p>
+</li>
+</ol>
+</li>
+<li><p>若一个集合中含有final state，则整个集合构成的状态是final state</p>
+</li>
+<li><p>子集构造法：</p>
+<ol>
+<li>核心思想：让构造的DFA的每个状态对应NFA的一个状态集合</li>
+<li>如果NFA中有n个状态，则DFA中最多可以有2^n^个状态。因为DFA中的状态是NFA状态集合的子集。</li>
+</ol>
+</li>
+<li><p>L(a)表示a的自动机</p>
+</li>
+</ol>
+<h1 id="Ch3-2-·-词汇分析（Lexical-Analysis"><a href="#Ch3-2-·-词汇分析（Lexical-Analysis" class="headerlink" title="Ch3-2 · 词汇分析（Lexical Analysis)"></a>Ch3-2 · 词汇分析（Lexical Analysis)</h1><h2 id="正则语言-Regular-Language"><a href="#正则语言-Regular-Language" class="headerlink" title="正则语言(Regular Language)"></a>正则语言(Regular Language)</h2><h4 id="从正则到NFA"><a href="#从正则到NFA" class="headerlink" title="从正则到NFA"></a>从正则到NFA</h4><ol>
+<li><p>$L_1 U L_2$</p>
+</li>
+<li><p>$L_1L_2$</p>
+</li>
+<li><p>$L_1^R$</p>
+</li>
+<li><p>$L$</p>
+</li>
+<li><p>$L_1$取反</p>
+</li>
+<li><p>交集</p>
+</li>
+<li><p>正则的性质</p>
+</li>
+</ol>
+<h4 id="从DFA到正则"><a href="#从DFA到正则" class="headerlink" title="从DFA到正则"></a>从DFA到正则</h4><ul>
+<li>变量消除法：把各个状态都表示出来，再把终止状态表达式中的其他状态消去。</li>
+</ul>
+<h2 id="Pumping-Lemma"><a href="#Pumping-Lemma" class="headerlink" title="Pumping Lemma"></a>Pumping Lemma</h2><ul>
+<li>Pumping Lemma 证明不是正则语言：如果你能够找到一个语言 LL的字符串 w，并证明<strong>无论如何分解都无法满足</strong> Pumping Lemma 中的条件，那么就可以证明该语言不是正则的。</li>
+</ul>
+<ol>
+<li>内容：</li>
+<li>理解：若|w| &gt; n（n是自动机的状态数），则一定有“回头路”。$w_i&#x3D;xy^iz$且|xy|&lt;n, |y|&gt;1.<ol>
+<li>若存在k使得$xy^kz$不属于L，则L不是正则</li>
+<li>上面这条可以证明$a^nb^n$不是正则语言</li>
+</ol>
+</li>
+</ol>
+<h1 id="Ch4-1-·-上下文无关语言"><a href="#Ch4-1-·-上下文无关语言" class="headerlink" title="Ch4-1 · 上下文无关语言"></a>Ch4-1 · 上下文无关语言</h1><h2 id="上下文无关文法（Context-Free-Grammar，CFG）"><a href="#上下文无关文法（Context-Free-Grammar，CFG）" class="headerlink" title="上下文无关文法（Context-Free Grammar，CFG）"></a>上下文无关文法（Context-Free Grammar，CFG）</h2><ol>
+<li>定义<ol>
+<li>上下文无关文法（Context-Free Grammar，CFG）是一种用于描述计算机语言和自然语言语法的形式文法。它由四元组 G&#x3D;(V,Σ,P,S)G &#x3D; (V, \Sigma, P, S)G&#x3D;(V,Σ,P,S) 组成，其中：<ol>
+<li><strong>终结符集合 Σ</strong>：一组基础符号，不能再被替换（如字母、数字、标点等）。</li>
+<li><strong>非终结符集合 V</strong>：一组可以继续展开的符号（如语法成分：句子、名词短语等）。</li>
+<li><strong>规则集合 P</strong>：一组产生式规则，每条规则的形式为 A→α，其中 A 是非终结符，α 是终结符和&#x2F;或非终结符的序列。</li>
+<li><strong>起始符号 S</strong>：语法生成的起点，通常是一个非终结符。</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>推导<ol>
+<li>最左推导和最右推导：就是优先把最左边或者最右边的符号展开</li>
+</ol>
+</li>
+<li>歧义性：<ol>
+<li>如果一个表达式可以构造出两棵语法树，则是有歧义的</li>
+<li>例子：w &#x3D; a + a * a.这是有歧义的<img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250304104127271.png" alt="image-20250304104127271"></li>
+</ol>
+</li>
+</ol>
+<h2 id="下推自动机-Push-Down-Automata-PDA"><a href="#下推自动机-Push-Down-Automata-PDA" class="headerlink" title="下推自动机(Push-Down Automata, PDA)"></a>下推自动机(Push-Down Automata, PDA)</h2><h3 id="概述-2"><a href="#概述-2" class="headerlink" title="概述"></a>概述</h3><ol>
+<li>上下文无关文法&#x3D;PDA&#x3D;NDA + Stack（z0）</li>
+<li>就是NDA加挂一个栈</li>
+<li>定义（是七元组，GPT说错了）：<img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250304111925097.png" alt="image-20250304111925097"></li>
+<li>例子：<img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250304112616625.png" alt="image-20250304112616625"></li>
+<li></li>
+<li>简洁表达（三元组）：<img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250304112853465.png" alt="image-20250304112853465"></li>
+<li>注意，有两种情况接受字符串：<ol>
+<li>终止状态</li>
+<li>空栈</li>
+</ol>
+</li>
+</ol>
+<h2 id="CFG等价于PDA"><a href="#CFG等价于PDA" class="headerlink" title="CFG等价于PDA"></a>CFG等价于PDA</h2><h3 id="从CFG到PDA"><a href="#从CFG到PDA" class="headerlink" title="从CFG到PDA"></a>从CFG到PDA</h3><p><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250307102558284.png" alt="image-20250307102558284"></p>
+<ol>
+<li>总是只有一个状态q</li>
+<li>若栈中为非终止符，则展开（如图前两行）</li>
+<li>如果读入终止符，则从栈中弹出</li>
+</ol>
+<h3 id="从PDA到CFG"><a href="#从PDA到CFG" class="headerlink" title="从PDA到CFG"></a>从PDA到CFG</h3><p><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250307103850553.png" alt="image-20250307103850553"></p>
+<ul>
+<li>注：<ol>
+<li>$V_{pXq}$是一个中间字符，意思是从p到q状态，从栈中弹出了X。</li>
+</ol>
+</li>
+</ul>
+<ol>
+<li>从初始状态到另一个状态，消耗了$S$，得到中间字符$V_{pSq}$</li>
+<li>从p到q，读入了a，弹出了X（PDA的读入和CFG的展开是一回事）</li>
+<li>读到了非终结符，展开，压入对应的中间字符</li>
+</ol>
+<h2 id="NPDA和DPDA"><a href="#NPDA和DPDA" class="headerlink" title="NPDA和DPDA"></a>NPDA和DPDA</h2><ul>
+<li>NPDA有歧义，DPDA没有</li>
+<li>两者不等价</li>
+</ul>
+<h2 id="上下文无关语言（CFL）"><a href="#上下文无关语言（CFL）" class="headerlink" title="上下文无关语言（CFL）"></a>上下文无关语言（CFL）</h2><ol>
+<li><p>给定两个CFL：$L_1,L_2$</p>
+<ol>
+<li><p>仍然是CFL的</p>
+<ol>
+<li>并，$L_1UL_2$</li>
+<li>连接，$L_1L_2$</li>
+<li>星号，$L_1^*$</li>
+<li>倒置，$L_1^R$</li>
+</ol>
+</li>
+<li><p>不一定是CFL的</p>
+<ol>
+<li><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250307111851680.png" alt="image-20250307111851680"></li>
+</ol>
+</li>
+</ol>
+</li>
+<li><p>CFL与RL</p>
+<ol>
+<li>两者相交为也CFL</li>
+</ol>
+</li>
+</ol>
+<h2 id="Pumping-Lemma-for-CFL"><a href="#Pumping-Lemma-for-CFL" class="headerlink" title="Pumping Lemma for CFL"></a>Pumping Lemma for CFL</h2><h3 id="Chomsky-Normal-Form（CNF）"><a href="#Chomsky-Normal-Form（CNF）" class="headerlink" title="Chomsky Normal Form（CNF）"></a>Chomsky Normal Form（CNF）</h3><ol>
+<li><p>Chomsky Normal Form (CNF, 乔姆斯基范式) 是上下文无关文法（Context-Free Grammar, CFG）的一种标准形式。若一个上下文无关文法符合 CNF，则它的所有产生规则必须满足以下两种形式之一：</p>
+<ol>
+<li><strong>二元规则（Binary Rules）</strong>：<br> 形如 <code>A → BC</code>，其中 <code>A, B, C</code> 均为非终结符（<code>B</code> 和 <code>C</code> 不能是起始符 <code>S</code>）。</li>
+<li><strong>终结规则（Terminal Rules）</strong>：<br> 形如 <code>A → a</code>，其中 <code>A</code> 为非终结符，<code>a</code> 为终结符。</li>
+</ol>
+<p>此外，还允许一个特殊的起始符规则：</p>
+<ul>
+<li><code>S → ε</code>（仅当 <code>S</code> 不出现在其他产生式的右侧时），表示空串。</li>
+</ul>
+</li>
+</ol>
+<h3 id="Puming-Lemma"><a href="#Puming-Lemma" class="headerlink" title="Puming Lemma"></a>Puming Lemma</h3><p><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250307114000658.png" alt="image-20250307114000658"></p>
+<ol>
+<li>是RL的Puming Lemma的升级版，要分解为五部分</li>
+<li>要重复的是2,4两部分，两者不能都为空</li>
+</ol>
+<h1 id="Ch4-2-·-语法分析-Syntax-Analysis"><a href="#Ch4-2-·-语法分析-Syntax-Analysis" class="headerlink" title="Ch4-2 · 语法分析(Syntax Analysis)"></a>Ch4-2 · 语法分析(Syntax Analysis)</h1><h2 id="自上而下的语法分析（Top-down-parsing）"><a href="#自上而下的语法分析（Top-down-parsing）" class="headerlink" title="自上而下的语法分析（Top-down parsing）"></a>自上而下的语法分析（Top-down parsing）</h2><h3 id="概述-3"><a href="#概述-3" class="headerlink" title="概述"></a>概述</h3><ol>
+<li>Top-down parsing 是一种解析技术，用于分析输入字符串的语法结构。它从语法的起始符号（根节点）开始，逐步向下扩展，直到生成与输入字符串匹配的解析树</li>
+<li>特点：<ol>
+<li><strong>解析树的构建方向</strong>：从根节点（起始符号）开始，逐步向下构建解析树。</li>
+<li><strong>推导方式</strong>：使用左推导（leftmost derivation），即每次替换最左边的非终结符。</li>
+<li><strong>解析过程</strong>：解析器尝试应用语法规则，逐步匹配输入字符串。如果匹配失败，可能需要回溯（backtracking）。</li>
+</ol>
+</li>
+<li>主要类型<ol>
+<li><strong>递归下降解析（Recursive Descent Parsing）</strong>：<ul>
+<li>通过递归函数实现解析，每个非终结符对应一个函数。</li>
+<li>可能需要回溯，尤其是在语法存在左递归或多个可选规则时。</li>
+</ul>
+</li>
+<li><strong>预测解析（Predictive Parsing）</strong>：<ul>
+<li>一种特殊的递归下降解析，通过向前看（lookahead）符号预测应用的规则。</li>
+<li>不需要回溯，效率更高，但对语法的要求更严格。</li>
+</ul>
+</li>
+</ol>
+</li>
+</ol>
+<h3 id="LL（1）文法"><a href="#LL（1）文法" class="headerlink" title="LL（1）文法"></a>LL（1）文法</h3><ol>
+<li><p>定义</p>
+<p>LL(1) 是一种 自上而下的预测分析文法，其中：</p>
+<ul>
+<li><strong>第一个 L</strong>：表示 Left-to-right（从左到右解析）</li>
+<li><strong>第二个 L</strong>：表示 Leftmost derivation（最左推导）</li>
+<li><strong>(1)</strong>：表示 每次只查看一个输入符号 来决定如何推导</li>
+</ul>
+</li>
+<li><p>特点：</p>
+<ol>
+<li>不是二义性的 (Not ambiguous)：每个输入字符串最多有一个语法分析树。</li>
+<li>没有左递归 (Not left-recursive)：文法不能包含直接或间接左递归，否则预测分析无法工作。</li>
+<li>可以使用一个符号的前瞻 (1-token lookahead) 进行预测。</li>
+</ol>
+</li>
+<li><p>LL(1) 文法的条件</p>
+<p>文法是 LL(1) 当且仅当 所有产生式$A→α∣βA \to \alpha | \beta A→α∣β$ 满足：</p>
+<ol>
+<li><p>α 和 β 不能以相同的终结符开头（避免选择冲突）。</p>
+<ul>
+<li><p>解决方法：左因子提取 (left factoring)</p>
+</li>
+<li><p>例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">A → ab | ac</span><br></pre></td></tr></table></figure>
+
+<p>不是 LL(1)，因为 ab 和 ac都以 a开头，可以重写为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">A → a B</span><br><span class="line">B → b | c</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>至多一个选项可以推导空串 (ε)，否则 Follow 集合会冲突。</p>
+<ul>
+<li><p>例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">A → α | β</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>如果 <code>FIRST(α)</code> 和 <code>FIRST(β)</code> 有交集，则不是 LL(1)</li>
+<li>如果 <code>ε ∈ FIRST(α)</code> 并且 <code>ε ∈ FIRST(β)</code>，则 <code>FOLLOW(A)</code> 可能冲突。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>如果某个选项能推出空串（ε），另一个选项不能以 FOLLOW(A) 里的终结符开头，否则解析器无法确定如何解析。</p>
+<ul>
+<li><p>例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">A → α | ε</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>如果 <code>FOLLOW(A)</code> 包含 <code>b</code>，且 <code>FIRST(α)</code> 也包含 <code>b</code>，则不是 LL(1)。因为当输入 <code>b</code> 时，解析器无法确定使用 <code>A → α</code> 还是 <code>A → ε</code>。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3 id="右下角的示例文法"><a href="#右下角的示例文法" class="headerlink" title="右下角的示例文法"></a><strong>右下角的示例文法</strong></h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">E  →  T E&#x27;</span><br><span class="line">E&#x27; →  + T E&#x27; | ε</span><br><span class="line">T  →  F T&#x27;</span><br><span class="line">T&#x27; →  * F T&#x27; | ε</span><br><span class="line">F  →  ( E ) | id</span><br></pre></td></tr></table></figure>
+
+<p><strong>验证是否 LL(1)：</strong></p>
+<ol>
+<li>没有左递归</li>
+<li><code>E&#39; → + T E&#39; | ε</code>，由于 <code>+</code> 不在 <code>FOLLOW(E&#39;)</code> 中，因此符合条件</li>
+<li><code>T&#39; → * F T&#39; | ε</code>，由于 <code>*</code> 不在 <code>FOLLOW(T&#39;)</code> 中，因此符合条件</li>
+<li>没有 FIRST 集合冲突</li>
+</ol>
+<p>✅ <strong>符合 LL(1) 文法规则！</strong></p>
+</li>
+</ol>
+<h2 id="递归下降解析（Recursive-Descent-Parsing）"><a href="#递归下降解析（Recursive-Descent-Parsing）" class="headerlink" title="递归下降解析（Recursive Descent Parsing）"></a>递归下降解析（Recursive Descent Parsing）</h2><ol>
+<li><p>思想：通过递归函数实现解析，每个非终结符对应一个函数。</p>
+</li>
+<li><p>问题和解决：</p>
+<ol>
+<li><p>需要回溯。当一种情况不被接受，还要回过头去尝试。</p>
+<ol>
+<li>例子：<img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250311102259084.png" alt="image-20250311102259084"><ol>
+<li>显然cAb应该被接受。但是在函数A()中，提前把b消了，导致结果为False。此时应回溯</li>
+</ol>
+</li>
+<li>解决：<ol>
+<li>我们定义两个函数：<ol>
+<li>First(A)：A的展开式中最左的终结符集合。若A为终结符，则就是它本身</li>
+<li>Follow(A)：A后面紧跟的终结符集合，不包含A。注意，Follow只对非终结符有效。对于终结符不用写。</li>
+</ol>
+</li>
+<li></li>
+</ol>
+</li>
+</ol>
+</li>
+<li><p>左递归循环。</p>
+<ol>
+<li><p>问题描述：<img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250312115949062.png" alt="image-20250312115949062"></p>
+<ol>
+<li><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250312120001244.png" alt="image-20250312120001244"></li>
+<li>会发现没有读入任何字符，在A()中无限循环</li>
+</ol>
+</li>
+<li><p>解决：套公式<img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250311103010549.png" alt="image-20250311103010549"></p>
+<ul>
+<li>有“循环项”和“非循环项”，先表示全部的非循环项，在用A’表示所有循环项。</li>
+</ul>
+<ol>
+<li>消除直接左递归<ol>
+<li>就是要得到展开式不以相同字符开头。</li>
+<li>$A{\to}Ab|c$变为$A{\to}cB,B{\to}bB|𝜖$</li>
+<li>以这样的形式就可以至少读入一个字符，避免无限循环</li>
+</ol>
+</li>
+<li>消除间接左递归<ol>
+<li>带入，然后消除直接左递归</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<h1 id="Ch6-1-·-中间表示（Intermediate-Representation，IR）"><a href="#Ch6-1-·-中间表示（Intermediate-Representation，IR）" class="headerlink" title="Ch6-1 · 中间表示（Intermediate Representation，IR）"></a>Ch6-1 · 中间表示（Intermediate Representation，IR）</h1><h2 id="三地址码"><a href="#三地址码" class="headerlink" title="三地址码"></a>三地址码</h2><ol>
+<li><p>形式：</p>
+<ol>
+<li>右侧最多只有一个运算符</li>
+<li>每条语句最多只有三个地址（变量）</li>
+</ol>
+</li>
+<li><p>四元式（Quadruples）：四元式（Quadruples）是一种中间代码，用于表示三地址代码。</p>
+<ol>
+<li>形式：(op, arg1, arg2, result)<img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250318190033673.png" alt="image-20250318190033673"></li>
+</ol>
+</li>
+<li><p>三元式（Triples）：</p>
+<ol>
+<li>形式：<ol>
+<li>(op, arg1, arg2)<img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250318190330720.png" alt="image-20250318190330720"></li>
+<li>优化：Triples with Syntax DAG（有向无环图）。避免重复运算。<ol>
+<li>在<strong>表达式计算</strong>或<strong>代码优化</strong>时，<strong>相同的子表达式</strong>可能会重复出现。<strong>DAG 通过共享公共子表达式</strong>，减少重复计算，提高效率。</li>
+<li><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250318190933404.png" alt="image-20250318190933404"></li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<h2 id="语法制导翻译"><a href="#语法制导翻译" class="headerlink" title="语法制导翻译"></a>语法制导翻译</h2><ol>
+<li><p>语法制导定义SDD</p>
+<ol>
+<li>SDD由两部分组成<img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250318113548445.png" alt="image-20250318113548445"><ol>
+<li>上下文无关文法（CFG）</li>
+<li>属性和语义规则</li>
+</ol>
+</li>
+<li><strong>CFG 只能描述语法，而 Ruler 规则使 CFL 具备了语义处理能力</strong>。<ol>
+<li>CFG表述了一颗语法树在某一步如何展开，对应的Ruler告诉你在某一步应该计算什么</li>
+</ol>
+</li>
+<li>Generation of Syntax DAG：消除重复计算</li>
+</ol>
+</li>
+<li><p>语法制导翻译（Syntax-Directed Translation，SDT）</p>
+<ol>
+<li>变量声明<img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250321102857707.png" alt="image-20250321102857707"></li>
+</ol>
+<ul>
+<li>record是一个终结符，后面跟一个声明的列表，用大括号包围<ol>
+<li><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250321103016549.png" alt="image-20250321103016549"></li>
+<li>有offest指针<img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250321103147179.png" alt="image-20250321103147179"></li>
+<li>record嵌套怎么办？用栈记录<img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250321103407418.png" alt="image-20250321103407418"></li>
+</ol>
+</li>
+</ul>
+<ol start="2">
+<li>一般语句：<ol>
+<li>符号说明：<ol>
+<li>“||”表示拼接</li>
+<li>E.addr：计算结果的地址，通常是一个临时变量或标识符</li>
+<li>E.code：计算该表达式的中间代码</li>
+</ol>
+</li>
+<li><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250321104736738.png" alt="image-20250321104736738"></li>
+</ol>
+</li>
+<li>流控制：<ol>
+<li>符号说明：<ol>
+<li>S.next：S的下一条语句</li>
+<li>B.true &#x2F; B.false：是标签，表示B这个布尔表达式的值为true &#x2F; false时，要跳转的标签</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>布尔语句</li>
+</ol>
+</li>
+</ol>
+<h1 id="Ch6-2-·-翻译为SSA形式"><a href="#Ch6-2-·-翻译为SSA形式" class="headerlink" title="Ch6-2 · 翻译为SSA形式"></a>Ch6-2 · 翻译为SSA形式</h1><h2 id="静态单赋值（Static-Single-Assignment，SSA）"><a href="#静态单赋值（Static-Single-Assignment，SSA）" class="headerlink" title="静态单赋值（Static Single Assignment，SSA）"></a>静态单赋值（Static Single Assignment，SSA）</h2><ol>
+<li><p>特点：</p>
+<ol>
+<li><p>每个变量只能定义（赋值）一次</p>
+</li>
+<li><p>用φ函数，根据流从多条路径中合并定义（赋值）</p>
+<ol>
+<li><p>例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">if (cond) &#123;</span><br><span class="line">    x1 = 1;</span><br><span class="line">&#125; else &#123;</span><br><span class="line">    x2 = 2;</span><br><span class="line">&#125;</span><br><span class="line">x3 = φ(x1, x2)   // 选择 x1 或 x2 作为 x3</span><br><span class="line">y1 = x3 + 3;</span><br></pre></td></tr></table></figure></li>
+</ol>
+</li>
+</ol>
+</li>
+<li><p>Gated SSA：</p>
+<ol>
+<li><p><strong>使用“门”变量（Gate Variables）来控制 <code>φ</code>（phi）函数的赋值</strong>，避免不必要的计算和存储开销。加一个条件</p>
+</li>
+<li><p>在上例中，<code>φ(x1, x2)</code> 在控制流合并点 <strong>无条件执行</strong>，即使 <code>cond</code> 为 <code>true</code>，<code>x2</code> 也会被计算（在 <code>else</code> 分支不执行的情况下）。</p>
+</li>
+<li><p>使用GSSA，<code>φ_g(cond, x1, x2)</code> 只有在 <code>cond</code> <strong>确定后才执行对应的赋值</strong>，不会无条件执行所有分支的赋值。</p>
+</li>
+<li><p><strong>𝛍（mu）函数</strong> 处理 <strong>循环入口（Loop Entry）</strong> 的变量初始化。之后遇到，让X2直接继承X4的值。</p>
+<p><strong>𝛈（eta）函数</strong> 处理 <strong>循环体（Loop Body）</strong> 内部变量的更新。<img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250324190913322.png" alt="image-20250324190913322"></p>
+</li>
+</ol>
+</li>
+</ol>
+<h2 id="LLVM-IR"><a href="#LLVM-IR" class="headerlink" title="LLVM IR"></a>LLVM IR</h2><ol>
+<li>Function<ol>
+<li>每个变量都用“%n”标记，这就保证了SSA的要求</li>
+</ol>
+</li>
+<li>GEP（指令，GetElementPtr，获取元素指针）</li>
+</ol>
+<h2 id="翻译为-SSA"><a href="#翻译为-SSA" class="headerlink" title="翻译为 SSA"></a>翻译为 SSA</h2><ol>
+<li>基本块<ol>
+<li>基本块的第一条指令一定是leader：<ol>
+<li>函数的第一条指令是leader</li>
+<li>跳转目标地址的指令是leader</li>
+<li>跳转指令后紧跟的指令是leadeer</li>
+</ol>
+</li>
+<li>一些基本块相关的名词<img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250325103218021.png" alt="image-20250325103218021"></li>
+<li>自然循环<ol>
+<li>定义：<ol>
+<li>只有一个header，称作支配</li>
+<li>最大的SCC（强联通分量）</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>支配：<ol>
+<li><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250325103734981.png" alt="image-20250325103734981"><ol>
+<li>A支配B：从入口开始进入B的所有路径一定经过A</li>
+<li>A后支配B：从B开始到出口的所有路径一定经过A</li>
+<li>A严格支配B：A支配B但是A不等于B。所有基本块都支配自己，但它们不会严格支配自己</li>
+<li>A立即支配B：A严格支配B，且不存在A严格支配C的同时C严格支配B</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>控制依赖<ol>
+<li>如果A节点的结果决定了会不会经过B，则B控制依赖于A。</li>
+<li>注意可以自己控制依赖自己</li>
+</ol>
+</li>
+<li>依赖前沿<ol>
+<li>就是B所支配的块的后继，且该后继不被B支配。</li>
+<li>出入口节点的支配前沿一定是空集</li>
+<li>迭代的支配前沿：计算出支配前沿，再把结果加入Bset，然后循环，直到不动点。<img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250325111907799.png" alt="image-20250325111907799"></li>
+</ol>
+</li>
+</ol>
+</li>
+<li>IDF vs. SSA<ol>
+<li>某个块中的变量可能传播到其支配前沿，所以要在支配前沿需要插入φ。</li>
+<li><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250325112933226.png" alt="image-20250325112933226"></li>
+</ol>
+</li>
+</ol>
+<h1 id="Ch8-1-·-Target-Code-Generation"><a href="#Ch8-1-·-Target-Code-Generation" class="headerlink" title="Ch8-1 · Target Code Generation"></a>Ch8-1 · Target Code Generation</h1><h2 id="块内优化"><a href="#块内优化" class="headerlink" title="块内优化"></a>块内优化</h2><h3 id="基于树的指令选择"><a href="#基于树的指令选择" class="headerlink" title="基于树的指令选择"></a>基于树的指令选择</h3><ol>
+<li>例子：<img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250401114121645.png" alt="image-20250401114121645"></li>
+</ol>
+<h2 id="窥孔优化"><a href="#窥孔优化" class="headerlink" title="窥孔优化"></a>窥孔优化</h2><p><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250401115551979.png" alt="image-20250401115551979"></p>
+<h1 id="Ch8-2-·-Translation-out-of-SSA"><a href="#Ch8-2-·-Translation-out-of-SSA" class="headerlink" title="Ch8-2 · Translation out of SSA"></a>Ch8-2 · Translation out of SSA</h1><h2 id="消除φ"><a href="#消除φ" class="headerlink" title="消除φ"></a>消除φ</h2><ol>
+<li>两大问题：<ol>
+<li>The Lost Copy Problem</li>
+<li>The Swap Problem</li>
+</ol>
+</li>
+<li>统一的解决方法（不考）<ol>
+<li><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250408105428665.png" alt="image-20250408105428665"></li>
+</ol>
+</li>
+</ol>
+<h1 id="Ch8-3-·-寄存器分配"><a href="#Ch8-3-·-寄存器分配" class="headerlink" title="Ch8-3 · 寄存器分配"></a>Ch8-3 · 寄存器分配</h1><ul>
+<li>一般考局部而不是全局</li>
+</ul>
+<h2 id="局部分配（Local-Register-Allocation）"><a href="#局部分配（Local-Register-Allocation）" class="headerlink" title="局部分配（Local Register Allocation）"></a>局部分配（Local Register Allocation）</h2><ol>
+<li>要求<ol>
+<li>生成的代码只能用到不多于k个寄存器</li>
+<li>最少地使用loads, stores</li>
+<li>足够高效O(N), O(N logN)</li>
+</ol>
+</li>
+<li>术语<ol>
+<li>live：在后面还会被调用，即在最后一次调用之前</li>
+<li>spilling：溢出，把值从寄存器存入内存</li>
+</ol>
+</li>
+<li>方法：<ol>
+<li>检查最大同时使用的寄存器数量n<ol>
+<li>若k&gt;&#x3D;n，则容易处理</li>
+<li>若k&lt;n，则要spilling。把暂时不用的数据存到内存中，要用的时候再调出来。</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<h2 id="全局分配（Global-Register-Allocation）"><a href="#全局分配（Global-Register-Allocation）" class="headerlink" title="全局分配（Global Register Allocation）"></a>全局分配（Global Register Allocation）</h2><ol>
+<li><p>思想：图着色算法</p>
+<ol>
+<li>先画出干扰图<ol>
+<li>会同时生存的寄存器之间加一条边</li>
+</ol>
+</li>
+<li>计算着色最少需要的颜色n<ol>
+<li>若k&gt;&#x3D;n，即能够用k种颜色着色，则容易处理</li>
+<li>如果k&lt;n则spilling</li>
+</ol>
+</li>
+</ol>
+</li>
+<li><p>Chaitin’s Algorithm（一个图着色算法）</p>
+<ul>
+<li>易知，若节点的度小于k，则容易用k色着色</li>
+</ul>
+<ol>
+<li>所以，我们先把度小于k的节点压栈，最后着色</li>
+<li>如果没有，则选择一个度最小的节点放入列表。</li>
+<li>若表不为空，表中的节点要spilling，即插入load,store指令。然后重新画图。</li>
+<li>迭代第1、2、3条</li>
+</ol>
+</li>
+<li><p>Chaitin-Briggs Algorithm（前一个算法等等改进）</p>
+<ul>
+<li>思想是不急着spilling，减少spill code</li>
+<li>即使没有满足要求的节点，我们也尝试把一个节点压栈。</li>
+<li>不一定成功</li>
+<li><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250408114747094.png" alt="image-20250408114747094"></li>
+<li><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250408114804851.png" alt="image-20250408114804851"></li>
+</ul>
+</li>
+</ol>
+<h1 id="Ch10-·-指令流水线"><a href="#Ch10-·-指令流水线" class="headerlink" title="Ch10 · 指令流水线"></a>Ch10 · 指令流水线</h1><p>去看PPT上的示例</p>
+<ol>
+<li>我们能否通过调整寄存器分配和指令顺序，从而生成出更快的代码呢？</li>
+</ol>
+<h2 id="指令调度的约束（Scheduling-Constraints）"><a href="#指令调度的约束（Scheduling-Constraints）" class="headerlink" title="指令调度的约束（Scheduling Constraints）"></a>指令调度的约束（Scheduling Constraints）</h2><ol>
+<li>依赖关系<ol>
+<li>真依赖关系（Read-After-Write Dependence）：无论如何调度，都不能打乱指令的顺序<img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250415103337166.png" alt="image-20250415103337166"></li>
+<li>假依赖关系：看似不能打乱顺序，但可以通过重命名寄存器解决1.<ol>
+<li><strong>Antidependence</strong><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250415103419020.png" alt="image-20250415103419020"><ol>
+<li>左图不能交换两条指令的顺序，否则MUL拿到了R2就不对了。</li>
+<li>但事实上可以像右图那样解决</li>
+</ol>
+</li>
+<li><strong>Output dependence（<strong>Write-After-Write</strong>）</strong><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250415103714763.png" alt="image-20250415103714763"></li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<h2 id="基本块调度"><a href="#基本块调度" class="headerlink" title="基本块调度"></a>基本块调度</h2><ol>
+<li>依赖图：<img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250415104155080.png" alt="image-20250415104155080"><ol>
+<li>节点(Node): Instructions</li>
+<li>边（Edge): True Dependence (Read-After-Write Dependence)</li>
+<li>深度(Depth)：从某一块到结束所需要的时钟周期</li>
+</ol>
+</li>
+<li>List Scheduling（列表调度）<ol>
+<li><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250415104426587.png" alt="image-20250415104426587"></li>
+</ol>
+</li>
+</ol>
+<h2 id="全局代码调度"><a href="#全局代码调度" class="headerlink" title="全局代码调度"></a>全局代码调度</h2><ol>
+<li><p>Extended Basic Block（EBB）</p>
+<ol>
+<li><p>定义：</p>
+<ol>
+<li>扩展基本块只有一个入口点</li>
+<li>除了第一个基本块可以有多个前驱基本块外，其他基本块都只有一个前驱基本块，且这个前驱基本块必须在扩展基本块内。</li>
+</ol>
+<p><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250415105431266.png" alt="image-20250415105431266"></p>
+</li>
+<li><p>可以把每条EBB path当做一个基本块来指令调度</p>
+<ol>
+<li>但是可能破坏程序的语义。比如说g需要c，但是我们把c移动到了B2，导致B3语义变化</li>
+<li>我们要添加一些指令来保证语义</li>
+</ol>
+</li>
+<li><p>Downward Code Motion（下移）</p>
+<ol>
+<li>src 不支配 dst<ol>
+<li>我们需要把dst块复制一下，保证其他路径的语义<img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250415105822251.png" alt="image-20250415105822251"></li>
+</ol>
+</li>
+<li>dst 不后支配 src<ol>
+<li>要把下移的指令也复制到其他块</li>
+<li><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250415105922568.png" alt="image-20250415105922568"></li>
+</ol>
+</li>
+<li>src支配dst 且 dst后支配src<ol>
+<li>直接下移即可，因为没有其他路径<img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250415110022464.png" alt="image-20250415110022464"></li>
+</ol>
+</li>
+</ol>
+</li>
+<li><p>Upward Code Motion（上移）</p>
+<ol>
+<li><p>dst 不后支配 src：每条路径都要复制一条才行<img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250418102830059.png" alt="image-20250418102830059"></p>
+</li>
+<li><p>src 不支配 dst：</p>
+<ol>
+<li><p>对于其他路径，其”父节点“多出来一条指令。我们需要做逆操作<img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250418103029116.png" alt="image-20250418103029116"></p>
+</li>
+<li><p>但是可能会有干扰，比如说你添加undo指令之后，其他父节点又多出来一句。解决方式是复制基本块：<img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250418103508101.png" alt="image-20250418103508101"></p>
+<p> 变为<img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250418103518725.png" alt="image-20250418103518725"></p>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<h1 id="Ch9-1-·-数据流分析（Data-Flow-Analysis）"><a href="#Ch9-1-·-数据流分析（Data-Flow-Analysis）" class="headerlink" title="Ch9-1 · 数据流分析（Data Flow Analysis）"></a>Ch9-1 · 数据流分析（Data Flow Analysis）</h1><h2 id="数据流方程"><a href="#数据流方程" class="headerlink" title="数据流方程"></a>数据流方程</h2><p><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250506102505983.png" alt="image-20250506102505983"></p>
+<ol>
+<li>代码优化：<ol>
+<li>Local common subexpression</li>
+<li>Global common subexpression</li>
+<li>Copy propagation</li>
+<li>Strength reduction</li>
+<li>Induction-variable elimination</li>
+</ol>
+</li>
+<li>相关概念：<img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250422105041017.png" alt="image-20250422105041017"></li>
+<li>分析算法：<img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250422104858892.png" alt="image-20250422104858892"><ol>
+<li>前两行是初始化</li>
+<li>后面的操作可以自定义。下面有几种不同的定义。<ol>
+<li>要求：是单调的。这样才能让OUT[B]最终确定下来。<img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250422115748201.png" alt="image-20250422115748201"><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250422115801249.png" alt="image-20250422115801249"></li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<h2 id="三大经典DFA"><a href="#三大经典DFA" class="headerlink" title="三大经典DFA"></a>三大经典DFA</h2><ol>
+<li>Reaching Definitions（到达定义分析）<ol>
+<li>函数定义<img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250422105552642.png" alt="image-20250422105552642"><ol>
+<li>定义传递函数$f_B$为基本块B输入的定义减去覆盖（kill）的定义加上生成的定义。</li>
+<li>定义合并函数&#x2F;\为并集</li>
+</ol>
+</li>
+<li>分析的例子见PPT</li>
+</ol>
+</li>
+<li>Available Expressions（可用表达式分析）<ol>
+<li>什么是avaliable的？<img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250422112630916.png" alt="image-20250422112630916"><ol>
+<li><strong>后面的4*i可以用前面的代替，也就是中间没有重新定义</strong></li>
+</ol>
+</li>
+<li>函数定义<img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250422112839015.png" alt="image-20250422112839015"><ol>
+<li>定义传递函数$f_B$为基本块B输入的定义减去覆盖（kill）的定义加上生成的定义。</li>
+<li>定义合并函数&#x2F;\为交集</li>
+</ol>
+</li>
+<li>Live Variable Analysis（活跃变量分析）<ol>
+<li><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250422113330019.png" alt="image-20250422113330019"></li>
+<li>这是一个从后向前的分析，因为是根据某一个块的表达式来分析前一个块的信息。</li>
+</ol>
+</li>
+<li>What’s the Best Order of Blocks<ol>
+<li>深度优先。在这里，深度优先搜索是一个逆向的后序搜索。<img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250422114728765.png" alt="image-20250422114728765"></li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<h2 id="局部冗余（Partial-Redundancy）"><a href="#局部冗余（Partial-Redundancy）" class="headerlink" title="局部冗余（Partial Redundancy）"></a>局部冗余（Partial Redundancy）</h2><ol>
+<li>冗余的来源</li>
+</ol>
+<p><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250506104548798.png" alt="image-20250506104548798"></p>
+<ol start="2">
+<li>无法完全消除冗余</li>
+<li>我们希望<strong>尽可能</strong>的不要重复计算，多次变一次</li>
+<li>分析步骤见PPT</li>
+</ol>
+<h2 id="懒惰代码运动问题（The-Lazy-Code-Motion-Problem）"><a href="#懒惰代码运动问题（The-Lazy-Code-Motion-Problem）" class="headerlink" title="懒惰代码运动问题（The Lazy Code Motion Problem）"></a>懒惰代码运动问题（The Lazy Code Motion Problem）</h2><ul>
+<li><p>是什么（3点）</p>
+<ul>
+<li><p><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250513103332875.png" alt="image-20250513103332875"></p>
+</li>
+<li><h3 id="消除所有可以消除的表达式冗余计算"><a href="#消除所有可以消除的表达式冗余计算" class="headerlink" title="消除所有可以消除的表达式冗余计算"></a>消除所有可以消除的表达式冗余计算</h3></li>
+<li><h3 id="优化后的程序不会执行原程序中不存在的计算"><a href="#优化后的程序不会执行原程序中不存在的计算" class="headerlink" title="优化后的程序不会执行原程序中不存在的计算"></a>优化后的程序不会执行原程序中不存在的计算</h3></li>
+<li><h3 id="尽可能晚地计算表达式"><a href="#尽可能晚地计算表达式" class="headerlink" title="尽可能晚地计算表达式"></a>尽可能晚地计算表达式</h3></li>
+</ul>
+</li>
+<li><p>怎么办（4点）<img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250506105354032.png" alt="image-20250506105354032"></p>
+</li>
+</ul>
+<ol>
+<li><p>第一步：找到预期表达式</p>
+<ol>
+<li><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250506105808269.png" alt="image-20250506105808269"></li>
+<li>预期表达式是指从此到结束一定会计算的表达式（像后支配）</li>
+<li>从后往前，如果从程序点 <em>p</em> 出发的所有路径最终都会计算表达式 <em>e</em>，那么称 <em>e</em> 在 <em>p</em> 处是预期的</li>
+</ol>
+</li>
+<li><p>第二步：可用表达式</p>
+<ol>
+<li><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250506110127990.png" alt="image-20250506110127990"></li>
+<li>从前往后，如果表达式 <em>e</em> 在到达程序点 <em>p</em> 的所有路径上都是预期的，并且在到达 <em>p</em> 之前没有被覆盖，那么称 <em>e</em> 在 <em>p</em> 处是可用的。</li>
+</ol>
+</li>
+<li><p>第三步：</p>
+<ol>
+<li><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250506110152514.png" alt="image-20250506110152514"></li>
+<li>从前往后，如果到达程序点 <em>p</em> 的所有路径都看到了表达式 <em>e</em> 的最早放置位置，但尚未使用它，那么称 <em>e</em> 在 <em>p</em> 处是可推迟的。</li>
+</ol>
+</li>
+<li><p>第四步：</p>
+<ol>
+<li><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250506110215171.png" alt="image-20250506110215171"></li>
+<li>从后往前，如果表达式 <em>e</em> 在程序点 <em>p</em> 之后的某个路径上被使用，那么称 <em>e</em> 在 <em>p</em> 处是已使用的</li>
+</ol>
+</li>
+</ol>
+<h2 id="常数传播（Constant-Propagation）"><a href="#常数传播（Constant-Propagation）" class="headerlink" title="常数传播（Constant Propagation）"></a>常数传播（Constant Propagation）</h2><ol>
+<li><p>概述：</p>
+<ol>
+<li><p>常数传播的基本概念</p>
+<p>在常数传播中，每个变量 <em>v</em> 被赋予一个状态，表示它在程序的某个点上的值。这些状态通常有以下几种：</p>
+<ol>
+<li><strong>UNDEF</strong>：表示变量的值是未定义的。</li>
+<li><strong>Constant</strong>：表示变量的值是一个具体的常数。</li>
+<li><strong>NAC</strong>（Not a Constant）：表示变量的值不是常数，即变量的值在运行时可能会变化。</li>
+</ol>
+<p>这些状态可以用一个函数 <em>m</em>(<em>v</em>) 来表示，其中 <em>m</em>(<em>v</em>) 的值可以是 UNDEF、Constant 或 NAC</p>
+</li>
+<li><p>m(v)的合并：</p>
+<ol>
+<li><strong>Merge Function: m(x)</strong> <strong>∧</strong> <strong>m(x’)</strong><ol>
+<li>UNDEF ∧ Constant &#x3D; Constant，把UNDEF看做任意值</li>
+<li>NAC ∧ Constant &#x3D; NAC</li>
+<li>Constant ∧ Constant &#x3D; Constant，相同的constant合并后还是const</li>
+<li>Constant ∧ Constant’ &#x3D; NAC，不同的const合并后就不对了。</li>
+</ol>
+</li>
+</ol>
+</li>
+<li><p>单调性：</p>
+<ol>
+<li><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250513105230264.png" alt="image-20250513105230264"></li>
+</ol>
+</li>
+</ol>
+</li>
+<li><p>两大特征：</p>
+<ol>
+<li>可能的数据流值集合是无界的（It has a unbounded set of possible data-flow values）：在常数传播中，一个变量在程序的不同路径上可能有不同的值。这些值的集合可能是无界的，即没有上限或下限。</li>
+<li>它不是分配的（It is not distributives）：f(a ∧ b) ≠ f(a) ∧ f(b).先合并再传播，和先传递再合并，不一样</li>
+</ol>
+</li>
+</ol>
+<h1 id="Ch9-2-·-符号执行（Symbolic-Execution）"><a href="#Ch9-2-·-符号执行（Symbolic-Execution）" class="headerlink" title="Ch9-2 · 符号执行（Symbolic Execution）"></a>Ch9-2 · 符号执行（Symbolic Execution）</h1><ol>
+<li><p>限制Limitations</p>
+<ol>
+<li><p>• <strong>Scalability</strong></p>
+<p>• (1) Path Explosion</p>
+<p>• (2) External Calls</p>
+<p>• (3) Constraint Solving</p>
+</li>
+</ol>
+</li>
+</ol>
+<h2 id="命题逻辑（PL）"><a href="#命题逻辑（PL）" class="headerlink" title="命题逻辑（PL）"></a>命题逻辑（PL）</h2><ol>
+<li>语法（syntax）：<img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250516102321293.png" alt="image-20250516102321293"></li>
+<li>solution<ol>
+<li>可满足性(satisfiability)和有效性(validity)：<ol>
+<li><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250516102636633.png" alt="image-20250516102636633"></li>
+</ol>
+</li>
+</ol>
+</li>
+<li>范式<ol>
+<li>Negation Normal Form (NNF)<ol>
+<li>不允许出现$¬F$：例如：¬(a ∧ b) 写为 ¬a ∨ ¬b</li>
+<li>不允许出现$F⇒G$：例如：a ⇒ b 写为 ¬a ∨ b</li>
+</ol>
+</li>
+<li>析取范式，Disjunctive Normal Form (DNF)<ol>
+<li><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250516103721661.png" alt="image-20250516103721661"></li>
+</ol>
+</li>
+<li>合取范式，Conjunctive Normal Form (CNF)<ol>
+<li>类似于DNF，只不过析取合取换位了</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>可满足性等价（Equisatisfiability）<ol>
+<li>两个公式 <em>ϕ</em> 和 <em>ψ</em> 是<strong>可满足性等价</strong>的，如果满足以下条件： <em>ϕ</em> 是可满足的⇔<em>ψ</em> 是可满足的</li>
+</ol>
+</li>
+</ol>
+<h3 id="Tseitin-Transformation"><a href="#Tseitin-Transformation" class="headerlink" title="Tseitin Transformation"></a>Tseitin Transformation</h3><ol>
+<li><strong>Tseitin 变换</strong>是一种将任意命题逻辑公式转换为合取范式（CNF）的方法，同时保持可满足性等价。![屏幕截图 2025-05-16 105137](E:\Pictures\Screenshots\屏幕截图 2025-05-16 105137.png)</li>
+<li>![屏幕截图 2025-05-16 105146](E:\Pictures\Screenshots\屏幕截图 2025-05-16 105146.png)</li>
+<li>把逻辑树写出来，根据逻辑树写出合取式，再改写以满足规范</li>
+</ol>
+<h3 id="SAT-problem"><a href="#SAT-problem" class="headerlink" title="SAT problem"></a>SAT problem</h3><ul>
+<li>如何判断一个式子是否可满足呢？真值表法太慢！</li>
+</ul>
+<ol>
+<li>DPLL<ol>
+<li><strong>DPLL算法</strong>是一种用于解决布尔可满足性问题（SAT问题）的回溯搜索算法。</li>
+<li>算法：<ol>
+<li>选择一个未赋值的变量，为其分配一个真值（通常是True或False）。</li>
+<li>简化公式，递归地调用DPLL算法。</li>
+<li>如果递归调用返回不可满足，则回溯，为该变量分配另一个真值。</li>
+</ol>
+</li>
+<li>小结论：<ol>
+<li>$(a_1 ∨ a_2 ∨ ¬c) ∧ (b_1 ∨ b_2 ∨ c)$可以立即简化为$a_1 ∨ a_2 ∨ b_1 ∨ b_2$（无论c的取值）</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>CDCL<ol>
+<li><strong>冲突驱动的子句学习（CDCL）</strong> 是一种先进的布尔可满足性问题（SAT）求解算法</li>
+<li><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250516112439776.png" alt="image-20250516112439776"></li>
+<li>遇到需要讨论的地方，就假设。例如，假设x1&#x3D;0，那么x4&#x3D;1.</li>
+<li>遇到冲突，例如x9&#x3D;1 &amp;&amp; x9 &#x3D; 0，就分析导致冲突的条件。由图可知，是x3,x7,x8导致的。这就说明x3&#x3D;1,x7&#x3D;1,x8&#x3D;0不能够同时满足</li>
+<li>把¬x3 ∨ ¬x7 ∨ x8加入原式</li>
+</ol>
+</li>
+</ol>
+<h2 id="一阶逻辑（FOL）"><a href="#一阶逻辑（FOL）" class="headerlink" title="一阶逻辑（FOL）"></a>一阶逻辑（FOL）</h2><h3 id="可满足性模理论（Satisfiability-Modulo-Theories，-SMT）"><a href="#可满足性模理论（Satisfiability-Modulo-Theories，-SMT）" class="headerlink" title="可满足性模理论（Satisfiability Modulo Theories， SMT）"></a>可满足性模理论（Satisfiability Modulo Theories， SMT）</h3><ol>
+<li>SMT求解器用于确定这些逻辑公式在给定理论下的可满足性。</li>
+<li>步骤：<ol>
+<li><strong>Step 1</strong>: Word-Level Preprocessing<ol>
+<li>简化公式</li>
+<li><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250516115056197.png" alt="image-20250516115056197"></li>
+</ol>
+</li>
+<li><strong>Step 2</strong>: Bit-Blasting (From FOL to PL)<ol>
+<li><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250516115042183.png" alt="image-20250516115042183"></li>
+</ol>
+</li>
+<li><strong>Step 3</strong>: DPLL&#x2F;CDCL</li>
+</ol>
+</li>
+</ol>
+<h1 id="Ch12-1-·-Inter-procedural-Data-Flow-Analysis"><a href="#Ch12-1-·-Inter-procedural-Data-Flow-Analysis" class="headerlink" title="Ch12-1 · Inter-procedural Data Flow Analysis"></a>Ch12-1 · Inter-procedural Data Flow Analysis</h1><h2 id="概述-4"><a href="#概述-4" class="headerlink" title="概述"></a>概述</h2><ol>
+<li><strong>交叉过程数据流分析</strong>是一种程序分析技术，用于分析程序中数据在不同过程（函数、方法）之间的流动。与仅分析单个过程的**内过程（intra-procedural）**数据流分析不同，交叉过程分析考虑了过程之间的调用关系，能够更全面地理解程序的行为和数据依赖关系</li>
+</ol>
+<h2 id="调用图和调用链"><a href="#调用图和调用链" class="headerlink" title="调用图和调用链"></a>调用图和调用链</h2><ol>
+<li><strong>调用图</strong>是一个有向图，表示程序中各个函数之间的调用关系。每个节点代表一个函数，每条有向边表示一个函数调用了另一个函数。</li>
+<li><strong>调用链</strong>是从程序的入口点到某个特定函数的调用路径。调用链可以看作是调用图中的一条路径，表示函数调用的顺序。</li>
+</ol>
+<h2 id="上下文敏感的数据流分析（Context-Sensitive-Data-Flow-Analysis）"><a href="#上下文敏感的数据流分析（Context-Sensitive-Data-Flow-Analysis）" class="headerlink" title="上下文敏感的数据流分析（Context-Sensitive Data Flow Analysis）"></a>上下文敏感的数据流分析（Context-Sensitive Data Flow Analysis）</h2><ol>
+<li><p>基于克隆的交叉过程数据流分析（Clone-based Interprocedural DFA）<img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250520102803449.png" alt="image-20250520102803449"></p>
+<ol>
+<li><strong>克隆过程</strong>：<ul>
+<li>对于每个过程，根据其调用上下文创建多个副本。每个副本对应一个特定的调用路径。</li>
+<li>例如，如果一个过程被两个不同的调用者调用，那么该过程会被克隆为两个副本，每个副本对应一个调用者。</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><p>基于摘要的交叉过程数据流分析（Summary-based Inter-procedural DFA）</p>
+<ol>
+<li><h3 id="自顶向下（Top-Down-TD）分析"><a href="#自顶向下（Top-Down-TD）分析" class="headerlink" title="自顶向下（Top-Down, TD）分析"></a>自顶向下（Top-Down, TD）分析</h3><p>自顶向下的分析方法从调用者（caller）开始，逐步分析被调用者（callee）。这种方法更具体地考虑了调用上下文，能够更精确地捕捉数据依赖关系。</p>
+</li>
+<li><h3 id="自底向上（Bottom-Up-BU）分析"><a href="#自底向上（Bottom-Up-BU）分析" class="headerlink" title="自底向上（Bottom-Up, BU）分析"></a>自底向上（Bottom-Up, BU）分析</h3><p>自底向上的分析方法从被调用者（callee）开始，逐步分析调用者（caller）。这种方法需要假设所有可能的调用上下文，但更容易并行化。<img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250520103309407.png" alt="image-20250520103309407"></p>
+</li>
+</ol>
+</li>
+</ol>
+<h3 id="DFA-as-Graph-Reachability"><a href="#DFA-as-Graph-Reachability" class="headerlink" title="DFA as Graph Reachability"></a>DFA as Graph Reachability</h3><ol>
+<li>图可达性问题<ol>
+<li>图可达性问题是图论中的一个基本问题，用于判断从一个节点到另一个节点是否存在路径。在数据流分析中，图可达性问题可以用来确定数据在程序中的流动路径。</li>
+<li><strong>节点</strong>：表示程序中的基本块（Basic Blocks），即一段没有分支的代码序列。</li>
+<li><strong>边</strong>：表示控制流的转移，即从一个基本块到另一个基本块的跳转。</li>
+</ol>
+</li>
+<li>如何判断节点可达呢？两种方法：<ol>
+<li>计算传递闭包</li>
+<li>深度优先搜索</li>
+</ol>
+</li>
+</ol>
+<h3 id="IFDS问题"><a href="#IFDS问题" class="headerlink" title="IFDS问题"></a>IFDS问题</h3><ol>
+<li><strong>I</strong>nterprocedural <strong>F</strong>inite <strong>D</strong>istributive Subset Problem：<strong>IFDS问题</strong>是一类用于交叉过程数据流分析的框架，它将数据流分析问题转化为图可达性问题，从而提供了一种高效的解决方案。IFDS框架适用于具有有限域上的分配流函数的问题，能够精确地处理全程序分析</li>
+<li>特点：<ol>
+<li><strong>过程间（Interprocedural）</strong>：考虑整个程序，包括过程调用和返回。</li>
+<li><strong>有限（Finite）</strong>：数据流事实的定义域是有限的。</li>
+<li><strong>分配性（Distributive）</strong>：流函数具有分配性，即对于任意两个数据流事实 <em>x</em> 和 <em>y</em>，有 <em>F</em>(<em>x</em>∪<em>y</em>)&#x3D;<em>F</em>(<em>x</em>)∪<em>F</em>(<em>y</em>)。</li>
+</ol>
+</li>
+<li>传递闭包方法：<ol>
+<li><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250520105953438.png" alt="image-20250520105953438"><ol>
+<li>能从0到达的地方代表着UNDEF</li>
+</ol>
+</li>
+<li>一个错误的例子：<img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250520111846295.png" alt="image-20250520111846295"><ol>
+<li>有一条路径可以从0到y，但是y显然不是UNDEF（因为z&#x3D;read（）让z变为DEF，进而y&#x3D;get（z）也是DEF）。</li>
+<li>原因是这条路径不是上下文敏感的。蓝色的是x&#x3D;get(z)的call，绿色的却是y&#x3D;get(z)的ret。</li>
+<li>解决方法：<img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250520112733340.png" alt="image-20250520112733340"></li>
+</ol>
+</li>
+</ol>
+</li>
+<li>深度优先方法：</li>
+<li>两种方法的比较：<img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250520113018740.png" alt="image-20250520113018740"></li>
+</ol>
+<h3 id="Indexing-Conventional-Reachability"><a href="#Indexing-Conventional-Reachability" class="headerlink" title="Indexing Conventional Reachability"></a>Indexing Conventional Reachability</h3><p><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250520114748097.png" alt="image-20250520114748097"></p>
+<ol>
+<li><p>标签的定义</p>
+<p>标签通常是一个包含两个值的数组 <code>[low, high]</code>，其中：</p>
+<ul>
+<li><strong><code>low</code></strong>：表示子图中的最小值。</li>
+<li><strong><code>high</code></strong>：表示节点的后序遍历值（post-order value）。</li>
+</ul>
+</li>
+<li><p>标签的性质</p>
+<ol>
+<li><strong><code>A → B ⇒ LabelB ⊆ LabelA</code></strong>：<ul>
+<li>如果存在一条从节点 <em>A</em> 到节点 <em>B</em> 的路径，则节点 <em>B</em> 的标签必须是节点 <em>A</em> 标签的子集。</li>
+<li>这是因为在路径上，节点 <em>B</em> 的 <code>low</code> 值必须大于或等于节点 <em>A</em> 的 <code>low</code> 值，而 <code>high</code> 值必须小于或等于节点 <em>A</em> 的 <code>high</code> 值。</li>
+</ul>
+</li>
+<li><strong><code>LabelB ⊈ LabelA ⇒ A ↛ B</code></strong>：<ul>
+<li>如果节点 <em>B</em> 的标签不是节点 <em>A</em> 标签的子集，则不存在从节点 <em>A</em> 到节点 <em>B</em> 的路径。</li>
+<li>这是因为如果 <em>B</em> 的 <code>low</code> 值小于 <em>A</em> 的 <code>low</code> 值，或者 <em>B</em> 的 <code>high</code> 值大于 <em>A</em> 的 <code>high</code> 值，那么 <em>B</em> 一定不在 <em>A</em> 的子图中。</li>
+</ul>
+</li>
+</ol>
+</li>
+<li></li>
+<li></li>
+</ol>
+<h2 id="上下文敏感的数据依赖分析（CS-DDA）"><a href="#上下文敏感的数据依赖分析（CS-DDA）" class="headerlink" title="上下文敏感的数据依赖分析（CS-DDA）"></a>上下文敏感的数据依赖分析（CS-DDA）</h2><ol>
+<li>概述<ol>
+<li><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250527103256566.png" alt="image-20250527103256566"></li>
+<li>同级依赖指的是相同函数中的变量依赖，不同级则是不同函数的变量</li>
+<li>依赖就是“左手依赖右手”。</li>
+<li><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250527103451399.png" alt="image-20250527103451399"></li>
+<li>不同级依赖分析时要注意比配。不能让h()的调用匹配到了给g()的返回值</li>
+</ol>
+</li>
+</ol>
+<h3 id="同级数据依赖分析"><a href="#同级数据依赖分析" class="headerlink" title="同级数据依赖分析"></a>同级数据依赖分析</h3><p><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250527104131158.png" alt="image-20250527104131158"></p>
+<ol>
+<li><p>和“summary edge”异曲同工</p>
+</li>
+<li><p>关键步骤：</p>
+<ol>
+<li>计算TC（传递闭包）</li>
+<li>更新TC</li>
+</ol>
+</li>
+<li><p><strong>Key Observation</strong>: The graph of each function is sparse, i.e., has a low treewidth (&lt; 10)</p>
+</li>
+<li><p><strong>Key Result:</strong> Answer any same-level data dependence query in O(1) after a O(n + k*log n) preprocessing</p>
+</li>
+<li><p>如何降低计算TC的复杂度呢</p>
+<ol>
+<li><p><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250527104659476.png" alt="image-20250527104659476"></p>
+</li>
+<li><p>引入树分解：</p>
+<ol>
+<li><p>定义：</p>
+<ol>
+<li><h3 id="定义-树分解"><a href="#定义-树分解" class="headerlink" title="定义 [树分解]"></a>定义 [树分解]</h3><p>给定一个图 <em>G</em>&#x3D;(<em>V</em>,<em>E</em>)，图 <em>G</em> 的<strong>树分解</strong> Tree(<em>G</em>)&#x3D;(<em>V**T</em>,<em>E**T</em>) 是一个树，其中每个节点称为一个<strong>袋子</strong>（bag），每个袋子是一个顶点子集 <em>B**i</em>⊆<em>V</em>。树分解需要满足以下条件：</p>
+<ol>
+<li><p><strong>顶点覆盖</strong>：</p>
+<ul>
+<li>图中的每个顶点 <em>v</em>∈<em>V</em> 必须至少出现在一个袋子 <em>B**i</em> 中。形式化地表示为：对于每个 <em>v</em>∈<em>V</em>，存在一个袋子 <em>B**i</em>，使得 <em>v</em>∈<em>B**i</em>。</li>
+</ul>
+</li>
+<li><p><strong>边覆盖</strong>：</p>
+<ul>
+<li>图中的每条边 (<em>u</em>,<em>v</em>)∈<em>E</em> 必须有一个袋子 <em>B**i</em> 包含 <em>u</em> 和 <em>v</em>。形式化地表示为：对于每条边 (<em>u</em>,<em>v</em>)∈<em>E</em>，存在一个袋子 <em>B**i</em>，使得 <em>u</em>∈<em>B**i</em> 且 <em>v</em>∈<em>B**i</em>。</li>
+</ul>
+</li>
+<li><p><strong>连通性</strong>：</p>
+<ul>
+<li>对于图中的任意一个顶点 <em>v</em>∈<em>V</em>，包含 <em>v</em> 的所有袋子在树中必须形成一个连通的子树。换句话说，如果 <em>v</em> 出现在多个袋子中，这些袋子在树中必须通过边相连。</li>
+</ul>
+</li>
+<li><h3 id="树宽"><a href="#树宽" class="headerlink" title="树宽"></a>树宽</h3><ul>
+<li><p><strong>定义</strong>：图 <em>G</em> 的<strong>树宽</strong>是其所有树分解中，袋子大小的最大值减1。形式化地表示为：</p>
+<p>tw(<em>G</em>)&#x3D;Tree(<em>G</em>)min(<em>B**i</em>∈Tree(<em>G</em>)max∣<em>B**i</em>∣−1)</p>
+</li>
+<li><p><strong>意义</strong>：树宽越小，图的结构越接近树，许多图算法在树宽较小的图上可以更高效地运行。</p>
+</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><p>理解：</p>
+<ol>
+<li>在同一个Bag内的节点代表能够互相到达</li>
+</ol>
+</li>
+</ol>
+</li>
+<li><p>计算TC</p>
+<ol>
+<li>想要知道两个节点能不能互相到达，就让两个Bag从下向上爬树。如果到达了同一个Bag，就说明他们能互相到达</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<h3 id="不同级数据依赖分析"><a href="#不同级数据依赖分析" class="headerlink" title="不同级数据依赖分析"></a>不同级数据依赖分析</h3><p><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250527112708159.png" alt="image-20250527112708159"></p>
+<h1 id="Ch12-2-·-指针别名分析"><a href="#Ch12-2-·-指针别名分析" class="headerlink" title="Ch12-2 · 指针别名分析"></a>Ch12-2 · 指针别名分析</h1><h2 id="概述-5"><a href="#概述-5" class="headerlink" title="概述"></a>概述</h2><ol>
+<li>别名：two expressions that denote the same memory location</li>
+</ol>
+<h2 id="May-Must-Pointer-Alias-Analysis"><a href="#May-Must-Pointer-Alias-Analysis" class="headerlink" title="May&#x2F;Must Pointer Alias Analysis"></a>May&#x2F;Must Pointer Alias Analysis</h2><ol>
+<li><p>定义：</p>
+<ol>
+<li><p><strong>May Alias（可能别名）</strong></p>
+</li>
+<li><p>定义：如果两个指针可能指向同一个内存位置，则称它们之间存在 May Alias 关系。</p>
+</li>
+<li><p><strong>Must Alias（必须别名）</strong></p>
+</li>
+<li><p>定义：如果两个指针一定指向同一个内存位置，则称它们之间存在 Must Alias 关系。</p>
+</li>
+<li><h3 id="Soundness（可靠性）"><a href="#Soundness（可靠性）" class="headerlink" title="Soundness（可靠性）"></a><strong>Soundness（可靠性）</strong></h3><p><strong>定义</strong>：一个分析方法是 <strong>sound</strong> 的，如果它能够保证所有可能的运行时行为都被考虑在内，即不会漏掉任何可能的情况。换句话说，sound 分析方法不会产生假阴性（false negatives）。</p>
+</li>
+<li><h3 id="Completeness（完整性）"><a href="#Completeness（完整性）" class="headerlink" title="Completeness（完整性）"></a><strong>Completeness（完整性）</strong></h3><p><strong>定义</strong>：一个分析方法是 <strong>complete</strong> 的，如果它能够精确地描述所有可能的运行时行为，即不会引入任何假阳性（false positives）。换句话说，complete 分析方法能够完全准确地描述指针之间的关系。</p>
+</li>
+<li><h3 id="Over-approximation（过近似）（上近似）"><a href="#Over-approximation（过近似）（上近似）" class="headerlink" title="Over-approximation（过近似）（上近似）"></a><strong>Over-approximation（过近似）（上近似）</strong></h3><p><strong>定义</strong>：Over-approximation 是一种保守的分析方法，它会引入一些假阳性（false positives），以确保不会漏掉任何可能的情况。换句话说，over-approximation 会高估指针之间的别名关系。</p>
+</li>
+<li><h3 id="Under-approximation（欠近似）（下近似）"><a href="#Under-approximation（欠近似）（下近似）" class="headerlink" title="Under-approximation（欠近似）（下近似）"></a><strong>Under-approximation（欠近似）（下近似）</strong></h3><p><strong>定义</strong>：Under-approximation 是一种精确的分析方法，它会漏掉一些可能的情况（false negatives），以确保不会引入任何假阳性。换句话说，under-approximation 会低估指针之间的别名关系。</p>
+</li>
+<li><p><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250527114858805.png" alt="image-20250527114858805"></p>
+</li>
+</ol>
+</li>
+</ol>
+<h2 id="Andersen’s-Algorithm"><a href="#Andersen’s-Algorithm" class="headerlink" title="Andersen’s Algorithm"></a>Andersen’s Algorithm</h2><ul>
+<li><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250530102322022.png" alt="image-20250530102322022"></li>
+</ul>
+<p><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250530103232544.png" alt="image-20250530103232544"></p>
+<h1 id="笔记"><a href="#笔记" class="headerlink" title="笔记"></a>笔记</h1><h2 id="第三章"><a href="#第三章" class="headerlink" title="第三章"></a>第三章</h2><ol>
+<li><p>如何证明表达式是正则的？把自动机画出来。正则的定义就是能被自动机表示</p>
+</li>
+<li><p>如何证明表达式不是正则的？Pumping Lemma。</p>
+</li>
+<li><p>泵引理可以证明不是RL，但是不能证明是RL。当存在至少一种情况不会改变文法结构时，泵引理失效。</p>
+</li>
+<li><p>确定有限自动机的五元组要搞清楚</p>
+</li>
+<li><p>字符串能否被NFA接受</p>
+</li>
+<li><p>正则到NFA转换为DFA</p>
+<ol>
+<li>正则变为NFA，关注几个基本方法</li>
+<li>NFA到DFA：子集构造法<img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250529210604379.png" alt="image-20250529210604379"><ol>
+<li>先得到初始状态集，即只需要𝜖就能到达</li>
+<li>然后经过一次字符运算，得到新的集合</li>
+<li>把新的集合拿出来继续迭代<ul>
+<li>有点像workLIst算法，算到不动点</li>
+</ul>
+</li>
+<li>带终结状态的集合作为DFA的终结状态</li>
+<li>最后可能需要最小化</li>
+</ol>
+</li>
+</ol>
+</li>
+<li><p>DFA最小化：</p>
+<ol>
+<li>把终结态和非终结态分为两个集合</li>
+<li>最每个集合中的每个状态进行传递，把结果落在相同集合的状态放一起，不同的则分开来成为新的集合</li>
+<li>迭代</li>
+<li>等价则只保留一个</li>
+</ol>
+</li>
+</ol>
+<h2 id="第四章"><a href="#第四章" class="headerlink" title="第四章"></a>第四章</h2><ol>
+<li>所有正则语言都是上下文无关语言</li>
+<li>对于一个题，可以先写出正则语言</li>
+<li>如何表示$a^nb^m,n!&#x3D;m$<ol>
+<li>$S-&gt;aSb|X|Y,X-&gt;aX|𝜖,Y-&gt;bY|𝜖$</li>
+<li>就是ab先相同，最后多出来几个a或者几个b</li>
+</ol>
+</li>
+<li>PDA：$a^ib^jc^k,i&#x3D;j,or,j&#x3D;k$</li>
+<li>$a^nb^n$是CFL，但不是RL</li>
+<li>$a^nb^nc^n$不是CFL</li>
+<li><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250601210954519.png" alt="image-20250601210954519"></li>
+</ol>
+<h3 id="RL和CFL"><a href="#RL和CFL" class="headerlink" title="RL和CFL"></a>RL和CFL</h3><ol>
+<li><p><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250307112214690.png" alt="image-20250307112214690"></p>
+<blockquote>
+<ol>
+<li>假设L是CFL，</li>
+<li>令L交$a^*b^<em>c^</em>$，后者为RL，则整体为CFL</li>
+<li>交下来结果是$a^nb^nc^n$，不是CFL</li>
+<li>矛盾，假设不成立</li>
+</ol>
+</blockquote>
+</li>
+</ol>
+<h3 id="Puming-Lemma-for-CFL"><a href="#Puming-Lemma-for-CFL" class="headerlink" title="Puming Lemma for CFL"></a>Puming Lemma for CFL</h3><ol>
+<li>{$a^nb^{n^2}$}</li>
+</ol>
+<h3 id="Top-down-parsing自上而下分析"><a href="#Top-down-parsing自上而下分析" class="headerlink" title="Top-down parsing自上而下分析"></a>Top-down parsing自上而下分析</h3><ol>
+<li><p>$$<br>A\to{Ba}\newline<br>B\to{dab}\newline<br>B\to{Cb}\newline<br>C\to{cB}\newline<br>C\to{Ac}\newline<br>$$</p>
+<ol>
+<li><p>消除左递归：带入消除。但是$B\to{cBd}$这样的消不掉，保留。</p>
+</li>
+<li><table>
+<thead>
+<tr>
+<th align="left">符号</th>
+<th align="center">First</th>
+<th align="right">Follow</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">a</td>
+<td align="center">a</td>
+<td align="right">&#x2F;</td>
+</tr>
+<tr>
+<td align="left">b</td>
+<td align="center">b</td>
+<td align="right">&#x2F;</td>
+</tr>
+<tr>
+<td align="left">c</td>
+<td align="center">c</td>
+<td align="right">&#x2F;</td>
+</tr>
+<tr>
+<td align="left">d</td>
+<td align="center">d</td>
+<td align="right">&#x2F;</td>
+</tr>
+<tr>
+<td align="left">A</td>
+<td align="center">c, d</td>
+<td align="right">$, d</td>
+</tr>
+<tr>
+<td align="left">B</td>
+<td align="center">c, d</td>
+<td align="right">c, d</td>
+</tr>
+<tr>
+<td align="left">C</td>
+<td align="center">c, d</td>
+<td align="right">c</td>
+</tr>
+</tbody></table>
+</li>
+</ol>
+</li>
+<li><p>LL(1)文法：</p>
+<ol>
+<li>特点：<ol>
+<li>无左递归</li>
+<li>无二义性</li>
+<li>最左推导</li>
+</ol>
+</li>
+<li>判断方法：First 和 Follow 集合<ol>
+<li>为了判断一个文法是否是 LL(1) 文法，需要计算每个非终结符的 <strong>First 集合</strong> 和 <strong>Follow 集合</strong>：<ol>
+<li>First(A)：A的展开式中最左的终结符集合。若A为终结符，则就是它本身<ol>
+<li>First(A)要么是终结符，要么是𝜖</li>
+</ol>
+</li>
+<li>Follow(A)：A后面紧跟的终结符集合，不包含A。注意，Follow只对非终结符有效。对于终结符不用写。<ol>
+<li>理解：<ol>
+<li>Follow(A)要么是终结符，要么是$。</li>
+<li>S是开头，$是结尾</li>
+<li>不能有𝜖</li>
+</ol>
+</li>
+<li>计算：<ol>
+<li>Follow(S) &#x3D; {$}</li>
+<li>若$A\to{BD}$，则把First(D) \ {𝜖}加入Follow(B)</li>
+<li>若$A\to{aB}$，注意，此时A的follow一定是B的follow，换言之Follow(A)是Follow(B)的子集。</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>求出来了FIrst和Follow，如何判断文法是不是LL(1)文法呢？<ol>
+<li>观察，无左递归</li>
+<li>无二义性：对于每个非终结符 <em>A</em> 的产生式 <em>A</em>→<em>α</em> 和 <em>A</em>→<em>β</em>，检查 First(<em>α</em>) 和 First(<em>β</em>) 是否有交集。例<ol>
+<li>对于 <em>A</em>→<em>a</em> 和 <em>A</em>→<em>ϵ</em>，First(<em>a</em>)&#x3D;{<em>a</em>} 和 First(<em>ϵ</em>)&#x3D;{<em>ϵ</em>} 互斥。</li>
+<li>如不互斥，则不是LL(1)文法</li>
+</ol>
+</li>
+<li>First 集和 Follow 集的互斥性<ol>
+<li>如果 <em>α</em> 可以推导出空串 <em>ϵ</em>，则检查 First(<em>β</em>) 和 Follow(<em>A</em>) 是否有交集。</li>
+<li>对于 <em>A</em>→<em>ϵ</em>，First(<em>ϵ</em>)&#x3D;{<em>ϵ</em>} 和 Follow(<em>A</em>)&#x3D;{<em>b</em>,$} 互斥</li>
+<li>如果有交集，则文法不是 LL(1) 文法。</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+<li><p>预测分析表：预测分析表是实现 LL(1) 语法分析的关键工具。它通过 First 集和 Follow 集的计算，帮助分析器在解析输入字符串时选择合适的产生式进行推导。</p>
+<ol>
+<li><p>预测分析表的结构</p>
+<p>预测分析表是一个二维表，其结构如下：</p>
+<ul>
+<li><strong>行</strong>：对应文法中的非终结符。</li>
+<li><strong>列</strong>：对应输入符号（包括终结符和输入结束符 $）。</li>
+<li><strong>表项</strong>：每个表项存储一个产生式或特殊标记（如错误标记或空产生式 <em>ϵ</em>）。</li>
+</ul>
+</li>
+<li><p><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250601211756710.png" alt="image-20250601211756710"></p>
+</li>
+</ol>
+</li>
+</ol>
+<h3 id="Bottom-Up-Parsing自下而上分析"><a href="#Bottom-Up-Parsing自下而上分析" class="headerlink" title="Bottom-Up Parsing自下而上分析"></a>Bottom-Up Parsing自下而上分析</h3><ol>
+<li>位移规约解析<ol>
+<li>位移规约解析是一种自底向上的语法分析方法，广泛应用于编译器设计中。它通过将输入符号逐步推入栈中，并根据文法规则进行规约，最终生成语法树。位移规约解析的核心在于两个基本操作：<strong>位移（Shift）</strong> 和 <strong>规约（Reduce）</strong>。</li>
+<li>基本概念<ol>
+<li><strong>位移（Shift）</strong><ol>
+<li>操作：将输入符号从输入缓冲区移动到分析栈的栈顶。</li>
+<li>目的：将输入符号逐步推入栈中，为后续的规约操作做准备。</li>
+</ol>
+</li>
+<li><strong>规约（Reduce）</strong><ol>
+<li>操作：根据文法规则，将栈顶的若干符号替换为规则的左侧非终结符。</li>
+<li>目的：逐步构建语法树，将输入符号归约为更高层次的语法结构。</li>
+</ol>
+</li>
+<li><strong>句柄</strong>：具体来说，句柄是当前栈顶符号序列中<strong>最左边</strong>的一个子序列，该子序列可以匹配某个产生式的右侧。</li>
+</ol>
+</li>
+<li>位移规约解析的步骤<ol>
+<li>初始化：<ul>
+<li>创建一个分析栈，初始时栈中只有一个特殊的起始符号（如 <code>$</code>）。</li>
+<li>创建一个输入缓冲区，包含输入符号和输入结束符（如 <code>$</code>）。</li>
+</ul>
+</li>
+<li>分析过程：<ul>
+<li>重复以下步骤，直到分析栈和输入缓冲区都为空：<ol>
+<li>位移操作：<ul>
+<li>如果当前<strong>输入</strong>符号是一个终结符，并且根据当前状态和输入符号，应该进行位移操作，则将输入符号推入分析栈，并移动输入指针到下一个符号。</li>
+</ul>
+</li>
+<li>规约操作：<ul>
+<li>如果<strong>分析栈</strong>的栈顶符号可以匹配某个产生式的右侧，则根据该产生式进行规约操作。将产生式右侧的符号从栈顶弹出，并将产生式左侧的非终结符推入栈中。</li>
+</ul>
+</li>
+<li>接受状态：<ul>
+<li>如果分析栈中只剩下起始符号和输入结束符，且输入缓冲区为空，则解析成功。</li>
+</ul>
+</li>
+<li>错误处理：<ul>
+<li>如果无法进行位移或规约操作，则报告语法错误。</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250601213025655.png" alt="image-20250601213025655"></li>
+</ol>
+</li>
+</ol>
+<h2 id="第五章"><a href="#第五章" class="headerlink" title="第五章"></a>第五章</h2><ol>
+<li><p>SDT语法制导翻译，和SDD很像：</p>
+<ol>
+<li><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250530161958331.png" alt="image-20250530161958331"></li>
+<li><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250530164309828.png" alt="image-20250530164309828"></li>
+<li><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250530164235753.png" alt="image-20250530164235753"></li>
+</ol>
+</li>
+<li><p>SDD：语法制导的定义</p>
+<ol>
+<li>SDD三要素：文法，属性，规则</li>
+<li>S属性定义：父节点的值有子节点计算出来。</li>
+<li>L属性定义：产生式中某个节点的值只能由其左侧的值求出。<img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250602145848506.png" alt="image-20250602145848506"></li>
+<li>属性：<ol>
+<li>综合属性.syn：<ol>
+<li>用的是自身的产生式所关联的语义规则来定义</li>
+<li>即通过N的子节点或本身的属性值来定义</li>
+</ol>
+</li>
+<li>继承属性.inh：<ol>
+<li>用的是父节点所关联的语义规则来定义</li>
+<li>即通过N的父节点、本身或兄弟节点的属性值来定义</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+<li><p><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250530110305304.png" alt="image-20250530110305304"><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250601213830036.png" alt="image-20250601213830036"></p>
+<ol>
+<li>左图是传统的左递归，右图是右递归（消除左递归的结果）</li>
+<li>左图是自底向上计算，右图是从顶往下计算</li>
+<li>右图.inh是指继承属性，即从父节点或兄弟节点获得的值。.syn是综合属性，即向父节点传送的值</li>
+</ol>
+</li>
+<li><p>公式：<img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250311103010549.png" alt="image-20250311103010549"></p>
+</li>
+</ol>
+<h2 id="第六章"><a href="#第六章" class="headerlink" title="第六章"></a>第六章</h2><ol>
+<li><p>DAG：有向无环图</p>
+<ol>
+<li>从下往上画，箭头指向父节点</li>
+<li>符号写在节点下面</li>
+<li><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250530171736424.png" alt="image-20250530171736424"></li>
+<li>被减数或者被除数放在左边</li>
+<li>在<strong>表达式计算</strong>或<strong>代码优化</strong>时，<strong>相同的子表达式</strong>可能会重复出现。<strong>DAG 通过共享公共子表达式</strong>，减少重复计算，提高效率。</li>
+</ol>
+</li>
+</ol>
+<h3 id="内存结构"><a href="#内存结构" class="headerlink" title="内存结构"></a>内存结构</h3><ol>
+<li><p>栈内部有哪些必要部分？</p>
+<ol>
+<li>局部变量</li>
+<li>返回值，参数</li>
+<li>返回地址</li>
+<li>data to recover(?)</li>
+</ol>
+</li>
+<li><p>函数调用时，栈中发生了什么（即函数调用的步骤）：</p>
+<ol>
+<li><h3 id="调用前"><a href="#调用前" class="headerlink" title=". 调用前"></a>. 调用前</h3><ul>
+<li><strong>调用者的状态保存</strong>：在调用函数之前，调用者（即调用当前函数的代码）的执行状态需要被保存。这通常包括：<ul>
+<li><strong>寄存器保存</strong>：某些寄存器（如通用寄存器、状态寄存器等）的值会被保存到栈中。这些寄存器可能包含调用者的局部变量、状态信息等。</li>
+<li><strong>返回地址保存</strong>：调用者的下一条指令地址（即函数调用完成后需要返回到的位置）会被保存到栈中。这个地址通常被称为返回地址。</li>
+<li><strong>参数准备</strong>：调用者会将函数调用所需的参数准备好，并按照一定的顺序（通常是从右到左）压入栈中。这些参数将被传递给被调用的函数。</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-调用时"><a href="#2-调用时" class="headerlink" title="2. 调用时"></a>2. 调用时</h3><ul>
+<li><strong>栈帧创建</strong>：当函数被调用时，系统会为被调用的函数创建一个新的栈帧（Stack Frame）。栈帧是栈中的一个区域，用于存储函数调用期间所需的所有信息。<ul>
+<li><strong>局部变量分配</strong>：被调用函数的局部变量会在栈帧中分配空间。这些局部变量只在函数调用期间有效，函数调用结束后，这些空间会被释放。</li>
+<li><strong>寄存器保存与恢复</strong>：某些寄存器的值可能会被保存到栈帧中，以便在函数调用期间使用这些寄存器。函数调用结束后，这些寄存器的值会被恢复。</li>
+<li><strong>函数执行</strong>：被调用的函数开始执行，它会使用栈帧中的局部变量和参数进行计算。在函数执行过程中，可能会进行更多的函数调用，从而在栈中创建更多的栈帧。</li>
+</ul>
+</li>
+</ul>
+<h3 id="3-调用后"><a href="#3-调用后" class="headerlink" title="3. 调用后"></a>3. 调用后</h3><ul>
+<li><strong>返回值处理</strong>：函数执行完成后，会将返回值（如果有）存储在某个约定的位置（通常是某个寄存器或栈中的某个位置）。</li>
+<li><strong>栈帧销毁</strong>：被调用函数的栈帧会被销毁。这包括释放局部变量占用的空间，恢复之前保存的寄存器值等。</li>
+<li><strong>返回地址恢复</strong>：从栈中恢复之前保存的返回地址，程序控制权会跳转到这个地址，继续执行调用者的代码。</li>
+<li><strong>调用者状态恢复</strong>：调用者的寄存器值等状态信息被恢复，调用者的代码继续执行。</li>
+</ul>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><ul>
+<li><strong>调用前</strong>：保存调用者的状态，准备参数。<ul>
+<li>例如：sw ra, 4(sp)把调用者的返回地址线保存到栈上。</li>
+</ul>
+</li>
+<li><strong>调用时</strong>：创建栈帧，分配局部变量空间，执行函数。<ul>
+<li>例如：addi sp, sp, -4</li>
+</ul>
+</li>
+<li><strong>调用后</strong>：销毁栈帧，恢复调用者状态，继续执行调用者的代码。<ul>
+<li>例如：恢复返回地址lw ra 0(sp)，销毁栈帧：addi sp, sp, 4</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+</li>
+</ol>
+<h3 id="三地址码-1"><a href="#三地址码-1" class="headerlink" title="三地址码"></a>三地址码</h3><ol>
+<li><p>可能出一个快排的题目</p>
+</li>
+<li><p><strong>三地址语句不是三地址码！！！</strong></p>
+<ol>
+<li>三地址语句如x &#x3D; t + s</li>
+<li>三地址码如LD R1, x</li>
+</ol>
+</li>
+<li><p>注意翻译的时候，运算结果要先用临时变量保存，然后才可以赋值</p>
+</li>
+<li><p>中间码写法：<img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250318112510132.png" alt="image-20250318112510132"></p>
+</li>
+<li><p>四元式序列格式：<img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250531153012392.png" alt="image-20250531153012392"></p>
+</li>
+<li><p>三元式序列格式：<img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250531153024914.png" alt="image-20250531153024914"></p>
+<ol>
+<li>注意，像a &#x3D; b + c这种语句，结果是用编号表示，即#0这种，不用写a</li>
+<li>但是像a &#x3D; d这种语句，要把a写出来。# 1: (&#x3D;, d, a)</li>
+</ol>
+</li>
+<li><p><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250601215759188.png" alt="image-20250601215759188"></p>
+</li>
+<li><p>间接三元式序列写法：两张表：三元式表和间接码表<img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250531154758707.png" alt="image-20250531154758707"></p>
+<ol>
+<li>三元式表：和前面的三元式表几乎一样，但是不要出现重复的语句</li>
+<li>间接码表：根据三元式表的编号选择性的引用。</li>
+</ol>
+</li>
+<li><p>对于跳转的操作符：goto, ifTrue</p>
+</li>
+<li><p>对于数组的操作符：</p>
+</li>
+<li><p>[ ]：( [ ], b, t1, t2 )     &#x2F;&#x2F; t2 &#x3D; b[ j ]</p>
+</li>
+<li><p>[ ]&#x3D;：( [ ]&#x3D;, a, t4, t3 )    &#x2F;&#x2F; a[ t4 ] &#x3D; t3</p>
+</li>
+</ol>
+<h3 id="静态单赋值（有题不会）"><a href="#静态单赋值（有题不会）" class="headerlink" title="静态单赋值（有题不会）"></a>静态单赋值（有题不会）</h3><ul>
+<li><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250531165713429.png" alt="image-20250531165713429"></li>
+</ul>
+<ol>
+<li><p>一般来说while的头尾会有φ函数</p>
+</li>
+<li><p>熟悉短路回填算法（Short-Circuit Backpatching）</p>
+</li>
+<li><p><strong>语句翻译（不会）</strong>：</p>
+<ol>
+<li>例题：<img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250531162952427.png" alt="image-20250531162952427"><ol>
+<li>先构造语法分析树：<img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250602133052384.png" alt="image-20250602133052384"></li>
+<li>注意翻译要求，要求用这里的翻译方案，所以还是要乘width</li>
+<li>把每一步展开，在需要临时变量的地方做好标记</li>
+<li>每一个gen都代表一条三地址码语句，但是不用写在分析树上</li>
+<li>每一条规则都代表分析树上的一个信息</li>
+</ol>
+</li>
+<li>例题：<img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250531170153835.png" alt="image-20250531170153835"><ol>
+<li>真值列表和假值列表怎么写？</li>
+<li>这两个表中装的是 goto 语句目标地址</li>
+</ol>
+</li>
+</ol>
+</li>
+<li></li>
+</ol>
+<h2 id="第八章"><a href="#第八章" class="headerlink" title="第八章"></a>第八章</h2><ol>
+<li><p><strong>三地址语句不是三地址码！！！</strong></p>
+</li>
+<li><p>riscv常见的操作符：</p>
+<ol>
+<li>beq, bne, blt, bgt</li>
+<li>JAL rd, offset   # 跳转到 PC + offset，并将返回地址存入 rd（一般为 ra</li>
+<li>JALR rd, offset(rs1)</li>
+<li>lw t0, 4(sp) 或 lw t0, x</li>
+<li>sw t0, 4(sp) 或 sw t0, x</li>
+</ol>
+</li>
+<li><p>图着色算法：</p>
+<ol>
+<li><p>思想：图着色算法</p>
+<ol>
+<li>先画出干扰图<ol>
+<li>会同时生存的寄存器之间加一条边</li>
+</ol>
+</li>
+<li>计算着色最少需要的颜色n<ol>
+<li>若k&gt;&#x3D;n，即能够用k种颜色着色，则容易处理</li>
+<li>如果k&lt;n则spilling</li>
+</ol>
+</li>
+</ol>
+</li>
+<li><p>Chaitin’s Algorithm（一个图着色算法）</p>
+<ul>
+<li>易知，若节点的度小于k，则容易用k色着色</li>
+</ul>
+<ol>
+<li>所以，我们先把度小于k的节点压栈，最后着色</li>
+<li>如果没有，则选择一个度最小的节点放入列表。</li>
+<li>若表不为空，表中的节点要spilling，即插入load,store指令。然后重新画图。</li>
+<li>迭代第1、2、3条</li>
+</ol>
+</li>
+<li><p>Chaitin-Briggs Algorithm（前一个算法等等改进）</p>
+<ul>
+<li>思想是不急着spilling，减少spill code</li>
+<li>即使没有满足要求的节点，我们也尝试把一个节点压栈。</li>
+<li>不一定成功</li>
+<li><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250408114747094.png" alt="image-20250408114747094"></li>
+<li><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250408114804851.png" alt="image-20250408114804851"></li>
+</ul>
+</li>
+</ol>
+</li>
+</ol>
+<h3 id="机器码"><a href="#机器码" class="headerlink" title="机器码"></a>机器码</h3><ol>
+<li><img src="E:\Pictures\Screenshots\A4C440C08DF9249AEC705CA307F288F2.jpg" alt="A4C440C08DF9249AEC705CA307F288F2"></li>
+<li>如题：<ol>
+<li>y &#x3D; *q<ol>
+<li>LD R1 q</li>
+<li>LD R2 *R1</li>
+<li>ST y R2</li>
+</ol>
+</li>
+<li>q &#x3D; q + 4<ol>
+<li>LD R1 q</li>
+<li>ADD R1 R1 #4</li>
+<li>ST q R1</li>
+</ol>
+</li>
+<li>*p &#x3D; y<ol>
+<li>LD R1 y</li>
+<li>LD R2 p </li>
+<li>ST *R2 R1</li>
+</ol>
+</li>
+</ol>
+</li>
+<li><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250602150004004.png" alt="image-20250602150004004"></li>
+</ol>
+<h3 id="寄存器"><a href="#寄存器" class="headerlink" title="寄存器"></a>寄存器</h3><ol>
+<li><p>为什么要寄存器分配？</p>
+<ol>
+<li>在避免**溢出（spill）**的情况下，<strong>减少</strong>物理寄存器使用。</li>
+</ol>
+</li>
+<li><p>什么是寄存器生命周期？</p>
+<ol>
+<li>从第一次使用，到最后一次使用之前</li>
+</ol>
+</li>
+<li><p>![b99444ab4b23b65a81f1e3906549f76b](E:\Documents\Tencent Files\2087179041\nt_qq\nt_data\Pic\2025-04\Ori\b99444ab4b23b65a81f1e3906549f76b.jpg)</p>
+<blockquote>
+<ol>
+<li>第4条已经解答</li>
+<li>2个。注意，不要简单的从左往右写，这样的话就要从头到尾保存a-1的值，没用。</li>
+<li>略</li>
+</ol>
+</blockquote>
+<ol start="6">
+<li>![50304d832c5dcecacb25ff2c46c45764](E:\Documents\Tencent Files\2087179041\nt_qq\nt_data\Pic\2025-04\Ori\50304d832c5dcecacb25ff2c46c45764.jpg)</li>
+</ol>
+<blockquote>
+<ol>
+<li>false。</li>
+</ol>
+</blockquote>
+<ol start="7">
+<li><p>![27eb905b5102524f832632dd4a80b887](E:\Documents\Tencent Files\2087179041\nt_qq\nt_data\Pic\2025-04\Ori\27eb905b5102524f832632dd4a80b887.jpg)</p>
+</li>
+<li><p>![f16c9d6b485184730df0a5cc65dbe63c](E:\Documents\Tencent Files\2087179041\nt_qq\nt_data\Pic\2025-04\Ori\f16c9d6b485184730df0a5cc65dbe63c.jpg)</p>
+</li>
+<li><p>![a8247b709ef323d292ac02e78aec1289](E:\Documents\Tencent Files\2087179041\nt_qq\nt_data\Pic\2025-04\Ori\a8247b709ef323d292ac02e78aec1289.jpg)</p>
+<blockquote>
+<ol>
+<li>画出生命周期图，看重叠部分，就是无溢出所需要的寄存器。然后画依赖图，只要同时存在就连边。</li>
+</ol>
+</blockquote>
+</li>
+<li><p>![7c4f7ce31b032857b2dd3f88abe841f4](E:\Documents\Tencent Files\2087179041\nt_qq\nt_data\Pic\2025-04\Ori\7c4f7ce31b032857b2dd3f88abe841f4.jpg)</p>
+<blockquote>
+<ul>
+<li>不用考虑控制流的问题，直接看行号。</li>
+<li>注意生命周期是到最后一次使用的前一行</li>
+</ul>
+</blockquote>
+</li>
+<li><p>![f4142ea4341eeaf67c4317ef4b43721e](E:\Documents\Tencent Files\2087179041\nt_qq\nt_data\Pic\2025-04\Ori\f4142ea4341eeaf67c4317ef4b43721e.jpg)</p>
+<blockquote>
+<ol>
+<li>要先画依赖图</li>
+</ol>
+</blockquote>
+</li>
+</ol>
+</li>
+</ol>
+<h2 id="第九章"><a href="#第九章" class="headerlink" title="第九章"></a>第九章</h2><h3 id="支配"><a href="#支配" class="headerlink" title="支配 ***"></a>支配 ***</h3><ol>
+<li><p>支配：</p>
+<ol>
+<li><p><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250325103734981.png" alt="image-20250325103734981"></p>
+<ol>
+<li>A支配B：从入口开始进入B的所有路径一定经过A</li>
+<li>A后支配B：从B开始到出口的所有路径一定经过A</li>
+<li>A严格支配B：A支配B但是A不等于B。所有基本块都支配自己，但它们不会严格支配自己</li>
+<li>A立即支配B：A严格支配B，且不存在A严格支配C的同时C严格支配B</li>
+</ol>
+</li>
+<li><p>支配树：支配树是一个有向树，其中每个节点的父节点是它的立即支配节点。支配树的根是控制流图的入口节点。</p>
+<ol>
+<li><p>图中边的类型（基于支配树的 DFS）</p>
+<p>假设我们从控制流图（CFG）入口出发进行 <strong>深度优先遍历（DFS）</strong>，那么访问过程中，图的边可以被分类如下：</p>
+<h3 id="1-树边（Tree-edge）"><a href="#1-树边（Tree-edge）" class="headerlink" title="1. 树边（Tree edge）"></a>1. <strong>树边（Tree edge）</strong></h3><ul>
+<li>DFS 过程中沿着尚未访问的子节点走的边。</li>
+<li>组成 DFS 树的主干结构。</li>
+<li>就是存在于支配树中的边</li>
+</ul>
+<h3 id="2-前进边（Forward-edge）"><a href="#2-前进边（Forward-edge）" class="headerlink" title="2. 前进边（Forward edge）"></a>2. <strong>前进边（Forward edge）</strong></h3><ul>
+<li>指向已访问过的“后代”节点（在 DFS 树中向下跳过中间层级）。</li>
+</ul>
+<h3 id="3-后退边（Back-edge）"><a href="#3-后退边（Back-edge）" class="headerlink" title="3. 后退边（Back edge）"></a>3. <strong>后退边（Back edge）</strong></h3><ul>
+<li>指向已访问过的“祖先”节点（常表示<strong>循环结构</strong>，例如回跳到循环头）。</li>
+</ul>
+<h3 id="4-交叉边（Cross-edge）"><a href="#4-交叉边（Cross-edge）" class="headerlink" title="4. 交叉边（Cross edge）"></a>4. <strong>交叉边（Cross edge）</strong></h3><ul>
+<li>指向非祖先也非后代的<strong>其他分支的节点</strong>。</li>
+</ul>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+<li><p>如何判断一个流图是<strong>可规约</strong>的？<img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250602152334869.png" alt="image-20250602152334869"></p>
+<ol>
+<li>一个控制流图是可规约的，当且仅当：<ul>
+<li><strong>所有的后退边（Back Edges）</strong> <code>X → Y</code> 满足：<ul>
+<li><code>Y</code> 是 <code>X</code> 的**支配者（dominator）&#96;，即所有的后退边都是回边</li>
+</ul>
+</li>
+<li>**其余的边（非后退边）*<em>构成的图是*<em>无环的</em></em></li>
+</ul>
+</li>
+</ol>
+</li>
+<li><p>计算流图的深度：<img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250602152632442.png" alt="image-20250602152632442"><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250602152728775.png" alt="image-20250602152728775"></p>
+</li>
+<li><p><strong>自然循环</strong>：<img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250602152823700.png" alt="image-20250602152823700"></p>
+<ol>
+<li>只有一个入口header，且header要能支配循环中所有的节点</li>
+<li>最大的强联通分量（强联通分量：任意两个节点都可以到达）</li>
+<li>一个图可以有多个自然循环。可以通过抓回边来找</li>
+</ol>
+</li>
+<li><p>若a dom c且b dom c，证明a, b之间有支配关系</p>
+<blockquote>
+<p>考虑支配数，a到c有边，b到c有边，求证ab之间有边</p>
+</blockquote>
+</li>
+<li><p>在CFG（控制流图）中有$a\to{b}$，证明idon(b) dom a。</p>
+<blockquote>
+<p>考虑反证法</p>
+</blockquote>
+</li>
+<li><p>画支配树可以倒过来想，从最后开始找支配节点。因为节点可以有很多子节点，但是只有唯一的父节点。</p>
+</li>
+<li><p>找支配前沿时，配合支配树更快</p>
+</li>
+</ol>
+<h2 id="ch9-1"><a href="#ch9-1" class="headerlink" title="ch9-1"></a>ch9-1</h2><ol>
+<li>流控制当中，要会worklist算法</li>
+<li>数据流方程</li>
+<li>能举例，什么是“可分配的控制流分析”。先分配再传递和先传递再分配结果相同，就是可分配。f(a v b) &#x3D; f(a) v f(b).</li>
+<li>会证明worklist算法的收敛性（可终止）：单调有界。<ol>
+<li><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250506103954853.png" alt="image-20250506103954853"></li>
+</ol>
+</li>
+<li>一句话解释什么是数据流分析</li>
+<li>The Lazy Code Motion Problem是什么（3点），怎么办（4点）</li>
+</ol>
+<h3 id="三大经典DFA-1"><a href="#三大经典DFA-1" class="headerlink" title="三大经典DFA ***"></a>三大经典DFA ***</h3><ol>
+<li>reaching definition<ol>
+<li><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250601162651074.png" alt="image-20250601162651074"></li>
+</ol>
+</li>
+<li>Available Expressions<ol>
+<li><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250601162721099.png" alt="image-20250601162721099"></li>
+<li>gen中这些表达式都在本块中<strong>被明确计算</strong>，并且在到达前、计算后，<strong>没有变量被重新赋值影响它们</strong>。换言之，凡是包含重新定义的表达式都是kill</li>
+<li>注意这里的表达式都是‘&#x3D;’右边的式子</li>
+</ol>
+</li>
+<li>Live Variable Analysis<ol>
+<li><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250601162709850.png" alt="image-20250601162709850"></li>
+</ol>
+</li>
+</ol>
+<h2 id="ch9-2"><a href="#ch9-2" class="headerlink" title="ch9-2"></a>ch9-2</h2><ol>
+<li><p>复习加法器原理，考试可能考在PL或FOL上</p>
+</li>
+<li><p>优化方法解释：<img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250602150656533.png" alt="image-20250602150656533"></p>
+<ol>
+<li><p>消除公共⼦表达式：顾名思义</p>
+</li>
+<li><p>对归纳变量进⾏强度消减：</p>
+<ol>
+<li>将<strong>计算代价高的运算</strong>（如乘法、除法）转换为<strong>计算代价低的运算</strong>（如加法、移位），<strong>前提是语义不变</strong>。</li>
+<li><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250601154304668.png" alt="image-20250601154304668"></li>
+</ol>
+</li>
+<li><p>消除归纳变量：</p>
+<ol>
+<li><p><strong>归纳变量</strong>是指在循环中<strong>线性变化的变量</strong>（如 <code>i = i + 1</code>, <code>j = j + 2</code>, <code>x = x - 3</code>）。</p>
+<blockquote>
+<p>如果一个归纳变量能被另一个归纳变量线性表示，就可以<strong>消除冗余变量</strong>，减少空间&#x2F;计算。</p>
+</blockquote>
+</li>
+<li><p><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250601154519643.png" alt="image-20250601154519643"></p>
+</li>
+</ol>
+</li>
+<li><p>复制传播和死代码消除：<img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250602150853983.png" alt="image-20250602150853983"></p>
+</li>
+<li><p>常量折叠</p>
+</li>
+<li><p>代码移动</p>
+</li>
+</ol>
+</li>
+</ol>
+<h3 id="符号执行"><a href="#符号执行" class="headerlink" title="符号执行"></a>符号执行</h3><p>1.<br>2. Tseitin Transformation：</p>
+<ol>
+<li>Tseitin Transformation 是一种将命题逻辑公式转换为合取范式（CNF）的方法，同时保持可满足性不变，即转换后的公式与原公式等可满足</li>
+<li>步骤：<ol>
+<li>把原来的每个节点全部用新的符号代替，然后把</li>
+</ol>
+</li>
+</ol>
+<h2 id="第十章"><a href="#第十章" class="headerlink" title="第十章"></a>第十章</h2><ol>
+<li>依赖图<img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250415103857514.png" alt="image-20250415103857514"></li>
+<li></li>
+</ol>
+<h1 id="第十二章"><a href="#第十二章" class="headerlink" title="第十二章"></a>第十二章</h1><ol>
+<li><p>IFDS问题。画图<img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250520105953438.png" alt="image-20250520105953438"><br>1. </p>
+</li>
+<li><p><strong>CS-DDA</strong></p>
+</li>
+<li><p><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250527113455654.png" alt="image-20250527113455654"></p>
+</li>
+<li><p>Andersen算法和图</p>
+<ol>
+<li>如何根据程序表示集合关系，如何画图，</li>
+</ol>
+</li>
+</ol>
+<h1 id="复习重点"><a href="#复习重点" class="headerlink" title="复习重点"></a>复习重点</h1><h2 id="前端"><a href="#前端" class="headerlink" title="前端"></a>前端</h2><h3 id="part1-·-Regex，NFA，DFA"><a href="#part1-·-Regex，NFA，DFA" class="headerlink" title="part1 · Regex，NFA，DFA"></a>part1 · Regex，NFA，DFA</h3><ol>
+<li>正则语言是指能够被NFA接受的语言</li>
+<li>掌握正则到NFA到（min）DFA的转换<ol>
+<li>$正则\to{NFA}$<img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250618131723617.png" alt="image-20250618131723617"></li>
+<li>$NFA\to{DAF}$：子集构造法</li>
+<li>$DFA\to{(min)DFA}$</li>
+</ol>
+</li>
+<li>掌握正则语言</li>
+</ol>
+<h3 id="part2-·-CFG-and-Parsing"><a href="#part2-·-CFG-and-Parsing" class="headerlink" title="part2 · CFG and Parsing"></a>part2 · CFG and Parsing</h3><ol>
+<li><p>一个上下文无关语言是一个四元组：G &#x3D; ( N, T, S, P )</p>
+<ol>
+<li>N：非终结符集合</li>
+<li>T：终结符集合</li>
+<li>S：起始符号（S ∈ N）</li>
+<li>P：产生式规则集合</li>
+</ol>
+</li>
+<li><p><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250618135828457.png" alt="image-20250618135828457"><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250618135811577.png" alt="image-20250618135811577"></p>
+</li>
+<li><p>递归下降</p>
+<ol>
+<li>左递归问题<ol>
+<li>直接左递归：用公式<img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250618140443487.png" alt="image-20250618140443487"></li>
+<li>间接左递归：<strong>怎么消？</strong><ol>
+<li>带入消除<ol>
+<li><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250618140627168.png" alt="image-20250618140627168"><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250618140635824.png" alt="image-20250618140635824"><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250618140654350.png" alt="image-20250618140654350"></li>
+<li>对于B的部分就可以不用管了，因为打破了间接循环依赖</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>回溯问题<ol>
+<li>LL(1)文法：<ol>
+<li>特征：<ol>
+<li>无左递归</li>
+<li>无二义性</li>
+<li>最左推导</li>
+<li>除此之外要注意：一次只看一个符号</li>
+</ol>
+</li>
+<li>建立<strong>预测表</strong><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250618142606727.png" alt="image-20250618142606727"><ol>
+<li>栈是要推导的文法，而输入是待匹配的字符串</li>
+<li>左侧非终结符是栈顶符号，输入字符就是下一个待匹配的字符</li>
+</ol>
+</li>
+<li>计算First，Follow：<ol>
+<li>First(A)：A的展开式中最左的终结符集合。若A为终结符，则就是它本身<ol>
+<li>First(A)要么是终结符，要么是𝜖</li>
+</ol>
+</li>
+<li>Follow(A)：A后面紧跟的终结符集合，不包含A。注意，Follow只对非终结符有效。对于终结符不用写。<ol>
+<li>理解：<ol>
+<li>Follow(A)要么是终结符，要么是$。</li>
+<li>S是开头，$是结尾</li>
+<li>不能有𝜖</li>
+</ol>
+</li>
+<li>计算：<ol>
+<li>Follow(S) &#x3D; {$}</li>
+<li>若$A\to{BD}$，则把First(D) \ {𝜖}加入Follow(B)</li>
+<li>若$A\to{aB}$，注意，此时A的follow一定是B的follow，换言之Follow(A)是Follow(B)的子集。</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>如何构建预测表：<ol>
+<li><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250618143451757.png" alt="image-20250618143451757"></li>
+<li>若对应位置已有内容，不要覆盖</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<h3 id="part3-·-IR-Generation"><a href="#part3-·-IR-Generation" class="headerlink" title="part3 · IR Generation"></a>part3 · IR Generation</h3><ol>
+<li>三地址码<ol>
+<li>注意t &#x3D; a [ p ]不用手动乘元素大小</li>
+<li>快排</li>
+</ol>
+</li>
+<li>SSA<ol>
+<li>特征<ol>
+<li>每个变量只有一次定义</li>
+<li>用φ合并</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>支配树<ol>
+<li>支配的相关概念：<ol>
+<li>立即支配：Immediate dominance – A strict-dom B, but there’s no C, such that A strict-dom C, C strict-dom B</li>
+</ol>
+</li>
+<li>什么是支配树，或者说如何构建支配树<ol>
+<li>支配树是一个有向树结构，反映了控制流图中所有基本快之间的支配关系</li>
+<li><strong>支配树中的父节点立即支配子节点</strong></li>
+</ol>
+</li>
+<li>证明支配树为什么是树，即证明表示支配关系的图一定是树？<ol>
+<li>要证明一个图是树，就要证明三点：<ol>
+<li>除了根节点之外，每个节点只有一个父节点</li>
+<li>图是连通的</li>
+<li>无环</li>
+</ol>
+</li>
+<li>要证明立即支配图是树结构，也是从这三点下手<ol>
+<li>唯一父节点：显然，根节点就是入口节点。除此之外，所有节点的立即支配节点是唯一的。<ol>
+<li>反证法：假设节点A有两个立即支配节点B, C，作为两个同时支配A的节点，他们之间一定有支配关系。但是这违反了立即支配的定义，所以假设不成立。</li>
+</ol>
+</li>
+<li>图是连通的：显然。</li>
+<li>图是无环的：<ol>
+<li>反证法：假设存在环路，则可以推导出 A 立即支配 A 本身，立即支配是严格支配，则说明A !&#x3D; A，矛盾。</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>支配前沿（DF）<ol>
+<li>定义：<ol>
+<li>给定控制流图（CFG）中的基本块 <em>D</em>，它的**支配前沿（DF）**是所有满足以下条件的基本块 <em>X</em> 的集合：<ol>
+<li><em>D</em> <strong>支配</strong> <em>X</em> 的某个<strong>前驱（predecessor）</strong> <em>P</em>（即 <em>D</em> dom <em>P</em>），</li>
+<li>但 <em>D</em> <strong>不严格支配</strong> <em>X</em>（即 <em>D</em> 不是 <em>X</em> 的最近支配者，或者说 <em>X</em> 不在 <em>D</em> 的支配树子树中）。</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>迭代支配前沿（IDF）<ol>
+<li><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250618153542522.png" alt="image-20250618153542522"></li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<h2 id="中端"><a href="#中端" class="headerlink" title="中端"></a>中端</h2><h3 id="part1-·-Data-Flow-Analysis"><a href="#part1-·-Data-Flow-Analysis" class="headerlink" title="part1 · Data Flow Analysis"></a>part1 · Data Flow Analysis</h3><ol>
+<li><p>三大数据流分析</p>
+<ol>
+<li>reaching definition<ol>
+<li><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250601162651074.png" alt="image-20250601162651074"></li>
+</ol>
+</li>
+<li>Available Expressions<ol>
+<li><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250601162721099.png" alt="image-20250601162721099"></li>
+<li>gen中这些表达式都在本块中<strong>被明确计算</strong>，并且在到达前、计算后，<strong>没有变量被重新赋值影响它们</strong>。换言之，凡是包含重新定义的表达式都是kill</li>
+<li>注意这里的表达式都是‘&#x3D;’右边的式子</li>
+<li>注意是<strong>取交集</strong></li>
+<li>注意kill要检查的表达式包括块内使用的和 IN 中的表达式。都要检查</li>
+</ol>
+</li>
+<li>Live Variable Analysis<ol>
+<li><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250601162709850.png" alt="image-20250601162709850"></li>
+<li>注意是<strong>逆向分析</strong></li>
+</ol>
+</li>
+</ol>
+</li>
+<li><p>worklist算法</p>
+<ol>
+<li><p>大意：</p>
+<ol>
+<li><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250618155858785.png" alt="image-20250618155858785"></li>
+<li>初始化所有 basic block 的 IN[B] &#x2F; OUT[B]；</li>
+<li>把所有 block 加入工作列表；</li>
+<li>while 工作列表非空：<ol>
+<li>从列表中取出一个 block；</li>
+<li>用 transfer function 和 meet operator 更新 OUT[B] 或 IN[B]；</li>
+<li>如果值变化了，则把它的前驱&#x2F;后继加入列表。</li>
+</ol>
+</li>
+</ol>
+</li>
+<li><p>证明该算法的收敛性：</p>
+<ol>
+<li>有限性：数据流值域是有限集合的半格。数据流框架中的每个变量取值都是从某个有限集中选出的，n个元素最多有2^n^个集合。</li>
+<li>单调性：每次更新一个节点的 IN&#x2F;OUT 时，都是在偏序半格上“下降”（如求交 ∩）或“上升”（如求并 ∪）</li>
+<li>单调有限则收敛</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<h3 id="part2-·-Symbolic-Execution"><a href="#part2-·-Symbolic-Execution" class="headerlink" title="part2 · Symbolic Execution"></a>part2 · Symbolic Execution</h3><ol>
+<li><p>分类：</p>
+<ol>
+<li>Path Sensitivity：分析会区分程序中的<strong>不同执行路径</strong>（如 if-else 分支），并分别处理每条路径上可能的状态。</li>
+<li>Flow Sensitivity：分析考虑程序中<strong>指令执行的顺序</strong>，即变量值随时间变化的过程。</li>
+<li>Context Sensitivity：分析考虑<strong>函数调用时的上下文</strong>，即不同调用点会分别分析函数的行为。</li>
+</ol>
+</li>
+<li><p>掌握三类的定义，要送分</p>
+</li>
+<li><p>三个问题：</p>
+<ol>
+<li><strong>Path Explosion（路径爆炸）</strong>：指程序中<strong>可执行路径数量呈指数级增长</strong>，随着分支语句（如 if、switch）增加，分析工具必须探索的路径数迅速变得难以控制。</li>
+<li><strong>Constraint Solving（约束求解）</strong>：将路径条件转化为逻辑公式，并使用约束求解器（如 SMT solver）判断是否<strong>可满足（satisfiable）</strong>，从而验证路径是否可行或生成满足条件的输入。</li>
+<li><strong>External Function Call（外部函数调用）</strong>：指程序中调用了<strong>无法深入分析的函数</strong>，例如库函数、系统调用、动态链接函数，分析工具无法查看其内部实现。</li>
+</ol>
+</li>
+<li><p>路径约束求解（Solving Path Constraints）</p>
+<ol>
+<li><p>命题逻辑（PL）</p>
+<ol>
+<li>定义：<ol>
+<li>只处理布尔变量（True &#x2F; False），不包含量词、变量、函数或算术。</li>
+<li>表达式例子：<code>(A ∨ B) ∧ ¬C</code></li>
+<li>用于最基础的<strong>SAT（可满足性）问题</strong></li>
+</ol>
+</li>
+<li></li>
+</ol>
+</li>
+<li><p>一阶逻辑（FOL）</p>
+<ol>
+<li><p>定义：</p>
+<ol>
+<li>引入<strong>变量、函数、谓词、量词</strong>（如 ∀x, ∃x）</li>
+<li>表达能力远高于命题逻辑，可表达整数、结构体、指针等</li>
+<li>示例：<code>∀x. (x &gt; 0 → P(x))</code></li>
+</ol>
+<ul>
+<li><strong>FOL 的可满足性是不可判定的</strong>，但很多子逻辑可以处理。</li>
+</ul>
+</li>
+<li><p>转换为PL</p>
+</li>
+</ol>
+</li>
+<li><p>Satisfiability Modulo Theories (SMT)：</p>
+<ol>
+<li>定义：<strong>SMT（Satisfiability Modulo Theories）</strong> 是指判断<strong>带理论支持的一阶逻辑公式</strong>是否可满足（satisfiable）</li>
+<li>简单说：<strong>SMT &#x3D; 一阶逻辑 + 理论（如整数、数组、位运算）</strong></li>
+<li>解决步骤：<img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250618171712068.png" alt="image-20250618171712068"><ol>
+<li>Word-Level Preprocessing（字级预处理）<ol>
+<li>例：<code>(x &amp; 0xFF) | 0x00</code> 直接简化为 <code>x &amp; 0xFF</code></li>
+<li>似乎就是化简</li>
+</ol>
+</li>
+<li>Bit-Blasting（位爆破）<ol>
+<li>把位向量逻辑公式 <strong>从一阶逻辑（FOL）转换成命题逻辑（PL）</strong></li>
+<li>将每个位向量变量展开成单个位（bit）变量的集合</li>
+<li>将位操作转换成对应的位层级逻辑门表达式</li>
+<li>例如：一个 8 位向量变量变成 8 个布尔变量</li>
+<li>这样公式就变成纯布尔公式，便于 SAT 求解器处理</li>
+</ol>
+</li>
+<li>使用DPLL或CDCL</li>
+</ol>
+</li>
+<li>例子：<ol>
+<li>假设我们有下面的位向量公式：<ul>
+<li>(x &amp; 0b1111) &#x3D; 0b1010</li>
+</ul>
+</li>
+<li>step 1：没有可以简化的了，跳过</li>
+<li>step 2：<img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250618172323976.png" alt="image-20250618172323976"><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250618172334864.png" alt="image-20250618172334864"></li>
+<li>step 3：用算法</li>
+</ol>
+</li>
+</ol>
+</li>
+<li><p>Bit Vector Theory</p>
+<ol>
+<li><strong>Bit Vector Theory</strong> 是 SMT（Satisfiability Modulo Theories）中专门用于处理<strong>固定宽度二进制整数（bit vectors）及其操作</strong>的理论。</li>
+<li>简单说，它让 SMT 求解器能像 CPU 那样准确处理溢出、移位、按位操作等底层行为。</li>
+</ol>
+</li>
+</ol>
+</li>
+<li><p>SAT问题<img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250603110011894.png" alt="image-20250603110011894"></p>
+<ol>
+<li>步骤:<ol>
+<li>通过tseitin转换为CNF</li>
+<li>用DPLL算法</li>
+</ol>
+</li>
+</ol>
+</li>
+<li><p>什么是CNF, DNF, NNF</p>
+<ol>
+<li>NNF（否定范式）：NNF 是一种逻辑表达式的形式，其中所有否定操作（NOT）仅应用于变量，而不是子表达式。</li>
+<li>CNF（合取范式）：CNF 是一种逻辑表达式的形式，其中整个表达式是一个合取（AND）的子句集合，每个子句是一个析取（OR）的原子命题（变量或其否定）集合。</li>
+<li>DNF（析取范式）：DNF 是一种逻辑表达式的形式，其中整个表达式是一个析取（OR）的子句集合，每个子句是一个合取（AND）的原子命题（变量或其否定）集合。</li>
+</ol>
+</li>
+<li><p>逻辑推导：</p>
+<ol>
+<li>蕴含：<img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250618170337256.png" alt="image-20250618170337256"></li>
+<li>否定：<img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250618170056744.png" alt="image-20250618170056744"></li>
+<li>分配律：<img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250618170204728.png" alt="image-20250618170204728"></li>
+</ol>
+</li>
+<li><p>DPLL算法：</p>
+<ol>
+<li>理解：就是不断地假设变量的值，使得表达式最终为真。如果推出矛盾，就回溯。如果穷举了所有可能性都没有满足的赋值，则说明不可满足。</li>
+</ol>
+</li>
+<li><p>CDCL算法：<img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250618172816314.png" alt="image-20250618172816314"></p>
+<ol>
+<li>理解：是对DPLL算法的改进。每次假设时要记录，并且推导时要画图</li>
+<li>如上图的冲突图，假设x1&#x3D;0，就新建一个入度为零的节点</li>
+<li>如果推出矛盾，就要分析矛盾原因。本例中就是$x_3&#x3D;1,x_7&#x3D;1,x_8&#x3D;0$导致冲突，那就说明这三个条件不能同时满足，那就把$¬x_3 ∨ ¬x_7 ∨ x_8$加入到前面，并且回溯到x3前面重新假设</li>
+</ol>
+</li>
+<li><p>Tseitin Transformation（特斯林变换）</p>
+<ol>
+<li>基本思想：<img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250618171443973.png" alt="image-20250618171443973"><ol>
+<li><strong>对原公式中每个子公式</strong>，引入一个新的布尔变量，代表该子公式的值。</li>
+<li><strong>用约束子句</strong>表达这个变量和子公式的等价关系。</li>
+<li>最后，<strong>主变量（代表整个公式）也被引入</strong>，最后的 CNF 是这些约束和主变量的合取。</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<h3 id="part3-·-Pointer-Analysis"><a href="#part3-·-Pointer-Analysis" class="headerlink" title="part3 · Pointer Analysis"></a>part3 · Pointer Analysis</h3><ol>
+<li>Andersen Alg. &amp; Steensgaard Alg.<img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250618173441994.png" alt="image-20250618173441994"><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250618175218831.png" alt="image-20250618175218831"><ol>
+<li>注意：<ol>
+<li>这是求解缺数的表格</li>
+<li>pts(p)代表p可能指向的所有对象的集合</li>
+<li>x, y这些变量的本质是指针，是地址</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>Andersen算法:<ol>
+<li>目标：静态分析程序中指针变量的 <strong>指向关系（points-to set）</strong>，即找出每个指针可能指向的所有变量或内存对象。</li>
+<li>核心思想：<ol>
+<li><strong>初始化</strong><br> 所有指针的 <code>pts</code> 集合为空</li>
+<li><strong>扫描程序所有语句，生成约束</strong><br> 根据上面规则，将语句转为集合包含约束和元素添加约束</li>
+<li><strong>约束传播</strong><br> 不断迭代求解这些约束，更新 <code>pts</code> 集合直到不再变化（达到固定点）</li>
+<li><strong>结果</strong><br> 最终每个指针变量的 <code>pts</code> 集合就是它的可能指向集合</li>
+</ol>
+</li>
+<li><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250618175614916.png" alt="image-20250618175614916"></li>
+</ol>
+</li>
+<li>Steensgaard算法：<ol>
+<li>把集合包含变成等价合并</li>
+</ol>
+</li>
+</ol>
+<h3 id="part4-·-Datalog-Based-Analysis"><a href="#part4-·-Datalog-Based-Analysis" class="headerlink" title="part4 · Datalog-Based Analysis"></a>part4 · Datalog-Based Analysis</h3><ul>
+<li><strong>Datalog-based analysis</strong> 就是把静态分析的规则用 Datalog 写出来，交给逻辑引擎去执行，从而实现自动、高效的程序分析。</li>
+</ul>
+<ol>
+<li>到达定义的DataLog表示法<ol>
+<li><p>三个谓词<img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250618193019411.png" alt="image-20250618193019411"></p>
+<ol>
+<li>def(B, N, X)：在 基本块 B（Block B） 中，第 N 条语句（statement N） 定义了变量 <strong>X</strong>。</li>
+<li>succ(B, N, C)：按照PPT的说法，基本块C是基本块B的后继，且B有N条语句。</li>
+<li>rd(B, N, C, M, X)：变量 <strong><code>X</code></strong> 在基本块 <strong><code>C</code></strong> 的第 <strong><code>M</code></strong> 条语句中被定义，该定义 可以在控制流图中传播到 基本块 <strong><code>B</code></strong> 的第 <strong><code>N</code></strong> 条语句。</li>
+</ol>
+</li>
+<li><p>三个规则</p>
+<ul>
+<li>“:-”的意思是从右向左推导，如果右边成立，那么左边就成立</li>
+</ul>
+<ol>
+<li>定义即到达：<ol>
+<li><strong>rd(B, N, B, N, X) :- def(B, N, X)</strong></li>
+<li>定义可以到达它自己</li>
+</ol>
+</li>
+<li>语句内部前向传播（顺序语句）<ol>
+<li><strong>rd(B, N, C, M, X) :- rd(B, N-1, C, M, X), def(B, N, Y), X≠Y</strong></li>
+<li>如果定义 <code>X</code> 到达了语句 <code>N-1</code>，并且语句 <code>N</code> 没有重定义 <code>X</code>，那么 <code>X</code> 的定义也能到达语句 <code>N</code>。</li>
+</ol>
+</li>
+<li>跨基本块传播<ol>
+<li><strong>rd(B, 0, C, M, X) :- rd(D, N, C, M, X), succ(D, N, B)</strong></li>
+<li>如果 <code>X</code> 的定义在 <code>(C, M)</code> 能到达基本块 <code>D</code> 的语句 <code>N</code>，并且 <code>D</code> 的语句 <code>N</code> 有控制流边到达基本块 <code>B</code>，那么我们认为这个定义在 <code>B</code> 的“开始处”（第 0 行）可达。</li>
+<li>第 0 行是一个虚拟位置，代表基本块入口；</li>
+</ol>
+</li>
+</ol>
+</li>
+<li><p>用法：“我们只定义规则和事实，分析过程有Datalog引擎自动完成”<img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250618194058524.png" alt="image-20250618194058524"></p>
+</li>
+<li><p>考的比较灵活，要理解。考试中可能出现新定义的谓词和规则</p>
+</li>
+</ol>
+</li>
+</ol>
+<h2 id="后端"><a href="#后端" class="headerlink" title="后端"></a>后端</h2><h3 id="part1-·-Instruction-Selection"><a href="#part1-·-Instruction-Selection" class="headerlink" title="part1 · Instruction Selection"></a>part1 · Instruction Selection</h3><ol>
+<li><p>三地址指令变机器码</p>
+<ol>
+<li><p>指令：写一些伪指令就好了：<img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250618194722884.png" alt="image-20250618194722884"></p>
+</li>
+<li><p>注意寻址模式（<strong>How we compute the addr</strong>）：</p>
+<ul>
+<li>假设R2的内容是x</li>
+</ul>
+<ol>
+<li>LD R1, a(R2)：addr &#x3D; x + a</li>
+<li>LD R1, 100(R2)：addr &#x3D; x + 100</li>
+<li>LD R1, #100（立即数）：R1 &#x3D; 100 </li>
+<li>LD R1, *R2：addr &#x3D; MEM[ x ]</li>
+<li>LD R1, *100(R2)：addr &#x3D; MEM[ x + 100 ]</li>
+</ol>
+</li>
+<li><p><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250618212144681.png" alt="image-20250618212144681"></p>
+</li>
+<li><p>对于跳转的操作符：goto, ifTrue</p>
+</li>
+<li><p>对于数组的操作符：</p>
+<ol start="6">
+<li><p>[ ]：( [ ], b, t1, t2 )     &#x2F;&#x2F; t2 &#x3D; b[ j ]</p>
+</li>
+<li><p>[ ]&#x3D;：( [ ]&#x3D;, a, t4, t3 )    &#x2F;&#x2F; a[ t4 ] &#x3D; t3</p>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<h3 id="part2-·-Register-Allocation"><a href="#part2-·-Register-Allocation" class="headerlink" title="part2 · Register Allocation"></a>part2 · Register Allocation</h3><ol>
+<li><p>局部寄存器分配</p>
+<ol>
+<li>线性扫描</li>
+</ol>
+</li>
+<li><p>全局寄存器分配</p>
+<ol>
+<li><p>图着色算法Chaitin’s Algorithm：</p>
+<ol>
+<li><p>步骤：</p>
+<ul>
+<li>易知，若节点的度<strong>小于</strong>k，则容易用k色着色</li>
+</ul>
+<ol>
+<li>所以，我们先把度<strong>小于</strong>k的节点压栈，最后着色</li>
+<li>如果没有，则选择一个度最小的节点放入列表。</li>
+<li>若表不为空，表中的节点要spilling，即插入load,store指令。然后重新画图。</li>
+<li>迭代第1、2、3条</li>
+</ol>
+</li>
+<li><p>什么时候压栈，什么时候溢出</p>
+<ol>
+<li>压栈：找到度数小于k的</li>
+<li>溢出：度数都不小于k</li>
+<li>着色：所有节点都入栈或溢出</li>
+</ol>
+</li>
+</ol>
+</li>
+<li><p>Chaitin-Briggs Algorithm（前一个算法的改进）</p>
+<ul>
+<li>思想是不急着spilling，减少spill code</li>
+<li>即使没有满足要求的节点，我们也尝试把一个节点压栈。</li>
+<li>不一定成功</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><p>为什么需要指令调度？</p>
+<ol>
+<li>从硬件的角度说，尽量利用并行性</li>
+<li>从软件的角度说，把并行度高的排在一起，以便硬件并行操作</li>
+</ol>
+</li>
+</ol>
+<h3 id="part3-·-Instruction-Scheduling"><a href="#part3-·-Instruction-Scheduling" class="headerlink" title="part3 · Instruction Scheduling"></a>part3 · Instruction Scheduling</h3><ol>
+<li><p>为什么要调度？</p>
+<ol>
+<li>现代高性能处理器每个时钟周期可以执行多个操作</li>
+</ol>
+</li>
+<li><p>为什么编译器很重要？</p>
+<ol>
+<li><p>硬件只能执行已经取出的指令。</p>
+<ol>
+<li>处理器只能对“已经被取指单元抓取到的指令”进行操作。</li>
+<li>如果下一条指令因为数据依赖、缓存未命中等原因卡住了，硬件就会停下来等，效率降低。</li>
+</ol>
+</li>
+<li><p>硬件缓冲资源有限</p>
+<ol>
+<li>这些缓冲区空间非常有限，一旦塞满，就不得不停止取指、停止执行</li>
+</ol>
+</li>
+<li><p>编译器可以通过指令调度提升效率</p>
+<ol>
+<li>译器分析指令之间的依赖关系，可以把无依赖的指令排在一起，尽量避免空等。</li>
+<li>这使得处理器可以在一个周期里执行多个指令，提高硬件利用率</li>
+</ol>
+</li>
+</ol>
+</li>
+<li><p>跨块调度不考</p>
+</li>
+<li><p>块内调度要考：</p>
+<ol>
+<li>真假依赖<ol>
+<li>真：写后读</li>
+<li>假：写后写，读后写</li>
+</ol>
+</li>
+<li>依赖图：<ol>
+<li><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250618203329396.png" alt="image-20250618203329396"></li>
+<li>要先消除假依赖</li>
+<li>标记时钟周期（深度）</li>
+</ol>
+</li>
+<li>List Scheduling 算法<ol>
+<li>只能先调度没有依赖的指令</li>
+<li>优先调度深度大的</li>
+<li>指令结束后从依赖图中删去</li>
+<li>如果有空操作，用NOP（no operation）填充</li>
+<li>迭代</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<h3 id="part4-·-Exercises"><a href="#part4-·-Exercises" class="headerlink" title="part4 · Exercises"></a>part4 · Exercises</h3><ol>
+<li><p><img src="C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250618203446736.png" alt="image-20250618203446736"></p>
+<ol>
+<li><p>为什么需要寄存器分配？</p>
+<ol>
+<li>Speed: Registers &gt; Memory</li>
+<li>Physical machines have limited number of registers</li>
+<li><strong>Register allocation</strong>: ∞ virtual registers ➞ k physical registers</li>
+</ol>
+</li>
+<li><p>最少需要几个寄存器？</p>
+<ol>
+<li>2个</li>
+</ol>
+</li>
+<li><pre><code>LD R1, b
+LD R2, c
+ADD R1, R1, R2
+DIV R1, R1, #3
+LD R2, d
+ADD R1, R2
+LD R2, a
+SUB R2, #1
+MUL R1, R1, R2
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">2. ![image-20250618203504267](C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250618203504267.png)</span><br><span class="line"></span><br><span class="line">   1. 注意要在寄存器的视角下考虑共存，不能在代码基本块的视角上看</span><br><span class="line"></span><br><span class="line">3. “重中之重”![image-20250618203535253](C:\Users\HUAWEI\AppData\Roaming\Typora\typora-user-images\image-20250618203535253.png)</span><br><span class="line"></span><br><span class="line">   1. 注意每行出现的寄存器，仔细考虑</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 笔记</span><br><span class="line"></span><br><span class="line">1. 快排写为三地址码：</span><br><span class="line"></span><br><span class="line">   1. 快排：</span><br><span class="line"></span><br><span class="line">      1. ```c++</span><br><span class="line">         procedure quicksort(A, low, high)</span><br><span class="line">         &#123;</span><br><span class="line">             if (low &lt; high)</span><br><span class="line">             &#123;</span><br><span class="line">                 pivot = partition(A, low, high)</span><br><span class="line">                 quicksort(A, low, pivot)</span><br><span class="line">                 quicksort(A, pivot + 1, high)</span><br><span class="line">             &#125;</span><br><span class="line">         &#125;</span><br><span class="line">         </span><br><span class="line">         procedure partition(A, low, high)</span><br><span class="line">         &#123;</span><br><span class="line">             pivot = A[low]               // 选择第一个元素作为枢轴</span><br><span class="line">             i = low - 1</span><br><span class="line">             j = high + 1</span><br><span class="line">         </span><br><span class="line">             while (true)</span><br><span class="line">             &#123;</span><br><span class="line">                 // 从左向右找第一个 &gt;= pivot 的元素</span><br><span class="line">                 repeat</span><br><span class="line">                     i = i + 1</span><br><span class="line">                 until A[i] &gt;= pivot</span><br><span class="line">         </span><br><span class="line">                 // 从右向左找第一个 &lt;= pivot 的元素</span><br><span class="line">                 repeat</span><br><span class="line">                     j = j - 1</span><br><span class="line">                 until A[j] &lt;= pivot</span><br><span class="line">         </span><br><span class="line">                 // 两指针相遇则分区完成，返回右指针 j</span><br><span class="line">                 if (i &gt;= j)</span><br><span class="line">                     return j</span><br><span class="line">         </span><br><span class="line">                 swap A[i] and A[j]        // 交换左右两边不符合顺序的元素</span><br><span class="line">             &#125;</span><br><span class="line">         &#125;</span><br><span class="line">         </span><br></pre></td></tr></table></figure>
+</code></pre>
+</li>
+<li><p>三地址码：</p>
+<ol>
+<li><pre><code class="language-C++">t1 = low            // i = low - 1; 但Hoare的i初始化为low - 1，稍改成low - 1
+t2 = t1 - 1
+i = t2
+
+t3 = high           // j = high + 1
+t4 = t3 + 1
+j = t4
+
+t5 = A[low]         // pivot = A[low]
+pivot = t5
+
+LABEL_PARTITION_LOOP:
+  // 从左往右找第一个 A[i] &gt;= pivot
+LABEL_SCAN_I:
+  t6 = i + 1
+  i = t6
+  t7 = A[i]
+  t8 = t7 &lt; pivot
+  if t8 == true goto LABEL_SCAN_I
+
+  // 从右往左找第一个 A[j] &lt;= pivot
+LABEL_SCAN_J:
+  t9 = j - 1
+  j = t9
+  t10 = A[j]
+  t11 = t10 &gt; pivot
+  if t11 == true goto LABEL_SCAN_J
+
+  // 如果i &gt;= j跳出循环
+  t12 = i &gt;= j
+  if t12 == true goto LABEL_RETURN_J
+
+  // 交换 A[i] 和 A[j]
+  t13 = A[i]
+  t14 = A[j]
+  A[i] = t14
+  A[j] = t13
+
+  goto LABEL_PARTITION_LOOP
+
+LABEL_RETURN_J:
+return j
+</code></pre>
+</li>
+<li></li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<h1 id="考试"><a href="#考试" class="headerlink" title="考试"></a>考试</h1><ol>
+<li>开卷考试。把复习内容整理好，打印下来。</li>
+<li>有三十分是概念题</li>
+<li>第一题是词法分析</li>
+<li>第二题是语法分析</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/05/04/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" rel="next" title="操作系统">
+                  操作系统 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">mukongshan</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>
