@@ -1385,7 +1385,7 @@ pre code {
     vertical-align: middle;
   }
   .links-of-author a::before {
-    background: #17e9ff;
+    background: #57cfff;
     display: inline-block;
     margin-right: 3px;
     transform: translateY(-2px);
@@ -3190,56 +3190,6 @@ body::before {
     margin: 0 40px;
   }
 }
-/* 1. 容器透明化：让评论区融入毛玻璃背景 */
-#gitalk-container .gt-container .gt-header-textarea,
-#gitalk-container .gt-container .gt-comment-content,
-#gitalk-container .gt-container .gt-comment-admin .gt-comment-content {
-  background-color: rgba(255,255,255,0.4) !important; /* 半透明白 */
-  backdrop-filter: blur(5px);
-  border: 1px solid rgba(255,255,255,0.3);
-  color: var(--text-color) !important;
-  transition: all 0.3s;
-}
-/* 输入框聚焦时稍微不透明一点 */
-#gitalk-container .gt-container .gt-header-textarea:focus {
-  background-color: rgba(255,255,255,0.7) !important;
-}
-/* 2. 按钮美化：变成你的主题色 */
-#gitalk-container .gt-container .gt-btn-public {
-  background-color: var(--link-color) !important;
-  border-color: var(--link-color) !important;
-  border-radius: 20px; /* 圆角按钮 */
-  color: #fff !important;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-}
-#gitalk-container .gt-container .gt-btn-public:hover {
-  background-color: var(--link-hover-color) !important;
-  transform: translateY(-2px);
-}
-/* 3. 头像变圆 */
-#gitalk-container .gt-container .gt-avatar img {
-  border-radius: 50% !important;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
-/* 4. 暗黑模式适配 */
-@media (prefers-color-scheme: dark) {
-  #gitalk-container .gt-container .gt-header-textarea,
-  #gitalk-container .gt-container .gt-comment-content {
-    background-color: rgba(0,0,0,0.4) !important; /* 半透明黑 */
-    color: #eee !important;
-    border: 1px solid rgba(255,255,255,0.1);
-  }
-  #gitalk-container .gt-container .gt-comment-body {
-    color: #ddd !important;
-  }
-}
-/* 5. 隐藏 Gitalk 底部烦人的 "Powered by" */
-/* 为了尊重开源，可以保留，但如果你想极致简洁，可以隐藏 */
-/*
-.gt-copyright {
-  display: none !important;
-}
-*/
 @keyframes avatarFloat {
   0%, 100% {
     transform: translateY(0);
