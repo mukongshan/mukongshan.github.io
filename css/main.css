@@ -1385,7 +1385,7 @@ pre code {
     vertical-align: middle;
   }
   .links-of-author a::before {
-    background: #fbfffc;
+    background: #a154ff;
     display: inline-block;
     margin-right: 3px;
     transform: translateY(-2px);
@@ -3188,28 +3188,6 @@ body::before {
     flex-direction: column;
     gap: 15px;
     margin: 0 40px;
-  }
-}
-.content-wrap {
-  background: transparent !important;
-  box-shadow: none !important;
-}
-.comments {
-  background: transparent !important;
-  box-shadow: none !important;
-  margin-top: 20px;
-}
-.posts-collapse {
-  background: transparent !important;
-}
-.post-block {
-  background: transparent !important;
-}
-@media (prefers-color-scheme: dark) {
-  .content-wrap,
-  .comments,
-  .posts-collapse {
-    background: transparent !important;
   }
 }
 @keyframes avatarFloat {
