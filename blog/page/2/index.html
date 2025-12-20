@@ -549,122 +549,6 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://kongshan.me/2024/12/04/course/Linux%E7%B3%BB%E7%BB%9F%E5%9F%BA%E7%A1%80/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="mukongshan">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="kongshan's blog">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | kongshan's blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/12/04/course/Linux%E7%B3%BB%E7%BB%9F%E5%9F%BA%E7%A1%80/" class="post-title-link" itemprop="url">Linux系统基础</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2024-12-04 12:00:00" itemprop="dateCreated datePublished" datetime="2024-12-04T12:00:00+08:00">2024-12-04</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2025-12-03 17:27:23" itemprop="dateModified" datetime="2025-12-03T17:27:23+08:00">2025-12-03</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/course/" itemprop="url" rel="index"><span itemprop="name">课业</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="安装Linux虚拟机"><a href="#安装Linux虚拟机" class="headerlink" title="安装Linux虚拟机"></a>安装Linux虚拟机</h1><ol>
-<li>~$ sudo apt update</li>
-<li>~$ sudo apt upgrade</li>
-<li>~$ sudo apt install openssh-server</li>
-</ol>
-<h1 id="ubuntu终端知识点"><a href="#ubuntu终端知识点" class="headerlink" title="ubuntu终端知识点"></a>ubuntu终端知识点</h1><ol>
-<li>解释器为shell</li>
-<li>三种指令格式：<ol>
-<li>“&#x2F;usr&#x2F;ubuntu&#x2F;date”：绝对路径下的命令</li>
-<li>“.&#x2F;date”：当前路径下的命令</li>
-<li>“date”：从环境变量中找命令</li>
-</ol>
-</li>
-<li>家目录快捷：’~’可以代替家目录</li>
-<li>Linux指令是不可逆的，所以要养成备份的习惯，现在用git很方便</li>
-<li>r：可读，w：可写，x：可执行·</li>
-<li>对于一个文件，对其父目录可写，才可以删除这个文件</li>
-<li>想要打开一个文件，必须对其所有上级目录可执行</li>
-<li>重定向：e.g. echo hello &gt; file.txt，使得hello不输出到屏幕，而是写入file中去。e.g. cat &lt; hello.txt，使得cat不再等待键盘输入，而是读hello文件。e.g. echo &gt;&gt; file.txt，追加内容，而非覆盖</li>
-<li>管道：’ | ‘ 将一个程序的输出和另一个程序的输入连接起来。注意，有的指令不接受输入，而是接受参数，直接把它串起来是没有用的。</li>
-<li>对于一条程序指令，要搞清楚哪部分是命令去完成的，哪部分是由shell完成的。e.g. sudo echo 1 &gt; text.txt 其中sudo让echo指令以超级用户的身份运行，但是重定向&gt;是由shell完成的，所以如果身份权限不够，即使用了sudo也无法完成。</li>
-<li>缓存：就是打开的文件</li>
-<li>Linux 系统中，文件的格式并不是由文件名或文件扩展名决定的，而是由文件的内容和用来打开文件的程序决定的。后缀只是用来方便用户使用。</li>
-<li>shell只能做整数计算，用库bc做小数运算</li>
-</ol>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2024/12/04/course/Linux%E7%B3%BB%E7%BB%9F%E5%9F%BA%E7%A1%80/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="https://kongshan.me/2024/12/04/course/MatLab%E7%AC%94%E8%AE%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -803,6 +687,218 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://kongshan.me/2024/12/04/course/PA%E5%AE%9E%E9%AA%8C%E8%AF%BE%E7%AC%94%E8%AE%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="mukongshan">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="kongshan's blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | kongshan's blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/12/04/course/PA%E5%AE%9E%E9%AA%8C%E8%AF%BE%E7%AC%94%E8%AE%B0/" class="post-title-link" itemprop="url">PA实验课笔记</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-12-04 12:00:00" itemprop="dateCreated datePublished" datetime="2024-12-04T12:00:00+08:00">2024-12-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-12-03 17:27:23" itemprop="dateModified" datetime="2025-12-03T17:27:23+08:00">2025-12-03</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/course/" itemprop="url" rel="index"><span itemprop="name">课业</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="第一章-·-C语言拾遗"><a href="#第一章-·-C语言拾遗" class="headerlink" title="第一章 · C语言拾遗"></a>第一章 · C语言拾遗</h1><h2 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h2><ol>
+<li>宏（#define）和引用(#include)的本质是复制粘贴。在预编译的时候会把目标文件或宏定义粘贴到对应位置。</li>
+<li>堆栈：在一个程序的进程空间中，栈是由高地址向低地址生长，堆则是由低向高。</li>
+<li>从下往上的相对位置为：代码区，数据区，堆，栈</li>
+</ol>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2024/12/04/course/PA%E5%AE%9E%E9%AA%8C%E8%AF%BE%E7%AC%94%E8%AE%B0/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://kongshan.me/2024/12/04/course/Linux%E7%B3%BB%E7%BB%9F%E5%9F%BA%E7%A1%80/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="mukongshan">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="kongshan's blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | kongshan's blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/12/04/course/Linux%E7%B3%BB%E7%BB%9F%E5%9F%BA%E7%A1%80/" class="post-title-link" itemprop="url">Linux系统基础</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-12-04 12:00:00" itemprop="dateCreated datePublished" datetime="2024-12-04T12:00:00+08:00">2024-12-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-12-03 17:27:23" itemprop="dateModified" datetime="2025-12-03T17:27:23+08:00">2025-12-03</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/course/" itemprop="url" rel="index"><span itemprop="name">课业</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="安装Linux虚拟机"><a href="#安装Linux虚拟机" class="headerlink" title="安装Linux虚拟机"></a>安装Linux虚拟机</h1><ol>
+<li>~$ sudo apt update</li>
+<li>~$ sudo apt upgrade</li>
+<li>~$ sudo apt install openssh-server</li>
+</ol>
+<h1 id="ubuntu终端知识点"><a href="#ubuntu终端知识点" class="headerlink" title="ubuntu终端知识点"></a>ubuntu终端知识点</h1><ol>
+<li>解释器为shell</li>
+<li>三种指令格式：<ol>
+<li>“&#x2F;usr&#x2F;ubuntu&#x2F;date”：绝对路径下的命令</li>
+<li>“.&#x2F;date”：当前路径下的命令</li>
+<li>“date”：从环境变量中找命令</li>
+</ol>
+</li>
+<li>家目录快捷：’~’可以代替家目录</li>
+<li>Linux指令是不可逆的，所以要养成备份的习惯，现在用git很方便</li>
+<li>r：可读，w：可写，x：可执行·</li>
+<li>对于一个文件，对其父目录可写，才可以删除这个文件</li>
+<li>想要打开一个文件，必须对其所有上级目录可执行</li>
+<li>重定向：e.g. echo hello &gt; file.txt，使得hello不输出到屏幕，而是写入file中去。e.g. cat &lt; hello.txt，使得cat不再等待键盘输入，而是读hello文件。e.g. echo &gt;&gt; file.txt，追加内容，而非覆盖</li>
+<li>管道：’ | ‘ 将一个程序的输出和另一个程序的输入连接起来。注意，有的指令不接受输入，而是接受参数，直接把它串起来是没有用的。</li>
+<li>对于一条程序指令，要搞清楚哪部分是命令去完成的，哪部分是由shell完成的。e.g. sudo echo 1 &gt; text.txt 其中sudo让echo指令以超级用户的身份运行，但是重定向&gt;是由shell完成的，所以如果身份权限不够，即使用了sudo也无法完成。</li>
+<li>缓存：就是打开的文件</li>
+<li>Linux 系统中，文件的格式并不是由文件名或文件扩展名决定的，而是由文件的内容和用来打开文件的程序决定的。后缀只是用来方便用户使用。</li>
+<li>shell只能做整数计算，用库bc做小数运算</li>
+</ol>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2024/12/04/course/Linux%E7%B3%BB%E7%BB%9F%E5%9F%BA%E7%A1%80/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="https://kongshan.me/2024/12/04/course/%E6%AF%9B%E6%A6%82%E5%A4%8D%E4%B9%A0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -911,7 +1007,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://kongshan.me/2024/12/04/course/%E4%BA%92%E8%81%94%E7%BD%91%E8%AE%A1%E7%AE%97/">
+    <link itemprop="mainEntityOfPage" href="https://kongshan.me/2024/12/04/course/PA%E5%B0%8F%E8%AE%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -929,7 +1025,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/12/04/course/%E4%BA%92%E8%81%94%E7%BD%91%E8%AE%A1%E7%AE%97/" class="post-title-link" itemprop="url">互联网计算</a>
+          <a href="/2024/12/04/course/PA%E5%B0%8F%E8%AE%B0/" class="post-title-link" itemprop="url">PA小记</a>
         </h2>
 
         <div class="post-meta-container">
@@ -969,29 +1065,15 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="第零章-·-计算机网络及其参考模型"><a href="#第零章-·-计算机网络及其参考模型" class="headerlink" title="第零章 · 计算机网络及其参考模型"></a>第零章 · 计算机网络及其参考模型</h1><h2 id="名词解释"><a href="#名词解释" class="headerlink" title="名词解释"></a>名词解释</h2><ol>
-<li>LAN（局域网，Local Area Networks）</li>
-<li>WLAN（无线局域网， Wireless Local Area Networks)</li>
-<li>WAN（广域网，Wide Area Networks）</li>
-<li>NAP（网络接入点，network access point）</li>
-<li>ISP  (互联网服务提供商，Internet Service Provider)</li>
-<li>Modem（调制解调器） 调制解调器用于将数字信号和模拟信号之间相互转换。它在数字设备（如计算机）与模拟通信线路（如电话线）之间充当桥梁。</li>
-<li>CSU &#x2F; DSU（通道服务单元 &#x2F; 数据服务单元）：CSU&#x2F;DSU设备用于将局域网与广域网连接，通常用于专用数据线路（如T1、E1线路）。它在数字信号和物理线路之间进行信号匹配。</li>
-<li>TA &#x2F; NT1（终端适配器 &#x2F; 网络终端1）：TA&#x2F;NT1是ISDN（综合业务数字网）中的设备，用于连接ISDN终端设备（如电话、计算机）与ISDN网络。</li>
-<li>Ethernet（以太网）</li>
-<li>ISDN（综合业务数字网）：ISDN提供数字传输服务，能够同时传输语音、视频和数据。</li>
-<li>RFC：RFC（Request for Comments）文档是一系列正式的文档，用于描述互联网技术和协议的标准、建议、方法和创新。</li>
-<li>TCP(传输控制协议，Transmission Control Protocol) ***</li>
-<li>UDP（用户数据报协议，Uesr Datagram Protocol）</li>
-<li>IP（互联网协议，Internet Protocol) ***</li>
-<li>HTTP （超文本传输协议，Hypertext  Transfer Protocol）***</li>
-<li>SMTP （简单邮件传输协议，Simple Mail  Transfer protocol ）***</li>
-<li>DNS （域名系统，Domain Name  System）***</li>
-<li>TFTP （简单文件传输协议，Trivial File Transfer Protocol）***</li>
+          <h1 id="思考题"><a href="#思考题" class="headerlink" title="思考题"></a>思考题</h1><ol>
+<li>在<code>cmd_c()</code>函数中, 调用<code>cpu_exec()</code>的时候传入了参数<code>-1</code>, 你知道这是什么意思吗?<ul>
+<li>在 NEMU 项目中的 cmd_c() 函数调用 cpu_exec(-1) 时，传入的 -1 参数表示让模拟器持续执行指令，直到某种停止条件（如断点或异常）发生。</li>
+</ul>
+</li>
 </ol>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2024/12/04/course/%E4%BA%92%E8%81%94%E7%BD%91%E8%AE%A1%E7%AE%97/#more" rel="contents">
+              <a class="btn" href="/2024/12/04/course/PA%E5%B0%8F%E8%AE%B0/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -1022,7 +1104,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://kongshan.me/2024/12/04/course/PA%E5%AE%9E%E9%AA%8C%E8%AF%BE%E7%AC%94%E8%AE%B0/">
+    <link itemprop="mainEntityOfPage" href="https://kongshan.me/2024/12/04/course/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -1040,7 +1122,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/12/04/course/PA%E5%AE%9E%E9%AA%8C%E8%AF%BE%E7%AC%94%E8%AE%B0/" class="post-title-link" itemprop="url">PA实验课笔记</a>
+          <a href="/2024/12/04/course/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" class="post-title-link" itemprop="url">数据结构与算法</a>
         </h2>
 
         <div class="post-meta-container">
@@ -1058,7 +1140,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2025-12-03 17:27:23" itemprop="dateModified" datetime="2025-12-03T17:27:23+08:00">2025-12-03</time>
+      <time title="修改时间：2025-12-03 17:38:18" itemprop="dateModified" datetime="2025-12-03T17:38:18+08:00">2025-12-03</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1080,122 +1162,33 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="第一章-·-C语言拾遗"><a href="#第一章-·-C语言拾遗" class="headerlink" title="第一章 · C语言拾遗"></a>第一章 · C语言拾遗</h1><h2 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h2><ol>
-<li>宏（#define）和引用(#include)的本质是复制粘贴。在预编译的时候会把目标文件或宏定义粘贴到对应位置。</li>
-<li>堆栈：在一个程序的进程空间中，栈是由高地址向低地址生长，堆则是由低向高。</li>
-<li>从下往上的相对位置为：代码区，数据区，堆，栈</li>
-</ol>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2024/12/04/course/PA%E5%AE%9E%E9%AA%8C%E8%AF%BE%E7%AC%94%E8%AE%B0/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://kongshan.me/2024/12/04/course/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E7%BB%93%E6%9E%84/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="mukongshan">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="kongshan's blog">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | kongshan's blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/12/04/course/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E7%BB%93%E6%9E%84/" class="post-title-link" itemprop="url">计算机组成结构</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2024-12-04 12:00:00" itemprop="dateCreated datePublished" datetime="2024-12-04T12:00:00+08:00">2024-12-04</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2025-12-03 17:27:23" itemprop="dateModified" datetime="2025-12-03T17:27:23+08:00">2025-12-03</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/course/" itemprop="url" rel="index"><span itemprop="name">课业</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="导论"><a href="#导论" class="headerlink" title="导论"></a>导论</h1><h2 id="第一章-·-计算机系统概述"><a href="#第一章-·-计算机系统概述" class="headerlink" title="第一章 · 计算机系统概述"></a>第一章 · 计算机系统概述</h2><h3 id="计算机的定义"><a href="#计算机的定义" class="headerlink" title="计算机的定义"></a>计算机的定义</h3><p>通用电子数字计算机</p>
-<h3 id="组织与结构"><a href="#组织与结构" class="headerlink" title="组织与结构 ***"></a>组织与结构 ***</h3><ol>
-<li><p>组织：对编程人员不可见。（类比：实现乘法是通过硬件单元还是重复加法，我们不得而知）</p>
+          <h1 id="第一章-·-导论"><a href="#第一章-·-导论" class="headerlink" title="第一章 · 导论"></a>第一章 · 导论</h1><h2 id="什么是数据结构"><a href="#什么是数据结构" class="headerlink" title="什么是数据结构"></a>什么是数据结构</h2><p>数据结构涉及三个方面： </p>
 <ul>
-<li>操作单元及其相互连接。</li>
-<li>包括控制信号，存储技术等等。</li>
+<li>数据的逻辑结构—–从用户视图看，是面向问题的。 </li>
+<li>数据的物理结构—–从具体实现视图看，是面向计算机的。 </li>
+<li>相关的操作及其实现。</li>
 </ul>
+<p>注意：非线性逻辑结构的物理结构不一定是非线性的，反之亦然。</p>
+<h2 id="ADT"><a href="#ADT" class="headerlink" title="ADT"></a>ADT</h2><ol>
+<li><p>ADTs: Abstract Data Types </p>
+<p>是将类型和与这个类型有关的操作集合封装在一起的数据模型。</p>
+<p>如：栈，字典，列表等等</p>
 </li>
-<li><p>结构：对编程人员可见。（类比：有没有乘法指令）</p>
-<ul>
-<li><p>直接影响程序逻辑执行的属性。</p>
+<li><p>思想：将数据类型的使用与它的表示（机内存储）、实现（机内操作的 实现）分开。更确切的说，把一个数据类型的表示及在这个类型 上的操作实现封装到一个程序模块中，用户不必知道它。</p>
 </li>
-<li><p>包括指令集，表示数据类型的位数等等。</p>
-</li>
+</ol>
+<h2 id="OO"><a href="#OO" class="headerlink" title="OO"></a>OO</h2><ol>
+<li>OO：object-oriented＝object＋class＋inherit＋ communicate</li>
+<li>面向对象编程核心思想：<ul>
+<li>封装</li>
+<li>继承</li>
+<li>多态</li>
 </ul>
 </li>
 </ol>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2024/12/04/course/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E7%BB%93%E6%9E%84/#more" rel="contents">
+              <a class="btn" href="/2024/12/04/course/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
